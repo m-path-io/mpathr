@@ -18,3 +18,5 @@ Imports:
     lifecycle,
     rlang
 Language: en-US
+URL: https://github.com/m-path-io/mpathr
+BugReports: https://github.com/m-path-io/mpathr/issues
