@@ -1,2 +1,11 @@
 ^mpathr\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$
+^README\.Rmd$
+^cran-comments\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^revdep$
+^\.github$
