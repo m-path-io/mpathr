@@ -1,0 +1,10 @@
+bibentry(
+  bibtype  = "Article",
+  title    = "{m-Path}: an easy-to-use and highly tailorable platform for ecological momentary assessment and intervention in behavioral research and clinical practice",
+  author   = "Merijn Mestdagh, Stijn Verdonck, Maarten Piot, Koen Niemeijer, Ghijs Kilani, Francis Tuerlinckx, Peter Kuppens, Egon Dejonckheere",
+  journal  = "Frontiers in Digital Health",
+  year     = 2023,
+  volume   = 5,
+  pages    = "1-11",
+  doi      = "10.3389/fdgth.2023.1182175"
+)
