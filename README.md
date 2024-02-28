@@ -4,6 +4,8 @@
 # mpathr <img src="man/figures/logo" align="right" height="120" alt="" />
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of mpathr is to …
