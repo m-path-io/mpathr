@@ -11,22 +11,29 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+options(tibble.print_min = 5, tibble.print_max = 5)
 ```
 
-# mpathr <img src="man/figures/logo" align="right" height="120" alt="" />
+# mpathr <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of mpathr is to ...
+`mpathr` is currently under development and is not yet meant for public use. Please check back later for updates.
 
 ## Installation
 
-You can install the development version of mpathr like so:
+You can install the development version of mpathr from Github using the [remotes](https://cran.r-project.org/package=remotes) package:
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+```{r, eval = FALSE}
+remotes::install_github("m-path-io/mpathr")
+```
+
+Alternatively, you can go to the Github repository yourself and download it using either Git or as a zip file. You can then run the following code:
+
+```{r, eval = FALSE}
+install.packages("path/to/mpathr", repos = NULL, type = "source")
 ```
 
 ## Example
@@ -35,24 +42,14 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(mpathr)
-## basic example code
+# TODO: Include basic examples here
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Reference 
+For an overview of all functions in this package, see the [mpathr Reference Site](https://m-path-io.github.io/mpathr/index.html). 
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+## Getting help
+If you encounter a clear bug or need help getting a function to run, please file an issue with a minimal reproducible example on [Github](https://github.com/m-path-io/mpathr/issues).
 
 ## Code of Conduct
 

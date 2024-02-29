@@ -1,21 +1,31 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mpathr <img src="man/figures/logo" align="right" height="120" alt="" />
+# mpathr <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of mpathr is to …
+`mpathr` is currently under development and is not yet meant for public
+use. Please check back later for updates.
 
 ## Installation
 
-You can install the development version of mpathr like so:
+You can install the development version of mpathr from Github using the
+[remotes](https://cran.r-project.org/package=remotes) package:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+remotes::install_github("m-path-io/mpathr")
+```
+
+Alternatively, you can go to the Github repository yourself and download
+it using either Git or as a zip file. You can then run the following
+code:
+
+``` r
+install.packages("path/to/mpathr", repos = NULL, type = "source")
 ```
 
 ## Example
@@ -24,32 +34,19 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(mpathr)
-## basic example code
+# TODO: Include basic examples here
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+## Reference
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
+For an overview of all functions in this package, see the [mpathr
+Reference Site](https://m-path-io.github.io/mpathr/index.html).
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+## Getting help
 
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+If you encounter a clear bug or need help getting a function to run,
+please file an issue with a minimal reproducible example on
+[Github](https://github.com/m-path-io/mpathr/issues).
 
 ## Code of Conduct
 
