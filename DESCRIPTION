@@ -3,7 +3,7 @@ Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
     person("Merijn", "Mestdagh", "merijn.mestdagh@kuleuven.be", role = c("aut"),
-           comment = c(ORCID = "0000-0001-5077-861X")
+           comment = c(ORCID = "0000-0001-5077-861X"),
     person("Koen", "Niemeijer", , "koen.niemeijer@kuleuven.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0816-534X"))
 Description: What the package does (one paragraph).
