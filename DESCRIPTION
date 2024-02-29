@@ -1,11 +1,12 @@
 Package: mpathr
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: 
-    person("Merijn", "Mestdagh", "merijn.mestdagh@kuleuven.be", role = c("aut"),
-           comment = c(ORCID = "0000-0001-5077-861X"),
+Authors@R: c(
+    person("Merijn", "Mestdagh", , "merijn.mestdagh@kuleuven.be", role = c("aut"),
+           comment = c(ORCID = "0000-0001-5077-861X")),
     person("Koen", "Niemeijer", , "koen.niemeijer@kuleuven.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0816-534X"))
+  )
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -16,9 +17,7 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    cli,
-    lifecycle,
-    rlang
+    lifecycle
 Language: en-US
 URL: https://github.com/m-path-io/mpathr
 BugReports: https://github.com/m-path-io/mpathr/issues
