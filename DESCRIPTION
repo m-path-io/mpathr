@@ -17,7 +17,10 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    lifecycle
+    cli,
+    dplyr,
+    lifecycle,
+    tidyr
 Language: en-US
 URL: https://github.com/m-path-io/mpathr
 BugReports: https://github.com/m-path-io/mpathr/issues
