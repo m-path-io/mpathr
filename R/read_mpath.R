@@ -35,7 +35,7 @@ read_meta_data <- function(
     file
 ) {
   # Hard coded locate to be used for m-Path meta data
-  mpath_locale <- locale(
+  mpath_locale <- readr::locale(
     date_names = "en",
     date_format = "%AD",
     time_format = "%AT",
@@ -63,7 +63,9 @@ read_meta_data <- function(
     file = file,
     delim = ";",
     locale = mpath_locale,
-    show_col_types = FALSE
+    show_col_types = FALSE,
+    col_names = TRUE,
+    col_types = c("cccclll")
   ) |>
     suppressWarnings()
 
@@ -83,27 +85,6 @@ read_meta_data <- function(
       problems
     ))
   }
-
-  # Transform the file to a long format if required
-  meta_data <- meta_data |>
-    pivot_longer(
-      cols = -"columnName",
-      names_to = "item_label",
-      values_to = "values"
-    ) |>
-    pivot_wider(
-      names_from = "columnName",
-      values_from = "values"
-    )
-
-  # Convert the "_mixed" columns to a logical (i.e. boolean) value
-  meta_data <- meta_data |>
-    mutate(
-      across(
-        .cols = dplyr::ends_with("_mixed"),
-        .fns = \(x) x == "1" # Dirty but fast
-      )
-    )
 
   meta_data
 }

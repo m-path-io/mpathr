@@ -4,10 +4,12 @@
 \alias{read_mpath}
 \title{Read an m-Path file into a tibble}
 \usage{
-read_mpath(file)
+read_mpath(file, meta_data)
 }
 \arguments{
 \item{file}{A string with the path to the m-Path file}
+
+\item{meta_data}{A string with the path to the meta data file}
 }
 \value{
 A \link[tibble]{tibble} with the contents of the m-Path file.
