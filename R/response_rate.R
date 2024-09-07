@@ -1,0 +1,60 @@
+#' Calculate response rate
+#'
+#' @param data data frame with data
+#' @param valid_col name of the column that stores whether the beep was answered or not
+#' @param participant_col name of the column that stores the participant id (or equivalent)
+#' @param time_col optional: name of the column that stores the time of the beep
+#' @param period_start optional: period start
+#' @param period_end optional: period end
+#'
+#' @return a data frame with the response rate for each participant, and the number of beeps used to calculate the response rate
+#' @export
+#'
+#' @examples
+response_rate <- function(data,
+                          valid_col,
+                          participant_col,
+                          time_col = NULL,
+                          period_start = NULL, # specify period start (optional)
+                          period_end = NULL){ # specify period end (optional)
+
+  valid_col <- enquo(valid_col)
+  time_col <- enquo(time_col)
+  participant_col <- enquo(participant_col)
+
+  # If period/start or end are specified, then time_col should also be specified, check:
+  if((!is.null(period_start) | !is.null(period_end)) & is.null(quo_name(time_col))){
+    stop("It seems like the period start or end are specified but the time column is not. Please specify a time colum.")
+  }
+
+  # filter if a period start was specified
+  if(!is.null(period_start)){
+    data <- data %>%
+      filter(as.Date(!!time_col) >= as.Date(period_start))
+  }
+
+  # filter if a period end was specified
+  if(!is.null(period_end)){
+    data <- data %>%
+      filter(as.Date(!!time_col) <= as.Date(period_end))
+  }
+
+  # Print information on the period of the response rates.
+  if (!is.null(period_start) & !is.null(period_end)) {
+    message(paste("Calculating response rates between date:", period_start, "and", period_end))
+  } else if (!is.null(period_start)) {
+    message(paste("Calculating response rates starting from date:", period_start))
+  } else if (!is.null(period_end)) {
+    message(paste("Calculating response rates up to date:", period_end))
+  } else {
+    message("Calculating response rates for the entire duration of the study.")
+  }
+
+  # grouping by the variable 'participant_col' and calculating number of beeps and response rate
+  response_rate <- data %>%
+    group_by(!!participant_col) %>%
+    summarize(number_of_beeps = n(),
+              response_rate = sum(!!valid_col) / n())
+
+  return(response_rate)
+}

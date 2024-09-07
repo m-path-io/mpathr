@@ -21,7 +21,9 @@ Imports:
     dplyr,
     lifecycle,
     readr,
-    tidyr
+    tidyr,
+    ggplot2,
+    jsonlite
 Language: en-US
 URL: https://github.com/m-path-io/mpathr
 BugReports: https://github.com/m-path-io/mpathr/issues

@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_mpath.R
 \name{read_mpath}
 \alias{read_mpath}
-\title{Read an m-Path file into a tibble}
+\title{Read m-Path data}
 \usage{
 read_mpath(file, meta_data)
 }
@@ -16,12 +16,21 @@ A \link[tibble]{tibble} with the contents of the m-Path file.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-This function reads an m-Path file into a tibble.
+This function reads an m-Path file into a dataframe.
 }
 \details{
 Some more details...
 }
 \examples{
 # TODO: create working examples
-read_mpath("path/to/file")
+# read_mpath("path/to/file")
+example_data_path <- system.file("extdata", "example_data.csv",
+                            package = "mpathr", mustWork = TRUE)
+
+example_meta_path <- system.file("extdata", "example_meta.csv",
+                            package = "mpathr", mustWork = TRUE)
+
+data <- read_mpath(file = example_data_path,
+        meta_data = example_meta_path)
+
 }
