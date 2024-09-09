@@ -12,7 +12,7 @@ response_rate_per_day <- function(data,
     # get day number from date
     group_by(!!participant_col) %>%
     mutate(day1 = as.Date(min(!!time_col, na.rm=TRUE)), # get the first day of the participant
-           day = difftime(as.Date(!!time_col), day1, units="days") + 1) %>% # calculate the number of days since the first beep was sent
+           day = as.integer(difftime(as.Date(!!time_col), day1, units="days") + 1)) %>% # calculate the number of days since the first beep was sent
     select(-day1) %>% # unselect the column day1, we just created it to calculate day_n, but we don't want it in our data
     ungroup() %>%
     group_by(day, !!participant_col) %>% # group by day and participant
@@ -36,6 +36,17 @@ response_rate_per_day <- function(data,
 #' @export
 #'
 #' @examples
+#' # load data
+#' data(example_data_preprocessed)
+#'
+#' # make plot with plot_response_rates
+#' plot_response_rates(data = example_data_preprocessed,
+#' time_col = sent,
+#' participant_col = participant,
+#' valid_col = answered)
+#' # since this function returns a ggplot object, it can be customized even further, see ggplot2 documentation for more information
+#'
+#'
 plot_response_rates <- function(data,
                                 valid_col,
                                 participant_col,  # specify participant variable

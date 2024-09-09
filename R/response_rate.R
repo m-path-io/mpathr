@@ -11,6 +11,35 @@
 #' @export
 #'
 #' @examples
+#' # Example 1: calculate response rates for the whole study
+#' # Get example data
+#' data(example_data_preprocessed)
+#'
+#' # Calculate response rate for each participant
+#' # In this case, we don't specify a time column and the start or end of a period, so the response rates will be based on all the participant's data
+#' response_rate <- response_rate(data = example_data_preprocessed,
+#'                                valid_col = answered,
+#'                                participant_col = participant)
+#'
+#' # Get participants with a response rate below 0.5
+#' response_rate[response_rate$response_rate < 0.5,]
+#'
+#'
+#' # Example 2: calculate response rates for a specific time period
+#' data(example_data_preprocessed)
+#'
+#' # Calculate response rate for each participant, but only for beeps between the 15th and 31st of May 2024
+#' response_rate <- response_rate(data = example_data_preprocessed,
+#'                                valid_col = answered,
+#'                                participant_col = participant,
+#'                                time_col = sent,
+#'                                period_start = '2024-05-15',
+#'                                period_end = '2024-05-31')
+#'
+#' # Get participants with a response rate below 0.5
+#' response_rate[response_rate$response_rate < 0.5,]
+#'
+
 response_rate <- function(data,
                           valid_col,
                           participant_col,

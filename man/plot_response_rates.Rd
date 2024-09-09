@@ -22,3 +22,15 @@ a ggplot object with the response rate per day (x axis) and participant (color)
 This function returns a ggplot object with the response rate per day (x axis) and participant (color).
 Note that instead of using calendar dates, the function returns a plot grouped by the day inside the study for the participant.
 }
+\examples{
+# load data
+data(example_data_preprocessed)
+
+# make plot with plot_response_rates
+plot_response_rates(data = example_data_preprocessed,
+time_col = sent,
+participant_col = participant,
+valid_col = answered)
++ theme_bw()
+
+}

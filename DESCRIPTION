@@ -2,11 +2,12 @@ Package: mpathr
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Merijn", "Mestdagh", , "merijn.mestdagh@kuleuven.be", role = c("aut"),
+    person("Merijn", "Mestdagh", email = "merijn.mestdagh@kuleuven.be", role = c("aut"),
            comment = c(ORCID = "0000-0001-5077-861X")),
-    person("Koen", "Niemeijer", , "koen.niemeijer@kuleuven.be", role = c("aut", "cre"),
+    person("Koen", "Niemeijer", email = "koen.niemeijer@kuleuven.be", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0816-534X"))
   )
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAWElEQVR42mNgGPTAxsZmJsVqQApgmGw1yApwKcQiT7phRBuCzzCSDSHGMKINIeDNmWQlA2IigKJwIssQkHdINgxfmBBtGDEBS3KCxBc7pMQgMYE5c/AXPwAwSX4lV3pTWwAAAABJRU5ErkJggg==
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -22,8 +23,12 @@ Imports:
     lifecycle,
     readr,
     tidyr,
+    rlang,
     ggplot2,
     jsonlite
 Language: en-US
 URL: https://github.com/m-path-io/mpathr
 BugReports: https://github.com/m-path-io/mpathr/issues
+Depends: 
+    R (>= 2.10)
+LazyData: true

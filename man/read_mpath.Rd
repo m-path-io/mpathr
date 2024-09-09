@@ -22,8 +22,9 @@ This function reads an m-Path file into a dataframe.
 Some more details...
 }
 \examples{
-# TODO: create working examples
-# read_mpath("path/to/file")
+
+# the files for the example data and meta data are inside the package
+# the following lines find the path to the files inside the package and save them
 example_data_path <- system.file("extdata", "example_data.csv",
                             package = "mpathr", mustWork = TRUE)
 
