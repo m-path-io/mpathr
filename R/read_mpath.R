@@ -24,7 +24,9 @@
 #' This function reads an m-Path file into a dataframe.
 #'
 #' @details
-#' Some more details...
+#' Note that this function has been tested only with the version v.1.1. of the meta_data.
+#' So it is adviced to use that version of the meta_data file
+#' (you can change the meta data version under "export version" in "Export data").
 #'
 #' @param file A string with the path to the m-Path file
 #' @param meta_data A string with the path to the meta data file
@@ -76,13 +78,13 @@ read_mpath <- function(
 
   # Create mapping from the values in meta_data$typeAnswer (that specifies how that column should be saved)
   # to the values that readr::read_delim expects (i, c, ?...)
-  type_mapping <- c("int" = "i",
+  type_mapping <- c("int" = "n",
                     "string" = "c",
-                    "double" = "d",
+                    "double" = "n",
                     "stringList" = "c", # the lists are read as strings and then converted to their respective types
                     "intList" = "c",
                     "doubleList" = "c",
-                    "basic" = "?") # ? means that R will guess what type this is
+                    "basic" = "i")
 
   # Create new column in meta_data with the type that readr::read_delim expects
   meta_data$type <- type_mapping[as.character(meta_data$typeAnswer)]
@@ -108,7 +110,8 @@ read_mpath <- function(
     timeStampStart = 'i',
     timeStampStop = 'i',
     originalTimeStampSent = 'i',
-    timeZoneOffset = 'i'
+    timeZoneOffset = 'i',
+    deltaUTC = 'n'
   )
 
   # Read first line to get names of columns (to be saved in col_names)
@@ -159,7 +162,7 @@ read_mpath <- function(
   # Integer cols:
   for(column in int_list_cols){ # for each column in num_list_cols
     data[[column]] <- lapply(data[[column]], function(x){ # and for each cell in that column
-      as.integer(unlist(strsplit(x, ","))) # separate each element by comma and unlist it (this results in a vector) and then convert this vector to numeric
+      as.numeric(unlist(strsplit(x, ","))) # separate each element by comma and unlist it (this results in a vector) and then convert this vector to numeric
     })
   }
 

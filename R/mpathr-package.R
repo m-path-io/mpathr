@@ -16,6 +16,7 @@
 #' @importFrom dplyr ungroup
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 ggplot
+#' @importFrom jsonlite fromJSON
 #' @importFrom lifecycle deprecated
 #' @importFrom rlang enquo
 #' @importFrom rlang quo_name

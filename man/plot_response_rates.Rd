@@ -31,6 +31,7 @@ plot_response_rates(data = example_data_preprocessed,
 time_col = sent,
 participant_col = participant,
 valid_col = answered)
-+ theme_bw()
+# since this function returns a ggplot object, it can be customized even further, see ggplot2 documentation for more information
+
 
 }
