@@ -19,7 +19,9 @@ A \link[tibble]{tibble} with the contents of the m-Path file.
 This function reads an m-Path file into a dataframe.
 }
 \details{
-Some more details...
+Note that this function has been tested only with the version v.1.1. of the meta_data.
+So it is adviced to use that version of the meta_data file
+(you can change the meta data version under "export version" in "Export data").
 }
 \examples{
 

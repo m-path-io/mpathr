@@ -1,8 +1,8 @@
 
 library(testthat)
 
-basic_path <- "tests/testdata/test_basic.csv"
-meta_path <- "tests/testdata/test_meta.csv"
+basic_path <- "../testdata/test_basic.csv"
+meta_path <- "../testdata/test_meta.csv"
 
 # basic_path <- '../read_mpath/data_testrequirements/basic.csv'
 # meta_path <- "../read_mpath/data_testrequirements/meta.csv"

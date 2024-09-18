@@ -4,8 +4,6 @@
 #' Hard coded locale to be used for m-Path data
 #'
 #' @returns Return a locale to be used in [readr::read_delim()] or friends.
-#' @examples
-#' mpath_locale
 #' @keywords internal
 .mpath_locale <- readr::locale(
   date_names = "en",
@@ -38,14 +36,14 @@
 #'
 #' # the files for the example data and meta data are inside the package
 #' # the following lines find the path to the files inside the package and save them
-#' example_data_path <- system.file("extdata", "example_data.csv",
-#'                             package = "mpathr", mustWork = TRUE)
+#' #example_data_path <- system.file("extdata", "example_data.csv",
+#' #                             package = "mpathr", mustWork = TRUE)
 #'
-#' example_meta_path <- system.file("extdata", "example_meta.csv",
-#'                             package = "mpathr", mustWork = TRUE)
+#' #example_meta_path <- system.file("extdata", "example_meta.csv",
+#' #                           package = "mpathr", mustWork = TRUE)
 #'
-#' data <- read_mpath(file = example_data_path,
-#'         meta_data = example_meta_path)
+#' #data <- read_mpath(file = example_data_path,
+#' #         meta_data = example_meta_path)
 #'
 read_mpath <- function(
     file,
