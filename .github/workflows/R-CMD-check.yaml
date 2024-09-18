@@ -63,6 +63,7 @@ jobs:
             any::testthat
             any::knitr
             any::rmarkdown
+            any::spelling
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
