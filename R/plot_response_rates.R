@@ -37,10 +37,10 @@ response_rate_per_day <- function(data,
 #'
 #' @examples
 #' # load data
-#' data(example_data_preprocessed)
+#' data(example_data)
 #'
 #' # make plot with plot_response_rates
-#' plot_response_rates(data = example_data_preprocessed,
+#' plot_response_rates(data = example_data,
 #' time_col = sent,
 #' participant_col = participant,
 #' valid_col = answered)

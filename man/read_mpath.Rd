@@ -27,13 +27,13 @@ So it is adviced to use that version of the meta_data file
 
 # the files for the example data and meta data are inside the package
 # the following lines find the path to the files inside the package and save them
-example_data_path <- system.file("extdata", "example_data.csv",
-                            package = "mpathr", mustWork = TRUE)
+#example_data_path <- system.file("extdata", "example_data.csv",
+#                             package = "mpathr", mustWork = TRUE)
 
-example_meta_path <- system.file("extdata", "example_meta.csv",
-                            package = "mpathr", mustWork = TRUE)
+#example_meta_path <- system.file("extdata", "example_meta.csv",
+#                           package = "mpathr", mustWork = TRUE)
 
-data <- read_mpath(file = example_data_path,
-        meta_data = example_meta_path)
+#data <- read_mpath(file = example_data_path,
+#         meta_data = example_meta_path)
 
 }
