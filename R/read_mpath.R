@@ -78,7 +78,7 @@ read_mpath <- function(
 
   # Create mapping from the values in meta_data$typeAnswer (that specifies how that column should be saved)
   # to the values that readr::read_delim expects (i, c, ?...)
-  type_mapping <- c("int" = "n",
+  type_mapping <- c("int" = "i",
                     "string" = "c",
                     "double" = "n",
                     "stringList" = "c", # the lists are read as strings and then converted to their respective types
@@ -149,7 +149,8 @@ read_mpath <- function(
     show_col_types = FALSE,
     col_names = TRUE,
     col_types = c(type_char) # this line specifies types
-    )
+    )|>
+    suppressWarnings()
 
   # handle the list columns
   ## First, storing which columns have to contain lists:
@@ -160,9 +161,17 @@ read_mpath <- function(
 
   # convert the cells to lists
   # Integer cols:
-  for(column in int_list_cols){ # for each column in num_list_cols
-    data[[column]] <- lapply(data[[column]], function(x){ # and for each cell in that column
-      as.numeric(unlist(strsplit(x, ","))) # separate each element by comma and unlist it (this results in a vector) and then convert this vector to numeric
+  for(column in int_list_cols){  # for each column in int_list_cols
+    data[[column]] <- lapply(data[[column]], function(x){  # for each cell in that column
+      tryCatch({
+        # Attempt to split, unlist, and convert to integers
+        as.integer(unlist(strsplit(x, ",")))
+      }, warning = function(w) {
+        # Check for 'NAs introduced by coercion to integer range'
+        if(grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
+          return(as.numeric(unlist(strsplit(x, ",")))) # if the warning is there, switch to as.numeric so no data is lost
+        }
+      })
     })
   }
 
@@ -184,7 +193,7 @@ read_mpath <- function(
     })
   }
 
-  # for string cols: we can get rid of the \" using fromJSON !
+  # for string cols: we can get rid of the \" using fromJSON
   for(column in string_cols){
     data[[column]] <- sapply(data[[column]], function(cell) {
       if (!is.na(cell)) {
@@ -195,7 +204,24 @@ read_mpath <- function(
     })
   }
 
-  #JORDAN: you can return in a message the variables that were present in the metadata but not in the data (if any)
+  # Catch problems
+  problems <- readr::problems(data)
+  problems <- problems[!grepl("columns", problems$expected), ]
+
+  if (nrow(problems) > 0) {
+    problems <- paste0(
+      "In row ", problems$row,
+      " column ", problems$col,
+      ", expected ", problems$expected,
+      " but got ", problems$actual, "."
+    )
+    names(problems) <- rep("x", length(problems))
+
+    cli_warn(c(
+      "There were problems when reading in the meta data:",
+      problems
+    ))
+  }
 
   return(data) # return data
 }
