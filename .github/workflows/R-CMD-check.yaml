@@ -65,10 +65,6 @@ jobs:
             any::rmarkdown
           needs: check
           
-      - name: Install suggested packages
-        run: |
-          install.packages(c('spelling', 'other-suggested-package'), dependencies = TRUE)
-
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
