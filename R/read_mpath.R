@@ -140,15 +140,14 @@ read_mpath <- function(
   type_char <- paste0(type_char, collapse = "") # put the types in one single string (that's how read_delim expects them)
 
   # Read data
-  data <- readr::read_delim(
+  suppressWarnings(data <- readr::read_delim(
     file = file,
     delim = ";",
     locale = .mpath_locale,
     show_col_types = FALSE,
     col_names = TRUE,
     col_types = c(type_char) # this line specifies types
-  ) |>
-    suppressWarnings()
+  ))
 
   # handle the list columns
   ## First, storing which columns have to contain lists:
@@ -248,15 +247,14 @@ read_meta_data <- function(
     ))
   }
 
-  meta_data <- readr::read_delim(
+  suppressWarnings(meta_data <- readr::read_delim(
     file = meta_data,
     delim = ";",
     locale = .mpath_locale,
     show_col_types = FALSE,
     col_names = TRUE,
     col_types = c("cccclll")
-  ) |>
-    suppressWarnings()
+  ))
 
   # Check for warnings with reading in the meta data. There should be none
   problems <- readr::problems(meta_data)
