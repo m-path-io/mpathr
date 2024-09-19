@@ -38,7 +38,9 @@ Calculate response rate
 data(example_data)
 
 # Calculate response rate for each participant
-# In this case, we don't specify a time column and the start or end of a period, so the response rates will be based on all the participant's data
+
+# We don't specify time_col, period_start or period_end.
+# Response rates will be based on all the participant's data
 response_rate <- response_rate(data = example_data,
                                valid_col = answered,
                                participant_col = participant)
@@ -50,7 +52,7 @@ response_rate[response_rate$response_rate < 0.5,]
 # Example 2: calculate response rates for a specific time period
 data(example_data)
 
-# Calculate response rate for each participant, but only for beeps between the 15th and 31st of May 2024
+# Calculate response rate for each participant (for beeps between the 15th and 31st of May 2024)
 response_rate <- response_rate(data = example_data,
                                valid_col = answered,
                                participant_col = participant,

@@ -8,6 +8,10 @@ response_rate_per_day <- function(data,
   participant_col <- enquo(participant_col)
   valid_col <- enquo(valid_col)
 
+  # Defining day and day1 before, to avoid 'no visible binding for global variable'
+  day = NULL
+  day1 = NULL
+
   data_plot <- data %>%
     # get day number from date
     group_by(!!participant_col) %>%
@@ -16,7 +20,8 @@ response_rate_per_day <- function(data,
     select(-day1) %>% # unselect the column day1, we just created it to calculate day_n, but we don't want it in our data
     ungroup() %>%
     group_by(day, !!participant_col) %>% # group by day and participant
-    summarize(response_rate = sum(!!valid_col) / n()) # calculate response rate
+    summarize(response_rate = sum(!!valid_col) / n()) %>% # calculate response rate
+    ungroup()
 
   return(data_plot)
 }
@@ -44,8 +49,7 @@ response_rate_per_day <- function(data,
 #' time_col = sent,
 #' participant_col = participant,
 #' valid_col = answered)
-#' # since this function returns a ggplot object, it can be customized even further, see ggplot2 documentation for more information
-#'
+#' # The resulting ggplot object can be formatted using ggplot2 functions (see ggplot2 documentation).
 #'
 plot_response_rates <- function(data,
                                 valid_col,
@@ -65,19 +69,19 @@ plot_response_rates <- function(data,
 
   # turn participant into a factor for plotting purposes
   data_plot <- data_plot %>%
-    mutate(participant := as.factor(!!participant_col)) # make participant_col a factor and assign to 'participant' (for plotting purposes)
+    mutate(participant = as.factor(!!participant_col)) # make participant_col a factor and assign to 'participant' (for plotting purposes)
 
   # get n of participants for plotting purposes
   num_unique <- data_plot %>%
     pull(!!participant_col) %>%
     unique() %>% length()
 
-  ggplot(data_plot, aes(x = day,
-                        y = response_rate,
-                        group = participant,
-                        color = participant,
-                        shape = participant,
-                        linetype = participant)) +
+  ggplot(data_plot, aes_string(x = 'day',
+                        y = 'response_rate',
+                        group = 'participant',
+                        color = 'participant',
+                        shape = 'participant',
+                        linetype = 'participant')) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
     ggplot2::scale_linetype_manual(values = rep(c("solid", "dashed", "dotted"), length.out = num_unique)) +

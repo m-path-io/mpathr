@@ -31,7 +31,6 @@ plot_response_rates(data = example_data,
 time_col = sent,
 participant_col = participant,
 valid_col = answered)
-# since this function returns a ggplot object, it can be customized even further, see ggplot2 documentation for more information
-
+# The resulting ggplot object can be formatted using ggplot2 functions (see ggplot2 documentation).
 
 }

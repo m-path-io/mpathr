@@ -147,7 +147,7 @@ read_mpath <- function(
     show_col_types = FALSE,
     col_names = TRUE,
     col_types = c(type_char) # this line specifies types
-    )|>
+  ) |>
     suppressWarnings()
 
   # handle the list columns

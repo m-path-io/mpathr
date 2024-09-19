@@ -15,6 +15,7 @@
 #' @importFrom dplyr summarize
 #' @importFrom dplyr ungroup
 #' @importFrom ggplot2 aes
+#' @importFrom ggplot2 aes_string
 #' @importFrom ggplot2 ggplot
 #' @importFrom jsonlite fromJSON
 #' @importFrom lifecycle deprecated
