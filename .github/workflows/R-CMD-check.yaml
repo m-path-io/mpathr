@@ -8,7 +8,7 @@
 # dependency.
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, lara_changes]
   pull_request:
     branches: [main, master]
 
