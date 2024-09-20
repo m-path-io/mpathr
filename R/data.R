@@ -1,6 +1,6 @@
 #' Example m-path data
 #'
-#' Contains the pre-processed example data for an m-path research study.
+#' Contains the preprocessed example data for an m-path research study.
 #'
 #' Each row corresponds to one beep sent during the study.
 #'

@@ -20,20 +20,37 @@ This function reads an m-Path file into a dataframe.
 }
 \details{
 Note that this function has been tested only with the version v.1.1. of the meta_data.
-So it is adviced to use that version of the meta_data file
+So it is advised to use that version of the meta_data file
 (you can change the meta data version under "export version" in "Export data").
 }
 \examples{
 
-# the files for the example data and meta data are inside the package
-# the following lines find the path to the files inside the package and save them
-#example_data_path <- system.file("extdata", "example_data.csv",
-#                             package = "mpathr", mustWork = TRUE)
+# Create small dataset to import using read_mpath
+data <- data.frame(connectionId = 228325,
+          code = '',
+          alias = '"example_alias"',
+          questionListName = '"example_questions"',
+          timeStampSent = 1722427206,
+          consent_yesno = 1,
+          slider_happy = 99)
 
-#example_meta_path <- system.file("extdata", "example_meta.csv",
-#                           package = "mpathr", mustWork = TRUE)
+# Create metadata for the dataset above
+meta_data <- data.frame(columnName = c('"consent_yesno"', '"slider_happy"'),
+          fullQuestion = c('"Do you consent to participate in this study?"',
+                 '"How happy are you right now?"'),
+          typeQuestion = c('"yesno"', '"sliderNegPos"'),
+          typeAnswer = c('"int"', '"int"'),
+          fullQuestion_mixed = c(0,0),
+          typeQuestion_mixed =  c(0,0),
+          typeAnswer_mixed =  c(0,0))
 
-#data <- read_mpath(file = example_data_path,
-#         meta_data = example_meta_path)
+# write both datasets as .csv files
+write.table(data, '../data.csv', row.names = FALSE, sep = ';', quote = FALSE)
+write.table(meta_data, '../meta_data.csv', row.names = FALSE, sep = ';', quote = FALSE)
+
+# Read in the data
+read_mpath(file = '../data.csv',
+      meta_data = '../meta_data.csv')
+
 
 }

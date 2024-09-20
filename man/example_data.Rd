@@ -60,7 +60,7 @@ A data frame with 1980 rows and 47 columns:
 example_data
 }
 \description{
-Contains the pre-processed example data for an m-path research study.
+Contains the preprocessed example data for an m-path research study.
 }
 \details{
 Each row corresponds to one beep sent during the study.
