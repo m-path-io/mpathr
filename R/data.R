@@ -1,6 +1,14 @@
 #' Example m-path data
 #'
+#' @description
+#'
 #' Contains the preprocessed example data for an m-path research study.
+#'
+#' In the study, 20 participants completed 11 beeps over the course of 10 days.
+#' The study consisted of:
+#'  - An intake questionnaire, which participants answered before the study started.
+#'  - A main questionnaire (10 times per day), where participants answered questions about their emotions and context at the time.
+#'  - An evening questionnaire (once, at the end of the day), about their emotions and activities throughout the day.
 #'
 #' Each row corresponds to one beep sent during the study.
 #'

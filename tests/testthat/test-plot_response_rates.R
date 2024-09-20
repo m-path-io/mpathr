@@ -22,6 +22,7 @@ data <- data.frame(
               each = beeps_per_day, n_participants)
 )
 
+# while it is not an exported function, plot_Response_rates depends on this function returning the correct df
 test_that('response_rate_per_day works correctly', {
   data_plot <- mpathr:::response_rate_per_day(
     data = data,
