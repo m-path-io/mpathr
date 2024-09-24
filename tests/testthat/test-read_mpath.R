@@ -1,28 +1,26 @@
-
-library(testthat)
-
-basic_path <- "../testdata/test_basic.csv"
-meta_path <- "../testdata/test_meta.csv"
+basic_path <- system.file("testdata", "test_basic.csv", package = "mpathr")
+meta_path <- system.file("testdata", "test_meta.csv", package = "mpathr")
 
 # basic_path <- '../read_mpath/data_testrequirements/basic.csv'
 # meta_path <- "../read_mpath/data_testrequirements/meta.csv"
 
-data <- read_mpath(file = basic_path,
-                   meta_data = meta_path)
+data <- read_mpath(
+  file = basic_path,
+  meta_data = meta_path
+)
 
-# Data is read without warnings or errors:
-
-test_that("Data is exported with no warnings", {
-
-  expect_no_warning(read_mpath(file = basic_path,
-                     meta_data = meta_path))
+test_that("Data is imported with no warnings", {
+  expect_no_warning(
+    read_mpath(
+      file = basic_path,
+      meta_data = meta_path
+    )
+  )
 })
 
 # Check that the data is being read as a dataframe
 test_that("Data is a dataframe", {
-
   expect_true(is.data.frame(data))
-
 })
 
 # Check that the correct number of rows and columns are read

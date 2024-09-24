@@ -11,11 +11,13 @@ data <- data.frame(
 
 test_that('no period end or start', {
 
-  expect_message(result <- response_rate(data = data,
-                          valid_col = valid,
-                          participant_col = participant,
-                          time_col = dates),
-                 "Calculating response rates for the entire duration of the study.")
+  result <- expect_message(
+    response_rate(
+      data = data,
+      valid_col = valid,
+      participant_col = participant,
+      time_col = dates),
+    "Calculating response rates for the entire duration of the study.")
 
   # is it a df?
   expect_true(is.data.frame(result))
@@ -29,11 +31,15 @@ test_that('no period end or start', {
 test_that('period_end and start but no time variable', {
 
   # we just expect an error
-  expect_error(response_rate(data = data,
-                             valid_col = valid,
-                             participant_col = participant,
-                             period_start = '2023-01-01',
-                             period_end = '2023-01-05'))
+  expect_error(
+    response_rate(
+      data = data,
+      valid_col = valid,
+      participant_col = participant,
+      period_start = '2023-01-01',
+      period_end = '2023-01-05'
+    )
+  )
 })
 
 test_that('only period_end given', {

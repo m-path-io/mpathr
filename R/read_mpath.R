@@ -73,10 +73,13 @@ read_mpath <- function(
   # give warnings from last 3 cols of metadata
   rows_with_changes <- meta_data[rowSums(meta_data[, c('fullQuestion_mixed', 'typeQuestion_mixed', 'typeAnswer_mixed')]) > 0, ]
 
-  # instead of just typing the name of the error, I will print these other messages (easier to read):
-  labels_to_changes <- c(fullQuestion_mixed = 'Question text',
-                         typeQuestion_mixed = 'Type of question',
-                         typeAnswer_mixed = 'Type of answer')
+  # instead of just typing the name of the error, I will print these other messages (easier to
+  # read):
+  labels_to_changes <- c(
+    fullQuestion_mixed = 'Question text',
+    typeQuestion_mixed = 'Type of question',
+    typeAnswer_mixed = 'Type of answer'
+  )
 
   if (nrow(rows_with_changes) > 0){ # if there are any rows with changes
     for (i in 1:nrow(rows_with_changes)){
@@ -93,13 +96,15 @@ read_mpath <- function(
 
   # Create mapping from the values in meta_data$typeAnswer (that specifies how that column should be saved)
   # to the values that readr::read_delim expects (i, c, ?...)
-  type_mapping <- c("int" = "i",
-                    "string" = "c",
-                    "double" = "n",
-                    "stringList" = "c", # the lists are read as strings and then converted to their respective types
-                    "intList" = "c",
-                    "doubleList" = "c",
-                    "basic" = "i")
+  type_mapping <- c(
+    "int" = "i",
+    "string" = "c",
+    "double" = "n",
+    "stringList" = "c", # the lists are read as strings and then converted to their respective types
+    "intList" = "c",
+    "doubleList" = "c",
+    "basic" = "i"
+  )
 
   # Create new column in meta_data with the type that readr::read_delim expects
   meta_data$type <- type_mapping[as.character(meta_data$typeAnswer)]
@@ -244,12 +249,12 @@ read_mpath <- function(
 #'
 #' Internal function to read the meta data file for an m-Path file.
 #'
-#' @param file A string with the path to the meta data file
+#' @param meta_data A string with the path to the meta data file
 #'
 #' @return A \link[tibble]{tibble} with the contents of the meta data file.
 #' @keywords internal
 read_meta_data <- function(
-    meta_data # JORDAN: Change variable to meta_data to be coherent with the rest of the code
+    meta_data
 ) {
   # Check if the first character of the file is not a quote. If it is, this is likely because it was
   # openend in Excel and saved again. This is because Excel will treat it as a string which means
@@ -264,7 +269,7 @@ read_meta_data <- function(
     ))
   }
 
-  suppressWarnings(meta_data <- readr::read_delim(
+  meta_data <- suppressWarnings(readr::read_delim(
     file = meta_data,
     delim = ";",
     locale = .mpath_locale,

@@ -4,26 +4,32 @@
 \name{mpathr-package}
 \alias{mpathr}
 \alias{mpathr-package}
-\title{mpathr: What the Package Does (One Line, Title Case)}
+\title{mpathr: Easily Handling Data from the ‘m-Path’ Platform}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Handling data from the m-path platform.
+Provides tools for importing and cleaning Experience Sampling Method (ESM) data collected via the 'm-Path' platform. Designed for researchers working with real-time questionnaire data, it simplifies the process of reading, organizing, and preparing ESM datasets for analysis. Functions include raw data handling, format standardization, and basic data checks. Additionally, convenience functions allow for quick exploration and understanding of key trends in the data.
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://m-path.io}
   \item \url{https://github.com/m-path-io/mpathr}
   \item Report bugs at \url{https://github.com/m-path-io/mpathr/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Koen Niemeijer \email{koen.niemeijer@kuleuven.be} (\href{https://orcid.org/0000-0002-0816-534X}{ORCID})
+\strong{Maintainer}: Merijn Mestdagh \email{merijn.mestdagh@m-path.io} (\href{https://orcid.org/0000-0001-5077-861X}{ORCID})
 
 Authors:
 \itemize{
-  \item Merijn Mestdagh \email{merijn.mestdagh@kuleuven.be} (\href{https://orcid.org/0000-0001-5077-861X}{ORCID})
+  \item Koen Niemeijer \email{koen.niemeijer@kuleuven.be} (\href{https://orcid.org/0000-0002-0816-534X}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item m-Path [copyright holder]
 }
 
 }

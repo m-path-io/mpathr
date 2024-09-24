@@ -1,3 +1,3 @@
-# mpathr 0.0.0.9999 (development version)
+# mpathr 1.0.0
 
 * Initial CRAN submission.

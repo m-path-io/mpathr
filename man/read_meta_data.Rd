@@ -7,7 +7,7 @@
 read_meta_data(meta_data)
 }
 \arguments{
-\item{file}{A string with the path to the meta data file}
+\item{meta_data}{A string with the path to the meta data file}
 }
 \value{
 A \link[tibble]{tibble} with the contents of the meta data file.

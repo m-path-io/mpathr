@@ -1,5 +1,3 @@
-library(testthat)
-
 # n_participants <- 5
 # beeps_per_day <- 10
 # n_days <- 5
@@ -24,7 +22,7 @@ data <- data.frame(
 
 # while it is not an exported function, plot_Response_rates depends on this function returning the correct df
 test_that('response_rate_per_day works correctly', {
-  data_plot <- mpathr:::response_rate_per_day(
+  data_plot <- response_rate_per_day(
     data = data,
     valid_col = valid,
     participant_col = participant,
