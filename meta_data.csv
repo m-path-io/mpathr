@@ -1,0 +1,3 @@
+columnName;fullQuestion;typeQuestion;typeAnswer;fullQuestion_mixed;typeQuestion_mixed;typeAnswer_mixed
+"consent_yesno";"Do you consent to participate in this study?";"yesno";"int";0;0;0
+"slider_happy";"How happy are you right now?";"sliderNegPos";"int";0;0;0
