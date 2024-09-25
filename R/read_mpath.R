@@ -1,7 +1,7 @@
 #' Locale to be used for m-Path data
 #'
 #' @description
-#' Hard coded locale to be used for m-Path data
+#' Hard coded locale to be used for 'm-Path' data
 #'
 #' @returns Return a locale to be used in [readr::read_delim()] or friends.
 #' @keywords internal
@@ -19,17 +19,17 @@
 #' Read m-Path data
 #'
 #' @description `r lifecycle::badge("experimental")`
-#' This function reads an m-Path file into a dataframe.
+#' This function reads an 'm-Path' file into a dataframe.
 #'
 #' @details
-#' Note that this function has been tested only with the version v.1.1. of the meta_data.
-#' So it is advised to use that version of the meta_data file
-#' (you can change the meta data version under "export version" in "Export data").
+#' Note that this function has been tested with the meta data version v.1.1.
+#' So it is advised to use that version of the meta data.
+#' (In 'm-Path', change the version in 'Export data' > "export version").
 #'
 #' @param file A string with the path to the m-Path file
 #' @param meta_data A string with the path to the meta data file
 #'
-#' @return A \link[tibble]{tibble} with the contents of the m-Path file.
+#' @return A \link[tibble]{tibble} with the 'm-Path' data.
 #' @export
 #'
 #' @examples
@@ -49,33 +49,14 @@ read_mpath <- function(
   # Read in the meta data
   meta_data <- read_meta_data(meta_data)
 
-  # give warnings from last 3 cols of metadata
-  rows_with_changes <- meta_data[rowSums(meta_data[, c('fullQuestion_mixed', 'typeQuestion_mixed', 'typeAnswer_mixed')]) > 0, ]
+  warn_meta_changes(meta_data)
 
-  # instead of just typing the name of the error, I will print these other messages (easier to read):
-  labels_to_changes <- c(fullQuestion_mixed = 'Question text',
-                         typeQuestion_mixed = 'Type of question',
-                         typeAnswer_mixed = 'Type of answer')
-
-  if (nrow(rows_with_changes) > 0){ # if there are any rows with changes
-    for (i in 1:nrow(rows_with_changes)){
-      row <- rows_with_changes[i,] # get the row
-
-      changes_made <- colnames(row)[row[,]==TRUE] # gets the name of the columns that contain TRUE
-
-      # print warning message
-      # in case there's more than 1 change in one row, outputting the different changes separated by a comma
-      warning(paste('In question', row['columnName'], 'the following has changed:',
-                    paste(labels_to_changes[changes_made], collapse = ", ")))
-    }
-  }
-
-  # Create mapping from the values in meta_data$typeAnswer (that specifies how that column should be saved)
+  # Create mapping from the values in meta_data$typeAnswer
   # to the values that readr::read_delim expects (i, c, ?...)
   type_mapping <- c("int" = "i",
                     "string" = "c",
                     "double" = "n",
-                    "stringList" = "c", # the lists are read as strings and then converted to their respective types
+                    "stringList" = "c", # lists are read as chars first
                     "intList" = "c",
                     "doubleList" = "c",
                     "basic" = "i")
@@ -83,10 +64,7 @@ read_mpath <- function(
   # Create new column in meta_data with the type that readr::read_delim expects
   meta_data$type <- type_mapping[as.character(meta_data$typeAnswer)]
 
-  # Special case for appUsage intList row: it should be read as a double List, even though it is an intList
-  meta_data[meta_data$typeQuestion == 'appUsage' & meta_data$typeAnswer == 'intList',]$typeAnswer <- 'doubleList'
-
-  meta_data[is.na(meta_data$type), "type"] <- "?" # if type is NA (because it is not in type_mapping), then R will guess the type
+  meta_data[is.na(meta_data$type), "type"] <- "?" # guess type
 
   cols_not_in_metadata <- c(
     connectionId = 'i',
@@ -111,29 +89,24 @@ read_mpath <- function(
   # Read first line to get names of columns (to be saved in col_names)
   col_names <- readr::read_lines(file, n_max = 1)
 
-  # but first: check if file was opened by Excel #JORDAN: As this check is reused in two functions, maybe create a new function for it
-  first_char <- substr(col_names, 1, 1)
-  if (first_char == '"') {
-    cli_abort(c(
-      "The file was saved and changed by Excel.",
-      i = "Please download the file from the m-Path website again."
-    ))
-  }
+  # but first: check if file was opened by Excel
+  check_first_char(col_names)
 
   col_names <- strsplit(col_names, ";")[[1]] # returns list of col_names
 
-  # Get the type of each column in file to specify column types in readr::read_delim
-  type_char <- sapply(col_names, function(col_name) {
-    if (col_name %in% meta_data$columnName) { # if col is present in meta data
-      return(meta_data$type[meta_data$columnName == col_name]) # then return type as specified in meta_data$type
+  # Get the type of each column in file to specify column types in read_delim
+  type_char <- vapply(col_names, function(col_name) {
+    if (col_name %in% meta_data$columnName) {
+      return(meta_data$type[meta_data$columnName == col_name])
     } else if (col_name %in% names(cols_not_in_metadata)){
       return(cols_not_in_metadata[col_name])
     } else {
       return("?") # otherwise, R will guess the type
     }
-  })
+  }, FUN.VALUE = character(1))
 
-  type_char <- paste0(type_char, collapse = "") # put the types in one single string (that's how read_delim expects them)
+  # put the types in one single string (that's how read_delim expects them)
+  type_char <- paste0(type_char, collapse = "")
 
   # Read data
   suppressWarnings(data <- readr::read_delim(
@@ -147,44 +120,32 @@ read_mpath <- function(
 
   # handle the list columns
   ## First, storing which columns have to contain lists:
-  int_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'intList']
-  num_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'doubleList']
+
+  # int_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'intList']
+  num_list_cols <- meta_data$columnName[meta_data$typeAnswer %in%
+                                          c('doubleList', 'intList')]
+
   string_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'stringList']
   string_cols <- meta_data$columnName[meta_data$typeAnswer == 'string']
 
-  # # convert the cells to lists
-  # # Integer cols:
-  data_int_lists <- data %>%
-    mutate(across(all_of(int_list_cols), ~ lapply(., function(x) {
-      tryCatch({
-        # Attempt to split, unlist, and convert to integers
-        as.integer(unlist(strsplit(.x, ",")))
-      }, warning = function(w) {
-        # Handle warning about 'NAs introduced by coercion to integer range'
-        if (grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
-          return(as.numeric(unlist(strsplit(.x, ",")))) # Fallback to numeric if integer fails
-        }
-      })
-    })))
-
-  data[,int_list_cols] <- data_int_lists[,int_list_cols]
-
+  # convert the cells to lists
   # Numeric:
   data_num_lists <- data %>%
-    mutate(across(all_of(num_list_cols), ~ I(lapply(.x, function(x) as.numeric(strsplit(x, ",")[[1]])))))
+    mutate(across(all_of(num_list_cols), ~ lapply(.x, function(x)
+      as.numeric(unlist(strsplit(x, ","))))))
 
   data[,num_list_cols] <- data_num_lists[,num_list_cols]
 
   # for string lists: now reading them as json lists
   data_string_list_cols <- data %>%
     mutate(across(all_of(string_list_cols),
-                  ~ I(lapply(., function(cell) {
+                  ~ lapply(., function(cell) {
                     if (!is.na(cell)) {
                       fromJSON(paste0('[', cell, ']'))
                     } else {
                       cell  # Return NA as is
                     }
-                  }))
+                  })
     ))
 
   data[,string_list_cols] <- data_string_list_cols[,string_list_cols]
@@ -192,13 +153,14 @@ read_mpath <- function(
   # for string cols: we can get rid of the \" using fromJSON
   data_strings <- data %>%
     mutate(across(all_of(string_cols),
-                  ~ sapply(.x, function(cell) {
+                  ~ vapply(.x, function(cell) {
                     if (!is.na(cell)) {
                       unlist(fromJSON(cell))
                     } else {
                       cell  # Return NA as is
                     }
-                  })
+                  },
+                  FUN.VALUE = character(1))
     ))
 
   data[,string_cols] <- data_strings[,string_cols]
@@ -234,20 +196,11 @@ read_mpath <- function(
 #' @return A \link[tibble]{tibble} with the contents of the meta data file.
 #' @keywords internal
 read_meta_data <- function(
-    meta_data # JORDAN: Change variable to meta_data to be coherent with the rest of the code
+    meta_data
 ) {
-  # Check if the first character of the file is not a quote. If it is, this is likely because it was
-  # openend in Excel and saved again. This is because Excel will treat it as a string which means
-  # adding quotes both to the entire line as well as inner quotes for the values. This will cause
-  # issues when reading in the data and should be avoided.
   first_char <- readr::read_lines(meta_data, n_max = 1)
-  first_char <- substr(first_char, 1, 1)
-  if (first_char == '"') {
-    cli_abort(c(
-      "The file was saved and changed by a Excel.",
-      i = "Please download the file from the m-Path website again."
-    ))
-  }
+
+  check_first_char(first_char)
 
   suppressWarnings(meta_data <- readr::read_delim(
     file = meta_data,
@@ -276,4 +229,44 @@ read_meta_data <- function(
   }
 
   meta_data
+}
+
+# Checks if data was opened by excel and gives an error if it was.
+check_first_char <- function(first_line) {
+  first_char <- substr(first_line, 1, 1)
+  if (first_char == '"') {
+    cli_abort(c(
+      "The file was saved and changed by Excel.",
+      i = "Please download the file from the m-Path website again."
+    ))
+  }
+}
+
+# Reads meta_data and gives warning about changes made
+warn_meta_changes <- function(meta_data){
+
+  # give warnings from last 3 cols of metadata
+  rows_with_changes <- meta_data[rowSums(meta_data[, c('fullQuestion_mixed',
+                                                  'typeQuestion_mixed',
+                                                  'typeAnswer_mixed')]) > 0, ]
+
+  # print these messages depending on what was changed
+  labels_to_changes <- c(fullQuestion_mixed = 'Question text',
+                         typeQuestion_mixed = 'Type of question',
+                         typeAnswer_mixed = 'Type of answer')
+
+  if (nrow(rows_with_changes) > 0){ # if there are any rows with changes
+    for (i in seq_len(nrow(rows_with_changes))){
+      row <- rows_with_changes[i,] # get the row
+
+      # gets the name of the columns that contain TRUE
+      changes_made <- colnames(row)[row[,]==TRUE]
+
+      # print warning message
+      # if >1 change, printing the different changes separated by a comma
+      warning(paste('In question', row['columnName'],
+                    'the following has changed:',
+                    paste(labels_to_changes[changes_made], collapse = ", ")))
+    }
+  }
 }

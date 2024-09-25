@@ -12,16 +12,16 @@ read_mpath(file, meta_data)
 \item{meta_data}{A string with the path to the meta data file}
 }
 \value{
-A \link[tibble]{tibble} with the contents of the m-Path file.
+A \link[tibble]{tibble} with the 'm-Path' data.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-This function reads an m-Path file into a dataframe.
+This function reads an 'm-Path' file into a dataframe.
 }
 \details{
-Note that this function has been tested only with the version v.1.1. of the meta_data.
-So it is advised to use that version of the meta_data file
-(you can change the meta data version under "export version" in "Export data").
+Note that this function has been tested with the meta data version v.1.1.
+So it is advised to use that version of the meta data.
+(In 'm-Path', change the version in 'Export data' > "export version").
 }
 \examples{
 

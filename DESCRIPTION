@@ -9,12 +9,14 @@ Authors@R: c(
     person("Lara", "Navarrete", email = "larann901@gmail.com", role = c("aut"))
   )
 data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAWElEQVR42mNgGPTAxsZmJsVqQApgmGw1yApwKcQiT7phRBuCzzCSDSHGMKINIeDNmWQlA2IigKJwIssQkHdINgxfmBBtGDEBS3KCxBc7pMQgMYE5c/AXPwAwSX4lV3pTWwAAAABJRU5ErkJggg==
-Description: The goal of 'mpathr' is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the m-Path platform.
+Description: The goal of `mpathr` is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the 'm-Path' platform (<https://m-path.io/landing/>).
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Suggests: 
+    knitr,
+    rmarkdown,
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
@@ -34,3 +36,4 @@ BugReports: https://github.com/m-path-io/mpathr/issues
 Depends: 
     R (>= 2.10)
 LazyData: true
+VignetteBuilder: knitr

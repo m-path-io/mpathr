@@ -13,6 +13,7 @@
 #' @importFrom dplyr pull
 #' @importFrom dplyr select
 #' @importFrom dplyr summarize
+#' @importFrom dplyr sym
 #' @importFrom dplyr ungroup
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 aes_string

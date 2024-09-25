@@ -27,6 +27,6 @@ test_that("Function returns all the example files", {
 test_that("Function returns a message if the file is not found", {
 
   expect_message(mpath_example('file_not_there.csv'),
-                 'File not found. Make sure that you wrote the file name correctly.')
+          'File not found. Make sure that you wrote the file name correctly.')
 
 })

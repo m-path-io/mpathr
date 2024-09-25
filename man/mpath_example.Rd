@@ -7,7 +7,8 @@
 mpath_example(file = NULL)
 }
 \arguments{
-\item{file}{the name of the file to be accessed. If NULL, the function will return a list of all the example files.}
+\item{file}{the name of the file to be accessed. If \code{NULL}, the function
+will return a list of all the example files.}
 }
 \value{
 a character string with the path to the m-Path example data
@@ -19,7 +20,8 @@ This function provides an easy way to access the m-Path example files.
 
 # Example 1: access 'example_basic.csv' data
 
-mpath_example('example_basic.csv') # returns the full path to the file 'example_basic.csv'
+mpath_example('example_basic.csv') # returns the full path to the file
+'example_basic.csv'
 
 # Example 2: list all the example files
 

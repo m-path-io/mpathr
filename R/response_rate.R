@@ -1,13 +1,16 @@
 #' Calculate response rate
 #'
 #' @param data data frame with data
-#' @param valid_col name of the column that stores whether the beep was answered or not
-#' @param participant_col name of the column that stores the participant id (or equivalent)
+#' @param valid_col name of the column that stores whether the beep
+#' was answered or not
+#' @param participant_col name of the column that stores the participant id
+#' (or equivalent)
 #' @param time_col optional: name of the column that stores the time of the beep
 #' @param period_start optional: period start
 #' @param period_end optional: period end
 #'
-#' @return a data frame with the response rate for each participant, and the number of beeps used to calculate the response rate
+#' @return a data frame with the response rate for each participant,
+#' and the number of beeps used to calculate the response rate
 #' @export
 #'
 #' @examples
@@ -23,23 +26,16 @@
 #'                                valid_col = answered,
 #'                                participant_col = participant)
 #'
-#' # Get participants with a response rate below 0.5
-#' response_rate[response_rate$response_rate < 0.5,]
-#'
-#'
 #' # Example 2: calculate response rates for a specific time period
 #' data(example_data)
 #'
-#' # Calculate response rate for each participant (for beeps between the 15th and 31st of May 2024)
+#' # Calculate response rate for each participant between dates
 #' response_rate <- response_rate(data = example_data,
 #'                                valid_col = answered,
 #'                                participant_col = participant,
 #'                                time_col = sent,
 #'                                period_start = '2024-05-15',
 #'                                period_end = '2024-05-31')
-#'
-#' # Get participants with a response rate below 0.5
-#' response_rate[response_rate$response_rate < 0.5,]
 #'
 
 response_rate <- function(data,
@@ -50,12 +46,18 @@ response_rate <- function(data,
                           period_end = NULL){ # specify period end (optional)
 
   valid_col <- enquo(valid_col)
-  time_col <- enquo(time_col)
   participant_col <- enquo(participant_col)
 
-  # If period/start or end are specified, then time_col should also be specified, check:
-  if((!is.null(period_start) | !is.null(period_end)) & is.null(quo_name(time_col))){
-    stop("It seems like the period start or end are specified but the time column is not. Please specify a time colum.")
+  if(!missing(time_col)){
+    time_col <- enquo(time_col)
+   }
+
+  # If period_start or end are specified, time_col should also be specified
+  if(!is.null(period_start) | !is.null(period_end)){
+    if(missing(time_col)){
+      stop("It seems like the period start or end are specified
+           but the time column is not. Please specify a time colum.")
+    }
   }
 
   # filter if a period start was specified
@@ -72,16 +74,19 @@ response_rate <- function(data,
 
   # Print information on the period of the response rates.
   if (!is.null(period_start) & !is.null(period_end)) {
-    message(paste("Calculating response rates between date:", period_start, "and", period_end))
+    message(paste("Calculating response rates between date:",
+                  period_start, "and", period_end))
   } else if (!is.null(period_start)) {
-    message(paste("Calculating response rates starting from date:", period_start))
+    message(paste("Calculating response rates starting from date:",
+                  period_start))
   } else if (!is.null(period_end)) {
-    message(paste("Calculating response rates up to date:", period_end))
+    message(paste("Calculating response rates up to date:",
+                  period_end))
   } else {
     message("Calculating response rates for the entire duration of the study.")
   }
 
-  # grouping by the variable 'participant_col' and calculating number of beeps and response rate
+  # grouping by 'participant_col' and calculating n of beeps and response rate
   response_rate <- data %>%
     group_by(!!participant_col) %>%
     summarize(number_of_beeps = n(),

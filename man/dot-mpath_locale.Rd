@@ -14,6 +14,6 @@ An object of class \code{locale} of length 7.
 Return a locale to be used in \code{\link[readr:read_delim]{readr::read_delim()}} or friends.
 }
 \description{
-Hard coded locale to be used for m-Path data
+Hard coded locale to be used for 'm-Path' data
 }
 \keyword{internal}

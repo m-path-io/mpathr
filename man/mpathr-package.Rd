@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-The goal of 'mpathr' is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the m-Path platform.
+The goal of `mpathr` is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the 'm-Path' platform (\url{https://m-path.io/landing/}).
 }
 \seealso{
 Useful links:

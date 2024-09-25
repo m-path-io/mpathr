@@ -4,9 +4,6 @@ library(testthat)
 basic_path <- "../testdata/test_basic.csv"
 meta_path <- "../testdata/test_meta.csv"
 
-# basic_path <- '../read_mpath/data_testrequirements/basic.csv'
-# meta_path <- "../read_mpath/data_testrequirements/meta.csv"
-
 data <- read_mpath(file = basic_path,
                    meta_data = meta_path)
 
@@ -43,20 +40,22 @@ test_that("Data has correct dimensions", {
 # Data types are correct
 
 # Check data types of first columns
-# (columns that are not in the meta data, and they should always be read in the same way)
+# (columns that are not in the meta data)
 test_that("First columns are read correctly", {
 
   # character columns
-  expect_true(all(sapply(data[, c('legacyCode',
+  expect_true(all(vapply(data[, c('legacyCode',
                                   'code',
                                   'alias',
                                   'initials',
                                   'accountCode',
                                   'questionListName')],
-                         is.character)))
+                         is.character,
+                         FUN.VALUE = logical(1)
+                         )))
 
   # integer columns
-  expect_true(all(sapply(data[, c('connectionId',
+  expect_true(all(vapply(data[, c('connectionId',
                                   'scheduledBeepId',
                                   'sentBeepId',
                                   'reminderForOriginalSentBeepId',
@@ -67,8 +66,9 @@ test_that("First columns are read correctly", {
                                   'originalTimeStampSent',
                                   'timeZoneOffset'
                                   )],
-                         is.integer)))
-
+                         is.integer,
+                         FUN.VALUE = logical(1)
+                         )))
 
   expect_true(is.numeric(data$deltaUTC))
 
@@ -83,7 +83,9 @@ test_that("String columns are read correctly", {
   meta_string_cols <- meta[meta$typeAnswer == 'string',]$columnName
 
   # Checks that all those columns are strings
-  expect_true(all(sapply(data[, meta_string_cols], is.character)))
+  expect_true(all(vapply(data[, meta_string_cols],
+                         is.character,
+                         FUN.VALUE = logical(1)))) # specify for vapply()
 
 })
 
@@ -91,7 +93,9 @@ test_that("Integer columns are read correctly", {
 
   meta_int_cols <- meta[meta$typeAnswer == 'int',]$columnName
 
-  expect_true(all(sapply(data[, meta_int_cols], is.integer)))
+  expect_true(all(vapply(data[, meta_int_cols],
+                         is.integer,
+                         FUN.VALUE = logical(1))))
 
 })
 
@@ -99,16 +103,22 @@ test_that("Numeric columns aer read correcly", {
 
   meta_numeric_cols <- meta[meta$typeAnswer == 'double',]$columnName
 
-  expect_true(all(sapply(data[, meta_numeric_cols], is.numeric)))
+  expect_true(all(vapply(data[, meta_numeric_cols],
+                         is.numeric,
+                         FUN.VALUE = logical(1))))
 })
 
 # List columns
 # Get list columns from meta data
-meta_list_cols <- meta[meta$typeAnswer %in% c('intList', 'doubleList', 'stringList'),]$columnName
+meta_list_cols <- meta[meta$typeAnswer %in% c('intList',
+                                              'doubleList',
+                                              'stringList'),]$columnName
 
 test_that('List columns are being read as lists', {
 
-  expect_true(all(sapply(data[, meta_list_cols], is.list)))
+  expect_true(all(vapply(data[, meta_list_cols],
+                         is.list,
+                         FUN.VALUE = logical(1))))
 })
 
 # Check that each list is being read as its respective type
@@ -117,11 +127,18 @@ test_that('List columns are being read as the correct type', {
   for (col in meta_list_cols) {
     col_type <- meta[meta$columnName == col,]$typeAnswer
     if (col_type == 'intList') {
-      expect_true(all(sapply(data[[col]], function(x) is.integer(x) || is.numeric(x))))
+      expect_true(all(vapply(data[[col]],
+                             function(x) is.integer(x) || is.numeric(x),
+                             FUN.VALUE = logical(1))))
     } else if (col == 'doubleList') {
-      expect_true(all(sapply(data[[col]], is.numeric)))
+      expect_true(all(vapply(data[[col]],
+                             is.numeric),
+                      FUN.VALUE = logical(1)))
     } else if (col == 'stringList') {
-      expect_true(all(sapply(data[[col]], is.character)))
+      expect_true(all(vapply(data[[col]],
+                             is.character,
+                             FUN.VALUE = logical(1))))
     }
   }
 })
+
