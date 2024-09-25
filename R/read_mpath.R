@@ -177,26 +177,22 @@ read_mpath <- function(
   # # Integer cols:
   data_int_lists <- data %>%
     mutate(across(all_of(int_list_cols), ~ lapply(., function(x) {
-      if (!is.na(x)) {
-        tryCatch({
-          # Attempt to split, unlist, and convert to integers
-          as.integer(unlist(strsplit(x, ",")))
-        }, warning = function(w) {
-          # Handle warning about 'NAs introduced by coercion to integer range'
-          if (grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
-            return(as.numeric(unlist(strsplit(x, ",")))) # Fallback to numeric if integer fails
-          }
-        })
-      } else {
-        x  # Return NA or empty cells as-is
-      }
+      tryCatch({
+        # Attempt to split, unlist, and convert to integers
+        as.integer(unlist(strsplit(.x, ",")))
+      }, warning = function(w) {
+        # Handle warning about 'NAs introduced by coercion to integer range'
+        if (grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
+          return(as.numeric(unlist(strsplit(.x, ",")))) # Fallback to numeric if integer fails
+        }
+      })
     })))
 
   data[,int_list_cols] <- data_int_lists[,int_list_cols]
 
   # Numeric:
   data_num_lists <- data %>%
-    mutate(across(all_of(num_list_cols), ~ I(lapply(., ~ as.numeric(strsplit(.x, ",")[[1]])))))
+    mutate(across(all_of(num_list_cols), ~ I(lapply(.x, function(x) as.numeric(strsplit(x, ",")[[1]])))))
 
   data[,num_list_cols] <- data_num_lists[,num_list_cols]
 
@@ -217,13 +213,13 @@ read_mpath <- function(
   # for string cols: we can get rid of the \" using fromJSON
   data_strings <- data %>%
     mutate(across(all_of(string_cols),
-                  ~ I(lapply(., function(cell) {
+                  ~ sapply(.x, function(cell) {
                     if (!is.na(cell)) {
                       unlist(fromJSON(cell))
                     } else {
                       cell  # Return NA as is
                     }
-                  }))
+                  })
     ))
 
   data[,string_cols] <- data_strings[,string_cols]
