@@ -4,11 +4,11 @@
 \name{mpathr-package}
 \alias{mpathr}
 \alias{mpathr-package}
-\title{mpathr: What the Package Does (One Line, Title Case)}
+\title{mpathr: Handling Data From The M-Path Platform}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Handling data from the m-path platform.
+The goal of 'mpathr' is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the m-Path platform.
 }
 \seealso{
 Useful links:
@@ -19,11 +19,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Koen Niemeijer \email{koen.niemeijer@kuleuven.be} (\href{https://orcid.org/0000-0002-0816-534X}{ORCID})
+\strong{Maintainer}: Merijn Mestdagh \email{merijn.mestdagh@m-path.io} (\href{https://orcid.org/0000-0001-5077-861X}{ORCID})
 
 Authors:
 \itemize{
-  \item Merijn Mestdagh \email{merijn.mestdagh@kuleuven.be} (\href{https://orcid.org/0000-0001-5077-861X}{ORCID})
+  \item Koen Niemeijer \email{koen.niemeijer@kuleuven.be} (\href{https://orcid.org/0000-0002-0816-534X}{ORCID})
+  \item Lara Navarrete \email{larann901@gmail.com}
 }
 
 }

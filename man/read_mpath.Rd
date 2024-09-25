@@ -25,32 +25,11 @@ So it is advised to use that version of the meta_data file
 }
 \examples{
 
-# Create small dataset to import using read_mpath
-data <- data.frame(connectionId = 228325,
-          code = '',
-          alias = '"example_alias"',
-          questionListName = '"example_questions"',
-          timeStampSent = 1722427206,
-          consent_yesno = 1,
-          slider_happy = 99)
+# We can use the function mpath_examples to get the path to the example data
+basic_path <- mpath_example(file ='example_basic.csv')
+meta_path <- mpath_example('example_meta.csv')
 
-# Create metadata for the dataset above
-meta_data <- data.frame(columnName = c('"consent_yesno"', '"slider_happy"'),
-          fullQuestion = c('"Do you consent to participate in this study?"',
-                 '"How happy are you right now?"'),
-          typeQuestion = c('"yesno"', '"sliderNegPos"'),
-          typeAnswer = c('"int"', '"int"'),
-          fullQuestion_mixed = c(0,0),
-          typeQuestion_mixed =  c(0,0),
-          typeAnswer_mixed =  c(0,0))
-
-# write both datasets as .csv files
-write.table(data, '../data.csv', row.names = FALSE, sep = ';', quote = FALSE)
-write.table(meta_data, '../meta_data.csv', row.names = FALSE, sep = ';', quote = FALSE)
-
-# Read in the data
-read_mpath(file = '../data.csv',
-      meta_data = '../meta_data.csv')
-
+data <- read_mpath(file = basic_path,
+                meta_data = meta_path)
 
 }

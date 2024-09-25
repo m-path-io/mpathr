@@ -18,10 +18,12 @@
 #' @importFrom ggplot2 aes_string
 #' @importFrom ggplot2 ggplot
 #' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite stream_in
 #' @importFrom lifecycle deprecated
 #' @importFrom rlang enquo
 #' @importFrom rlang quo_name
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr pivot_wider
+#' @importFrom tidyselect all_of
 ## usethis namespace: end
 NULL

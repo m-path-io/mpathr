@@ -1,0 +1,82 @@
+﻿columnName;fullQuestion;typeQuestion;typeAnswer;fullQuestion_mixed;typeQuestion_mixed;typeAnswer_mixed
+consent_yesno_yesno;" <p style=""font-size: 20px;""><strong>I have read and understood the information in this document and I have received an answer to my questions regarding this research. I give my consent to participate.</strong></p>";yesno;int;0;0;0
+gender_multipleChoice_index;" <p style=""font-size: 30px;""> What is your gender? </p>";multipleChoice;int;0;0;0
+gender_multipleChoice_string;" <p style=""font-size: 30px;""> What is your gender? </p>";multipleChoice;string;0;0;0
+gender_multipleChoice_likert;" <p style=""font-size: 30px;""> What is your gender? </p>";multipleChoice;int;0;0;0
+age_open;" <p style=""font-size: 30px;""> How old are you? </p>";open;string;0;0;0
+SWLS_intro_basic;SWLS_intro;basic;basic;0;0;0
+SWLS_1_multipleChoice_index;" <p style=""font-size: 30px;"">In most ways, my life is close to ideal.</p>";multipleChoice;int;0;0;0
+SWLS_1_multipleChoice_string;" <p style=""font-size: 30px;"">In most ways, my life is close to ideal.</p>";multipleChoice;string;0;0;0
+SWLS_1_multipleChoice_likert;" <p style=""font-size: 30px;"">In most ways, my life is close to ideal.</p>";multipleChoice;int;0;0;0
+SWLS_2_multipleChoice_index;" <p style=""font-size: 30px;"">The conditions of my life are excellent.</p>";multipleChoice;int;0;0;0
+SWLS_2_multipleChoice_string;" <p style=""font-size: 30px;"">The conditions of my life are excellent.</p>";multipleChoice;string;0;0;0
+SWLS_2_multipleChoice_likert;" <p style=""font-size: 30px;"">The conditions of my life are excellent.</p>";multipleChoice;int;0;0;0
+SWLS_3_multipleChoice_index;" <p style=""font-size: 30px;"">I am satisfied with my life.</p>";multipleChoice;int;0;0;0
+SWLS_3_multipleChoice_string;" <p style=""font-size: 30px;"">I am satisfied with my life.</p>";multipleChoice;string;0;0;0
+SWLS_3_multipleChoice_likert;" <p style=""font-size: 30px;"">I am satisfied with my life.</p>";multipleChoice;int;0;0;0
+SWLS_4_multipleChoice_index;" <p style=""font-size: 30px;"">So far I have gotten the important things I want in life.</p>";multipleChoice;int;0;0;0
+SWLS_4_multipleChoice_string;" <p style=""font-size: 30px;"">So far I have gotten the important things I want in life.</p>";multipleChoice;string;0;0;0
+SWLS_4_multipleChoice_likert;" <p style=""font-size: 30px;"">So far I have gotten the important things I want in life.</p>";multipleChoice;int;0;0;0
+SWLS_5_multipleChoice_index;" <p style=""font-size: 30px;"">If I could live my life over, I would change almost nothing.</p>";multipleChoice;int;0;0;0
+SWLS_5_multipleChoice_string;" <p style=""font-size: 30px;"">If I could live my life over, I would change almost nothing.</p>";multipleChoice;string;0;0;0
+SWLS_5_multipleChoice_likert;" <p style=""font-size: 30px;"">If I could live my life over, I would change almost nothing.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_intro_basic;BFI_neuroticism_intro;basic;basic;0;0;0
+BFI_neuroticism_4_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is depressed, blue</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_4_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is depressed, blue</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_4_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is depressed, blue</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_9R_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is relaxed, handles stress well</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_9R_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is relaxed, handles stress well</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_9R_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is relaxed, handles stress well</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_14_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>can be tense</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_14_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>can be tense</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_14_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>can be tense</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_19_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>worries a lot</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_19_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>worries a lot</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_19_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>worries a lot</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_24R_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is emotionally stable, not easily upset</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_24R_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is emotionally stable, not easily upset</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_24R_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>is emotionally stable, not easily upset</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_29_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>can be moody</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_29_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>can be moody</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_29_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>can be moody</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_34R_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>remains calm in tense situations</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_34R_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>remains calm in tense situations</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_34R_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>remains calm in tense situations</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_39_multipleChoice_index;" <p style=""font-size: 30px;"">I see myself as someone who <strong>gets nervous easily</strong>.</p>";multipleChoice;int;0;0;0
+BFI_neuroticism_39_multipleChoice_string;" <p style=""font-size: 30px;"">I see myself as someone who <strong>gets nervous easily</strong>.</p>";multipleChoice;string;0;0;0
+BFI_neuroticism_39_multipleChoice_likert;" <p style=""font-size: 30px;"">I see myself as someone who <strong>gets nervous easily</strong>.</p>";multipleChoice;int;0;0;0
+intake_outro_basic;intake_outro;basic;basic;0;0;0
+slider_happy_sliderNeutralPos;"<p style=""font-size: 30px;"">How <strong>happy</strong> do you feel right now?</p>";sliderNeutralPos;int;0;0;0
+slider_sad_sliderNegPos;"<p style=""font-size: 30px;"">How <strong>sad</strong> do you feel right now?</p>";sliderNegPos;int;0;0;0
+slider_angry_sliderNegPos;"<p style=""font-size: 30px;"">How <strong>angry</strong> do you feel right now?</p>";sliderNegPos;int;0;0;0
+slider_relaxed_sliderNegPos;"<p style=""font-size: 30px;"">How <strong>relaxed</strong> do you feel right now?</p>";sliderNegPos;int;0;0;0
+slider_anxious_sliderNegPos;"<p style=""font-size: 30px;"">How <strong>anxious</strong> do you feel right now?</p>";sliderNegPos;int;0;0;0
+slider_energetic_sliderNegPos;"<p style=""font-size: 30px;"">How <strong>energetic</strong> do you feel right now?</p>";sliderNegPos;int;0;0;0
+slider_tired_sliderNegPos;"<p style=""font-size: 30px;"">How <strong>tired</strong> do you feel right now?</p>";sliderNegPos;int;0;0;0
+context_location_multipleChoice_index;"<p style=""font-size: 30px;"">Where are you now?</p>";multipleChoice;int;0;0;0
+context_location_multipleChoice_string;"<p style=""font-size: 30px;"">Where are you now?</p>";multipleChoice;string;0;0;0
+context_location_multipleChoice_likert;"<p style=""font-size: 30px;"">Where are you now?</p>";multipleChoice;int;0;0;0
+context_company_multipleChoice_index;"<p style=""font-size: 30px;"">With whom are you right now?</p>";multipleChoice;int;0;0;0
+context_company_multipleChoice_string;"<p style=""font-size: 30px;"">With whom are you right now?</p>";multipleChoice;string;0;0;0
+context_company_multipleChoice_likert;"<p style=""font-size: 30px;"">With whom are you right now?</p>";multipleChoice;int;0;0;0
+context_activity_multipleChoice_index;"<p style=""font-size: 30px;"">What are you doing now?</p>";multipleChoice;int;0;0;0
+context_activity_multipleChoice_string;"<p style=""font-size: 30px;"">What are you doing now?</p>";multipleChoice;string;0;0;0
+context_activity_multipleChoice_likert;"<p style=""font-size: 30px;"">What are you doing now?</p>";multipleChoice;int;0;0;0
+step_count_steps;;steps;int;0;0;0
+main_outro_basic;main_outro;basic;basic;0;0;0
+evening_questionnaire_warning_basic;evening_questionnaire_warning;basic;basic;0;0;0
+evening_slider_happy_sliderNeutralPos;"<p style=""font-size: 30px;""> In general, how <strong>happy</strong> did you feel <strong>today</strong>?</p>";sliderNeutralPos;int;0;0;0
+evening_slider_sad_sliderNegPos;"<p style=""font-size: 30px;""> In general, how <strong>sad</strong> did you feel <strong>today</strong>?</p>";sliderNegPos;int;0;0;0
+evening_slider_angry_sliderNegPos;"<p style=""font-size: 30px;"">In general, how <strong>angry</strong> did you feel <strong>today</strong>?</p>";sliderNegPos;int;0;0;0
+evening_slider_relaxed_sliderNegPos;"<p style=""font-size: 30px;"">In general, how <strong>relaxed</strong> did you feel <strong>today</strong>?</p>";sliderNegPos;int;0;0;0
+evening_slider_anxious_sliderNegPos;"<p style=""font-size: 30px;"">In general, how <strong>anxious</strong> did you feel <strong>today</strong>?</p>";sliderNegPos;int;0;0;0
+evening_slider_energetic_sliderNegPos;"<p style=""font-size: 30px;"">In general, how <strong>energetic</strong> did you feel <strong>today</strong>?</p>";sliderNegPos;int;0;0;0
+evening_slider_tired_sliderNegPos;"<p style=""font-size: 30px;"">In general, how <strong>tired</strong> did you feel <strong>today</strong>?</p>";sliderNegPos;int;0;0;0
+evening_yesno_stressful_yesno;"<p style=""font-size: 30px;"">Did something <strong>stressful</strong> happen <strong>today</strong>?</p>";yesno;int;0;0;0
+evening_yesno_positive_yesno;"<p style=""font-size: 30px;"">Did something <strong>positive</strong> happen <strong>today</strong>?</p>";yesno;int;0;0;0
+positive_description_open;"<p style=""font-size: 30px;"">Could you briefly explain the positive thing that happened?</p>";open;string;0;0;0
+evening_context_activity_multipleChoice_index;"<p style=""font-size: 30px;"">What activities did you do <strong>today</strong>?</p>";multipleChoice;intList;0;0;0
+evening_context_activity_multipleChoice_string;"<p style=""font-size: 30px;"">What activities did you do <strong>today</strong>?</p>";multipleChoice;stringList;0;0;0
+evening_context_activity_multipleChoice_likert;"<p style=""font-size: 30px;"">What activities did you do <strong>today</strong>?</p>";multipleChoice;intList;0;0;0
+evening_outro_basic;evening_outro;basic;basic;0;0;0
+stressful_description_open;"<p style=""font-size: 30px;"">Could you briefly explain the stressful thing that happened?</p>";open;string;0;0;0
