@@ -9,6 +9,8 @@ meta_data <- data.frame(columnName = c('"consent_yesno"', '"slider_happy"'),
           typeQuestion_mixed =  c(0,0),
           typeAnswer_mixed =  c(0,0))
 
+meta_data$columnName <- as.character(meta_data$columnName)
+
 test_that('no warnings are printed', {
 
  expect_no_warning(mpathr:::warn_meta_changes(meta_data))
