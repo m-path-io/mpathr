@@ -21,7 +21,7 @@ test_that('specific warnings are printed for consent_yesno and
           slider_happy question changes', {
 
 
-  meta_data[meta_data$columnName == '"consent_yesno"',
+  meta_data[meta_data$columnName == '\"consent_yesno\"',
             c('fullQuestion_mixed', 'typeQuestion_mixed')] <- 1
 
   # Test for the specific warning related to the "consent_yesno" question
@@ -30,9 +30,9 @@ test_that('specific warnings are printed for consent_yesno and
     regexp = "In question \"consent_yesno\" the following has changed: Question text, Type of question"
   )
 
-  meta_data[meta_data$columnName == '"consent_yesno"',
+  meta_data[meta_data$columnName == '\"consent_yesno\"',
             c('fullQuestion_mixed', 'typeQuestion_mixed')] <- 0
-  meta_data[meta_data$columnName == '"slider_happy"', 'typeAnswer_mixed'] <- 1
+  meta_data[meta_data$columnName == '\"slider_happy\"', 'typeAnswer_mixed'] <- 1
 
   # Test for the specific warning related to the "slider_happy" question
   expect_warning(
