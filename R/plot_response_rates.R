@@ -8,7 +8,7 @@ response_rate_per_day <- function(data,
   participant_col <- enquo(participant_col)
   valid_col <- enquo(valid_col)
 
-  # Defining day and day1 before, to avoid 'no visible binding for global variable'
+  # Defining day and day1 before, to avoid warning 'no visible binding for global variable'
   day = NULL
   day1 = NULL
 

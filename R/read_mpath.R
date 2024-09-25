@@ -170,53 +170,63 @@ read_mpath <- function(
   ## First, storing which columns have to contain lists:
   int_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'intList']
   num_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'doubleList']
-  string_list_cols <- as.list(meta_data$columnName[meta_data$typeAnswer == 'stringList'])
-  string_cols <- as.list(meta_data$columnName[meta_data$typeAnswer == 'string'])
+  string_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'stringList']
+  string_cols <- meta_data$columnName[meta_data$typeAnswer == 'string']
 
-  # convert the cells to lists
-  # Integer cols:
-  for(column in int_list_cols){  # for each column in int_list_cols
-    data[[column]] <- lapply(data[[column]], function(x){  # for each cell in that column
-      tryCatch({
-        # Attempt to split, unlist, and convert to integers
-        as.integer(unlist(strsplit(x, ",")))
-      }, warning = function(w) {
-        # Check for 'NAs introduced by coercion to integer range'
-        if(grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
-          return(as.numeric(unlist(strsplit(x, ",")))) # if the warning is there, switch to as.numeric so no data is lost
-        }
-      })
-    })
-  }
+  # # convert the cells to lists
+  # # Integer cols:
+  data_int_lists <- data %>%
+    mutate(across(all_of(int_list_cols), ~ lapply(., function(x) {
+      if (!is.na(x)) {
+        tryCatch({
+          # Attempt to split, unlist, and convert to integers
+          as.integer(unlist(strsplit(x, ",")))
+        }, warning = function(w) {
+          # Handle warning about 'NAs introduced by coercion to integer range'
+          if (grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
+            return(as.numeric(unlist(strsplit(x, ",")))) # Fallback to numeric if integer fails
+          }
+        })
+      } else {
+        x  # Return NA or empty cells as-is
+      }
+    })))
+
+  data[,int_list_cols] <- data_int_lists[,int_list_cols]
 
   # Numeric:
-  for(column in num_list_cols){ # for each column in num_list_cols
-    data[[column]] <- lapply(data[[column]], function(x){ # and for each cell in that column
-      as.numeric(unlist(strsplit(x, ","))) # separate each element by comma and unlist it (this results in a vector) and then convert this vector to numeric
-    })
-  }
+  data_num_lists <- data %>%
+    mutate(across(all_of(num_list_cols), ~ I(lapply(., ~ as.numeric(strsplit(.x, ",")[[1]])))))
+
+  data[,num_list_cols] <- data_num_lists[,num_list_cols]
 
   # for string lists: now reading them as json lists
-  for(column in string_list_cols){
-    data[[column]] <- lapply(data[[column]], function(cell) {
-      if (!is.na(cell)) {
-        fromJSON(paste0('[', cell, ']'))
-      } else {
-        cell  # Return NA as is
-      }
-    })
-  }
+  data_string_list_cols <- data %>%
+    mutate(across(all_of(string_list_cols),
+                  ~ I(lapply(., function(cell) {
+                    if (!is.na(cell)) {
+                      fromJSON(paste0('[', cell, ']'))
+                    } else {
+                      cell  # Return NA as is
+                    }
+                  }))
+    ))
+
+  data[,string_list_cols] <- data_string_list_cols[,string_list_cols]
 
   # for string cols: we can get rid of the \" using fromJSON
-  for(column in string_cols){
-    data[[column]] <- sapply(data[[column]], function(cell) {
-      if (!is.na(cell)) {
-        unlist(fromJSON(cell))
-      } else {
-        cell  # Return NA as is
-      }
-    })
-  }
+  data_strings <- data %>%
+    mutate(across(all_of(string_cols),
+                  ~ I(lapply(., function(cell) {
+                    if (!is.na(cell)) {
+                      unlist(fromJSON(cell))
+                    } else {
+                      cell  # Return NA as is
+                    }
+                  }))
+    ))
+
+  data[,string_cols] <- data_strings[,string_cols]
 
   # Catch problems
   problems <- readr::problems(data)
@@ -232,8 +242,8 @@ read_mpath <- function(
     names(problems) <- rep("x", length(problems))
 
     cli_warn(c(
-      "There were problems when reading in the meta data:",
-      problems
+      "There were problems when reading in the data:",
+      problems[1:100]
     ))
   }
 
