@@ -126,19 +126,70 @@ test_that('List columns are being read as lists', {
 test_that('List columns are being read as the correct type', {
   for (col in meta_list_cols) {
     col_type <- meta[meta$columnName == col,]$typeAnswer
-    if (col_type == 'intList') {
+    if (col_type %in% c('intList', 'doubleList')) {
       expect_true(all(vapply(data[[col]],
-                             function(x) is.integer(x) || is.numeric(x),
+                             function(x) is.numeric(x),
                              FUN.VALUE = logical(1))))
-    } else if (col == 'doubleList') {
-      expect_true(all(vapply(data[[col]],
-                             is.numeric),
-                      FUN.VALUE = logical(1)))
     } else if (col == 'stringList') {
       expect_true(all(vapply(data[[col]],
                              is.character,
                              FUN.VALUE = logical(1))))
     }
   }
+})
+
+# Test that problems are being printed when they occur:
+# Make small dataset that will result in parsing problems
+basic <- data.frame(connectionId = 228325.76, # this should be an int
+          code = '',
+          alias = '"example_alias"',
+          questionListName = '"example_questions"',
+          timeStampSent = 1722427206,
+          consent_yesno = 1,
+          slider_happy = 99)
+
+# Create metadata for the dataset above
+meta <- data.frame(columnName = c('"consent_yesno"', '"slider_happy"'),
+          fullQuestion = c('"Do you consent to participate in this study?"',
+                 '"How happy are you right now?"'),
+          typeQuestion = c('"yesno"', '"sliderNegPos"'),
+          typeAnswer = c('"int"', '"int"'),
+          fullQuestion_mixed = c(0,0),
+          typeQuestion_mixed =  c(0,0),
+          typeAnswer_mixed =  c(0,0))
+
+basic_file <- tempfile(fileext = ".csv")
+meta_file <- tempfile(fileext = ".csv")
+
+write.table(basic, basic_file, row.names = FALSE, sep = ";", quote = FALSE)
+write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
+
+test_that("Problem with integer is printed", {
+
+  expect_warning(read_mpath(file = basic_file,
+                            meta_data = meta_file),
+                 "In row 2 column 1, expected an integer but got 228325.76.")
+
+})
+
+# Problems in meta_data
+meta <- data.frame(columnName = c('"consent_yesno"', '"slider_happy"'),
+                   fullQuestion =
+                     c('"Do you consent to participate in this study?"',
+                     '"How happy are you right now?"'),
+                   typeQuestion = c('"yesno"', '"sliderNegPos"'),
+                   typeAnswer = c('"int"', '"int"'),
+                   fullQuestion_mixed = c(0,0),
+                   typeQuestion_mixed =  c(10,0),
+                   typeAnswer_mixed =  c(0,0))
+
+meta_file <- tempfile(fileext = ".csv")
+write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
+
+test_that("Problem with meta_data is printed", {
+
+  expect_warning(mpathr:::read_meta_data(meta_file),
+                 "In row 2 column 6, expected 1/0/T/F/TRUE/FALSE but got 10.")
+
 })
 

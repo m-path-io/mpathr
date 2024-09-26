@@ -180,7 +180,7 @@ read_mpath <- function(
 
     cli_warn(c(
       "There were problems when reading in the data:",
-      problems[1:100]
+      problems
     ))
   }
 

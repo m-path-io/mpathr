@@ -4,11 +4,11 @@
 \name{mpathr-package}
 \alias{mpathr}
 \alias{mpathr-package}
-\title{mpathr: Handling Data From The M-Path Platform}
+\title{mpathr: Handling Data from the 'M-Path' Platform}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-The goal of `mpathr` is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the 'm-Path' platform (\url{https://m-path.io/landing/}).
+The goal of `mpathr` is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the 'm-Path' platform (\url{https://m-path.io/landing/}). The package provides functions to read data from 'm-Path', and to calculate response rate in data from Experience Sampling studies.
 }
 \seealso{
 Useful links:

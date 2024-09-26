@@ -5,9 +5,12 @@
 #' was answered or not
 #' @param participant_col name of the column that stores the participant id
 #' (or equivalent)
-#' @param time_col optional: name of the column that stores the time of the beep
-#' @param period_start optional: period start
-#' @param period_end optional: period end
+#' @param time_col optional: name of the column that stores the time of the
+#' beep, as a 'POSIXct' object.
+#' @param period_start string representing the starting date to
+#' calculate response rates (optional). Accepts dates in the following
+#' formats: \code{yyyy-mm-dd} or\code{yyyy/mm/dd}.
+#' @param period_end period end to calculate response rates (optional).
 #'
 #' @return a data frame with the response rate for each participant,
 #' and the number of beeps used to calculate the response rate

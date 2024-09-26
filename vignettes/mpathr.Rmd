@@ -18,8 +18,6 @@ knitr::opts_chunk$set(
 library(mpathr)
 ```
 
-# mpathr
-
 The main goal of `mpathr` is to provide functions to import data from the m-Path
 platform, as well as provide functions for common manipulations for
 ESM data.
@@ -58,7 +56,11 @@ participants' response rate. We provide a function `response_rate` that
 calculates the response_rate per participant for the entire duration of the 
 study, or for a specific time frame.\n
 
-For this, we can use the `example_data`. Which contains data from the same 
+This function takes as argument a `valid_col`, that takes a logical column that 
+stores whether the beep was answered by the participant, or not, as well as a 
+`participant_col`, that identifies each separate participant.
+
+We will show how to use this function with the `example_data`, that contains data from the same 
 study as the `example_basic.csv` file, but after some cleaning.\n
 
 ```{r}
@@ -85,8 +87,10 @@ response_rates[response_rates$response_rate < 0.5,]
 
 We could also be interested in seeing the participants' response rate during
 a specific period of time (for example, if we think a participant's compliance
-significantly dropped a certain date). In this case, we can specify the date 
-period that we are interested in:
+significantly dropped a certain date). In this case, we should supply the 
+function with the (otherwise optional) argument `time_col`, that should contain
+times stored as 'POSIXct' objects, and specify the date period that we are
+interested in (in the format 'yyyy-mm-dd' or 'yyyy/mm/dd'):
 
 ```{r}
 response_rates_after_15 <- response_rate(data = example_data,

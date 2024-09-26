@@ -22,11 +22,14 @@ was answered or not}
 \item{participant_col}{name of the column that stores the participant id
 (or equivalent)}
 
-\item{time_col}{optional: name of the column that stores the time of the beep}
+\item{time_col}{optional: name of the column that stores the time of the
+beep, as a 'POSIXct' object.}
 
-\item{period_start}{optional: period start}
+\item{period_start}{string representing the starting date to
+calculate response rates (optional). Accepts dates in the following formats:
+\code{yyyy-mm-dd} or\code{yyyy/mm/dd}.}
 
-\item{period_end}{optional: period end}
+\item{period_end}{period end to calculate response rates (optional).}
 }
 \value{
 a data frame with the response rate for each participant,
