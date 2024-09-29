@@ -26,8 +26,8 @@ was answered or not}
 beep, as a 'POSIXct' object.}
 
 \item{period_start}{string representing the starting date to
-calculate response rates (optional). Accepts dates in the following formats:
-\code{yyyy-mm-dd} or\code{yyyy/mm/dd}.}
+calculate response rates (optional). Accepts dates in the following
+formats: \code{yyyy-mm-dd} or\code{yyyy/mm/dd}.}
 
 \item{period_end}{period end to calculate response rates (optional).}
 }

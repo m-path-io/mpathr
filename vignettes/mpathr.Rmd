@@ -27,17 +27,26 @@ ESM data.
 To show how to import data using `mpathr`, we provide example data within 
 the package:
 
-```{r}
+```{r show m-Path example data}
 mpath_example()
 ```
 As shown above, the package comes with an example of the `basic.csv` that can be
 exported from the m-Path platform. \n
 
 To read this data into R, we can use the `read_mpath` function. We will also 
-need a path to the meta data. We can obtain the paths to the example basic data 
+need a path to the meta data. 
+
+The main advantage of using `read_mpath`, as opposed to other functions like 
+`read.csv`, is that `read_mpath` uses the meta data to correctly interpret the
+data types. Furthermore it will also automatically convert columns that store 
+multiple responses into lists. For a response with multiple options like 1,4,6,
+`read_mpath` will store a list with each number, which facilitates further 
+preprocess these responses.\n
+
+We can obtain the paths to the example basic data 
 and meta data using the `mpath_example` function: 
 
-```{r}
+```{r use read_mpath}
 # find paths to example basic and meta data:
 basic_path <- mpath_example(file ='example_basic.csv')
 meta_path <- mpath_example('example_meta.csv')
@@ -45,6 +54,30 @@ meta_path <- mpath_example('example_meta.csv')
 # read the data
 data <- read_mpath(file = basic_path,
                    meta_data = meta_path)
+```
+
+### Note: saving m-Path data
+As explained above, the resulting data frame will contain columns with lists,
+which can be problematic when saving the data. To save the data, we suggest
+using either `fwrite` from the `data.table` package, or the `save` function. 
+
+If you want to save the data as a 'csv' to use it in another program, use
+`fwrite` from the `data.table` package:
+
+```{r write data as csv}
+library(data.table)
+
+fwrite(data, 
+       file = 'data.csv', # specify path
+       sep = ';', # separator between columns
+       sep2 = c('', ',', '')) # separator within list columns
+```
+
+Otherwise, if the data will be used in R, we suggest saving it as an R object:
+```{r write data as an R object}
+# save the data as an R object
+save(data, 
+     file = 'data.RData') # specify path
 ```
 
 ## Obtaining response rates
@@ -63,7 +96,7 @@ stores whether the beep was answered by the participant, or not, as well as a
 We will show how to use this function with the `example_data`, that contains data from the same 
 study as the `example_basic.csv` file, but after some cleaning.\n
 
-```{r}
+```{r calculate response rate}
 data(example_data)
 
 response_rates <- response_rate(data = example_data,
@@ -81,7 +114,7 @@ The function returns a dataframe with:\n
 The output of this function can further be used to identify participants with 
 low response rates:
 
-```{r}
+```{r show low response rates}
 response_rates[response_rates$response_rate < 0.5,]
 ```
 
@@ -92,7 +125,7 @@ function with the (otherwise optional) argument `time_col`, that should contain
 times stored as 'POSIXct' objects, and specify the date period that we are
 interested in (in the format 'yyyy-mm-dd' or 'yyyy/mm/dd'):
 
-```{r}
+```{r calculate response rate after 15th of May 2024}
 response_rates_after_15 <- response_rate(data = example_data,
                                valid_col = answered,
                                participant_col = participant,
@@ -102,7 +135,7 @@ response_rates_after_15 <- response_rate(data = example_data,
 
 This will return the participant's response rate after the 15th of May 2024. 
 
-```{r}
+```{r show low response rates after 15th of May 2024}
 response_rates_after_15
 ```
 
@@ -111,7 +144,7 @@ response_rates_after_15
 We also suggest a way to plot the participant response rates, to identify 
 patterns like response rates dropping over time. For this, we provide the `plot_response_rate` function.
 
-```{r, fig.width=7, fig.height=5}
+```{r plot response rate, fig.width=7, fig.height=5}
 plot_response_rate(data = example_data,
             time_col = sent,
             participant_col = participant,
@@ -120,7 +153,7 @@ plot_response_rate(data = example_data,
 Note that the resulting plot can be further customized using the `ggplot2`
 package.
 
-```{r, fig.width=7, fig.height=5}
+```{r customize plot response rate plot, fig.width=7, fig.height=5}
 library(ggplot2)
 
 plot_response_rate(data = example_data,
@@ -131,8 +164,4 @@ plot_response_rate(data = example_data,
   ggtitle('Response rate over time') +
   xlab('Day in study')
 ```
-
-
-
-
 

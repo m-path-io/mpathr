@@ -40,7 +40,6 @@
 #'                                period_start = '2024-05-15',
 #'                                period_end = '2024-05-31')
 #'
-
 response_rate <- function(data,
                           valid_col,
                           participant_col,
