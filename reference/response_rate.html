@@ -15,7 +15,8 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/mpathr.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -57,28 +58,34 @@
 
 
 <dt id="arg-valid-col">valid_col<a class="anchor" aria-label="anchor" href="#arg-valid-col"></a></dt>
-<dd><p>name of the column that stores whether the beep was answered or not</p></dd>
+<dd><p>name of the column that stores whether the beep
+was answered or not</p></dd>
 
 
 <dt id="arg-participant-col">participant_col<a class="anchor" aria-label="anchor" href="#arg-participant-col"></a></dt>
-<dd><p>name of the column that stores the participant id (or equivalent)</p></dd>
+<dd><p>name of the column that stores the participant id
+(or equivalent)</p></dd>
 
 
 <dt id="arg-time-col">time_col<a class="anchor" aria-label="anchor" href="#arg-time-col"></a></dt>
-<dd><p>optional: name of the column that stores the time of the beep</p></dd>
+<dd><p>optional: name of the column that stores the time of the
+beep, as a 'POSIXct' object.</p></dd>
 
 
 <dt id="arg-period-start">period_start<a class="anchor" aria-label="anchor" href="#arg-period-start"></a></dt>
-<dd><p>optional: period start</p></dd>
+<dd><p>string representing the starting date to
+calculate response rates (optional). Accepts dates in the following
+formats: <code>yyyy-mm-dd</code> or<code>yyyy/mm/dd</code>.</p></dd>
 
 
 <dt id="arg-period-end">period_end<a class="anchor" aria-label="anchor" href="#arg-period-end"></a></dt>
-<dd><p>optional: period end</p></dd>
+<dd><p>period end to calculate response rates (optional).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a data frame with the response rate for each participant, and the number of beeps used to calculate the response rate</p>
+    <p>a data frame with the response rate for each participant,
+and the number of beeps used to calculate the response rate</p>
     </div>
 
     <div class="section level2">
@@ -96,20 +103,10 @@
 <span class="r-in"><span>                               participant_col <span class="op">=</span> <span class="va">participant</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating response rates for the entire duration of the study.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Get participants with a response rate below 0.5</span></span></span>
-<span class="r-in"><span><span class="va">response_rate</span><span class="op">[</span><span class="va">response_rate</span><span class="op">$</span><span class="va">response_rate</span> <span class="op">&lt;</span> <span class="fl">0.5</span>,<span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   participant number_of_beeps response_rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>           2             110         0.418</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>          16             110         0.318</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>          20             110         0.436</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example 2: calculate response rates for a specific time period</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">example_data</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Calculate response rate for each participant (for beeps between the 15th and 31st of May 2024)</span></span></span>
+<span class="r-in"><span><span class="co"># Calculate response rate for each participant between dates</span></span></span>
 <span class="r-in"><span><span class="va">response_rate</span> <span class="op">&lt;-</span> <span class="fu">response_rate</span><span class="op">(</span>data <span class="op">=</span> <span class="va">example_data</span>,</span></span>
 <span class="r-in"><span>                               valid_col <span class="op">=</span> <span class="va">answered</span>,</span></span>
 <span class="r-in"><span>                               participant_col <span class="op">=</span> <span class="va">participant</span>,</span></span>
@@ -118,14 +115,6 @@
 <span class="r-in"><span>                               period_end <span class="op">=</span> <span class="st">'2024-05-31'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating response rates between date: 2024-05-15 and 2024-05-31</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Get participants with a response rate below 0.5</span></span></span>
-<span class="r-in"><span><span class="va">response_rate</span><span class="op">[</span><span class="va">response_rate</span><span class="op">$</span><span class="va">response_rate</span> <span class="op">&lt;</span> <span class="fl">0.5</span>,<span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   participant number_of_beeps response_rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>          16              55        0.036<span style="text-decoration: underline;">4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>          20              77        0.494 </span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -133,7 +122,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Merijn Mestdagh, Koen Niemeijer.</p>
+  <p>Developed by Merijn Mestdagh, Koen Niemeijer, Lara Navarrete.</p>
 </div>
 
 <div class="pkgdown-footer-right">
