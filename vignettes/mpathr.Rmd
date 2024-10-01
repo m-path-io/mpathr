@@ -43,8 +43,8 @@ multiple responses into lists. For a response with multiple options like 1,4,6,
 `read_mpath` will store a list with each number, which facilitates further 
 preprocess these responses.\n
 
-We can obtain the paths to the example basic data 
-and meta data using the `mpath_example` function: 
+We can obtain the paths to the example basic data and meta data 
+using the `mpath_example` function: 
 
 ```{r use read_mpath}
 # find paths to example basic and meta data:
@@ -104,7 +104,7 @@ response_rates <- response_rate(data = example_data,
                                participant_col = participant)
 ```
 
-The function returns a dataframe with:\n
+The function returns a data frame with:\n
 
 * The `participant` column, as specified in `participant_col`
 * The `number_of_beeps` used to calculate the response rate.
