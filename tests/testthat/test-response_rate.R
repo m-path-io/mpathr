@@ -6,7 +6,9 @@ n_rows_per_participant <- 10
 data <- data.frame(
   participant = rep(1:n_participants, each = n_rows_per_participant),
   valid = rep(c(TRUE, FALSE), (n_participants * n_rows_per_participant)/2),
-  dates = rep(seq(as.Date("2023-01-01"), as.Date("2023-01-10"), by = "day"), n_participants)
+  dates = rep(seq(as.Date("2023-01-01"),
+                  as.Date("2023-01-10"),
+                  by = "day"), n_participants)
 )
 
 test_that('no period end or start', {
@@ -15,7 +17,7 @@ test_that('no period end or start', {
                           valid_col = valid,
                           participant_col = participant,
                           time_col = dates),
-                 "Calculating response rates for the entire duration of the study.")
+            "Calculating response rates for the entire duration of the study.")
 
   # is it a df?
   expect_true(is.data.frame(result))
@@ -33,7 +35,9 @@ test_that('period_end and start but no time variable', {
                              valid_col = valid,
                              participant_col = participant,
                              period_start = '2023-01-01',
-                             period_end = '2023-01-05'))
+                             period_end = '2023-01-05'),
+               "It seems like the period start or end are specified
+           but the time column is not. Please specify a time colum.")
 })
 
 test_that('only period_end given', {
@@ -80,7 +84,7 @@ test_that('period_start and end given', {
                                time_col = dates,
                                period_start = '2023-01-02',
                                period_end = '2023-01-07')
-                 , "Calculating response rates between date: 2023-01-02 and 2023-01-07")
+        , "Calculating response rates between date: 2023-01-02 and 2023-01-07")
 
   # is it a df?
   expect_true(is.data.frame(result))
