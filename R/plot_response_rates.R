@@ -1,29 +1,20 @@
 # this function is used by the function plot_response_rate (below).
-response_rate_per_day <- function(data,
-                                  valid_col,
-                                  participant_col,
-                                  time_col){
+response_rate_per_day <- function(
+    data,
+    valid_col,
+    participant_col,
+    time_col
+){
 
-  time_col <- enquo(time_col)
-  participant_col <- enquo(participant_col)
-  valid_col <- enquo(valid_col)
-
-  # Defining day and day1 before, to avoid 'no visible binding for global variable'
-  day = NULL
-  day1 = NULL
-
-  data_plot <- data %>%
-    # get day number from date
-    group_by(!!participant_col) %>%
-    mutate(day1 = as.Date(min(!!time_col, na.rm=TRUE)), # get the first day of the participant
-           day = as.integer(difftime(as.Date(!!time_col), day1, units="days") + 1)) %>% # calculate the number of days since the first beep was sent
-    select(-day1) %>% # unselect the column day1, we just created it to calculate day_n, but we don't want it in our data
-    ungroup() %>%
-    group_by(day, !!participant_col) %>% # group by day and participant
-    summarize(response_rate = sum(!!valid_col) / n()) %>% # calculate response rate
+  data <- data |>
+    group_by({{ participant_col }}) |>
+    mutate(day = dplyr::dense_rank({{ time_col }})) |>
+    ungroup() |>
+    group_by({{ participant_col }}, .data$day) |>
+    summarize(response_rate = sum({{ valid_col }}) / n(), .groups = "drop") |>
     ungroup()
 
-  return(data_plot)
+  data
 }
 
 #' Plots response rate per day (and per participant)
