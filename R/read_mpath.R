@@ -70,96 +70,53 @@ read_mpath <- function(
   # Read in the meta data
   meta_data <- read_meta_data(meta_data)
 
-  # give warnings from last 3 cols of metadata
-  rows_with_changes <- meta_data[rowSums(meta_data[, c('fullQuestion_mixed', 'typeQuestion_mixed', 'typeAnswer_mixed')]) > 0, ]
 
-  # instead of just typing the name of the error, I will print these other messages (easier to
-  # read):
-  labels_to_changes <- c(
-    fullQuestion_mixed = 'Question text',
-    typeQuestion_mixed = 'Type of question',
-    typeAnswer_mixed = 'Type of answer'
-  )
+  # but first: check if file was opened by Excel
+  is_opened_in_excel(col_names)
 
-  if (nrow(rows_with_changes) > 0){ # if there are any rows with changes
-    for (i in 1:nrow(rows_with_changes)){
-      row <- rows_with_changes[i,] # get the row
-
-      changes_made <- colnames(row)[row[,]==TRUE] # gets the name of the columns that contain TRUE
-
-      # print warning message
-      # in case there's more than 1 change in one row, outputting the different changes separated by a comma
-      warning(paste('In question', row['columnName'], 'the following has changed:',
-                    paste(labels_to_changes[changes_made], collapse = ", ")))
-    }
-  }
-
-  # Create mapping from the values in meta_data$typeAnswer (that specifies how that column should be saved)
-  # to the values that readr::read_delim expects (i, c, ?...)
-  type_mapping <- c(
-    "int" = "i",
-    "string" = "c",
-    "double" = "n",
-    "stringList" = "c", # the lists are read as strings and then converted to their respective types
-    "intList" = "c",
-    "doubleList" = "c",
-    "basic" = "i"
-  )
-
-  # Create new column in meta_data with the type that readr::read_delim expects
-  meta_data$type <- type_mapping[as.character(meta_data$typeAnswer)]
-
-  # Special case for appUsage intList row: it should be read as a double List, even though it is an intList
-  meta_data[meta_data$typeQuestion == 'appUsage' & meta_data$typeAnswer == 'intList',]$typeAnswer <- 'doubleList'
-
-  meta_data[is.na(meta_data$type), "type"] <- "?" # if type is NA (because it is not in type_mapping), then R will guess the type
-
+  # Define the default column names in data files
+  # These are not included in the metadata file
   cols_not_in_metadata <- c(
-    connectionId = 'i',
-    legacyCode = 'c',
-    code = 'c',
-    alias = 'c',
-    initials = 'c',
-    accountCode = 'c',
-    scheduledBeepId = 'i',
-    sentBeepId = 'i',
-    reminderForOriginalSentBeepId = 'i',
-    questionListName = 'c',
-    timeStampScheduled = 'i',
-    timeStampSent = 'i',
-    timeStampStart = 'i',
-    timeStampStop = 'i',
-    originalTimeStampSent = 'i',
-    timeZoneOffset = 'i',
-    deltaUTC = 'n'
+    connectionId = "i",
+    legacyCode = "c",
+    code = "c",
+    alias = "c",
+    initials = "c",
+    accountCode = "c",
+    scheduledBeepId = "i",
+    sentBeepId = "i",
+    reminderForOriginalSentBeepId = "i",
+    questionListName = "c",
+    timeStampScheduled = "i",
+    timeStampSent = "i",
+    timeStampStart = "i",
+    timeStampStop = "i",
+    originalTimeStampSent = "i",
+    timeZoneOffset = "i",
+    deltaUTC = "n"
   )
 
-  # Read first line to get names of columns (to be saved in col_names)
-  col_names <- readr::read_lines(file, n_max = 1)
+  cols_not_in_metadata <- tibble(
+    columnName = names(cols_not_in_metadata),
+    type = cols_not_in_metadata
+  )
 
-  # but first: check if file was opened by Excel #JORDAN: As this check is reused in two functions, maybe create a new function for it
-  first_char <- substr(col_names, 1, 1)
-  if (first_char == '"') {
-    cli_abort(c(
-      "The file was saved and changed by Excel.",
-      i = "Please download the file from the m-Path website again."
-    ))
-  }
-
-  col_names <- strsplit(col_names, ";")[[1]] # returns list of col_names
+  # Get the column names in the data file
+  col_names <- strsplit(col_names, ";")[[1]]
 
   # Get the type of each column in file to specify column types in readr::read_delim
-  type_char <- sapply(col_names, function(col_name) {
-    if (col_name %in% meta_data$columnName) { # if col is present in meta data
-      return(meta_data$type[meta_data$columnName == col_name]) # then return type as specified in meta_data$type
-    } else if (col_name %in% names(cols_not_in_metadata)){
-      return(cols_not_in_metadata[col_name])
-    } else {
-      return("?") # otherwise, R will guess the type
-    }
-  })
+  type_char <- meta_data |>
+    select("columnName", "type") |>
+    rbind(cols_not_in_metadata) |>
+    dplyr::left_join(
+      x = tibble(columnName = col_names),
+      y = _,
+      by = "columnName"
+    ) |>
+    mutate(type = ifelse(is.na(.data$type), "?", .data$type)) # not in metadata, let R guess the type
 
-  type_char <- paste0(type_char, collapse = "") # put the types in one single string (that's how read_delim expects them)
+  # put the types in one single string (that"s how read_delim expects them)
+  type_char <- paste0(type_char$type, collapse = "")
 
   # Read data
   suppressWarnings(data <- readr::read_delim(
@@ -294,6 +251,67 @@ read_meta_data <- function(
       problems
     ))
   }
+
+  # give warnings from last 3 cols of metadata
+  rows_with_changes <- meta_data |>
+    pivot_longer("fullQuestion_mixed":"typeAnswer_mixed") |>
+    filter(.data$value)
+
+  if (nrow(rows_with_changes) > 0){
+    rows_with_changes <- rows_with_changes |>
+      mutate(name = case_match(
+        .data$name,
+        "fullQuestion_mixed" ~ "{.fullq Question text}",
+        "typeQuestion_mixed" ~ "{.typeq Type of question}",
+        "typeAnswer_mixed" ~ "{.typea Type of answer}"
+      ))
+
+    # Create a new coloured theme to use in the warning
+    cli::cli_div(
+      theme = list(
+        span.fullq = list(color = "red"),
+        span.typeq = list(color = "blue"),
+        span.typea = list(color = "green")
+      )
+    )
+
+    # Generate the warning messages for the questions
+    problems <- paste0("In `", rows_with_changes$columnName, "`: ",rows_with_changes$name)
+
+    # Generate bullet points
+    names(problems) <- rep("*", length(problems))
+
+    cli_warn(c(
+      "!" = "The following questions were changed during the study:",
+      problems
+    ))
+  }
+
+  # Create mapping from the values in meta_data$typeAnswer (that specifies how that column should be saved)
+  # to the values that readr::read_delim expects (i, c, ?...)
+  meta_data <- meta_data |>
+    mutate(type = case_match(
+      .data$typeAnswer,
+      "basic" ~ "i",
+      "int" ~ "i",
+      "string" ~ "c",
+      "stringList" ~ "c", # the lists are read as strings and then converted to their respective types
+      "intList" ~ "c",
+      "doubleList" ~ "c",
+      "double" ~ "n"
+    ))
+
+  # Special case for appUsage intList row: it should be read as a double List, even though it is an
+  # intList
+  meta_data <- meta_data |>
+    mutate(typeAnswer = ifelse(
+      .data$typeQuestion == "appUsage" & .data$typeAnswer == "intList",
+      "doubleList",
+      .data$typeAnswer
+    ))
+
+  # if type is NA (because it is not in type_mapping), then R will guess the type
+  meta_data[is.na(meta_data$type), "type"] <- "?"
 
   meta_data
 }
