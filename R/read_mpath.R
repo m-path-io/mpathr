@@ -200,6 +200,35 @@ read_mpath <- function(
   }
 
   return(data) # return data
+#' Check if an m-Path CSV file was opened in Excel
+#'
+#' @description
+#' This function checks if an m-Path data file has previously been opened in Excel, in which case
+#' the whole file is wrapped in quotation marks. Actual quotation marks will then also be quoted,
+#' which is why we can't simply remove the outer quotes. Also, this function takes a single string
+#' as input (the first line of the file) instead of the file itself, because this would mean the
+#' file would have to be read twice. One time for this function, and then another time to get the
+#' column names.
+#'
+#' @param line The first line of the file to check if it was opened in Excel.
+#' @param call The environment from which the function was called to display in the error message.
+#'
+#' @return Returns `TRUE` if the line is opened by Excel, otherwise an error informing the user of
+#'   this problem.
+#' @keywords internal
+is_opened_in_excel <- function(line, call = rlang::caller_env()) {
+  first_char <- substr(line, 1, 1)
+  if (first_char == "'") {
+    cli_abort(
+      c(
+        "The file was saved and changed by Excel.",
+        i = "Please download the file from the m-Path website again."
+      ),
+      call = call
+    )
+  }
+
+  invisible(TRUE)
 }
 
 #' Read m-Path meta data
@@ -214,17 +243,11 @@ read_meta_data <- function(
     meta_data
 ) {
   # Check if the first character of the file is not a quote. If it is, this is likely because it was
-  # openend in Excel and saved again. This is because Excel will treat it as a string which means
+  # opened in Excel and saved again. This is because Excel will treat it as a string which means
   # adding quotes both to the entire line as well as inner quotes for the values. This will cause
   # issues when reading in the data and should be avoided.
-  first_char <- readr::read_lines(meta_data, n_max = 1)
-  first_char <- substr(first_char, 1, 1)
-  if (first_char == '"') {
-    cli_abort(c(
-      "The file was saved and changed by a Excel.",
-      i = "Please download the file from the m-Path website again."
-    ))
-  }
+  first_line <- readr::read_lines(meta_data, n_max = 1)
+  is_opened_in_excel(first_line)
 
   meta_data <- suppressWarnings(readr::read_delim(
     file = meta_data,
