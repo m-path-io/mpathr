@@ -130,57 +130,30 @@ read_mpath <- function(
 
   # handle the list columns
   ## First, storing which columns have to contain lists:
-  int_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'intList']
-  num_list_cols <- meta_data$columnName[meta_data$typeAnswer == 'doubleList']
-  string_list_cols <- as.list(meta_data$columnName[meta_data$typeAnswer == 'stringList'])
-  string_cols <- as.list(meta_data$columnName[meta_data$typeAnswer == 'string'])
+  int_list_cols <- meta_data$columnName[meta_data$typeAnswer == "intList"]
+  num_list_cols <- meta_data$columnName[meta_data$typeAnswer == "doubleList"]
+  string_list_cols <- meta_data$columnName[meta_data$typeAnswer == "stringList"]
+  string_cols <- meta_data$columnName[meta_data$typeAnswer == "string"]
 
-  # convert the cells to lists
-  # Integer cols:
-  for(column in int_list_cols){  # for each column in int_list_cols
-    data[[column]] <- lapply(data[[column]], function(x){  # for each cell in that column
-      tryCatch({
-        # Attempt to split, unlist, and convert to integers
-        as.integer(unlist(strsplit(x, ",")))
-      }, warning = function(w) {
-        # Check for 'NAs introduced by coercion to integer range'
-        if(grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
-          return(as.numeric(unlist(strsplit(x, ",")))) # if the warning is there, switch to as.numeric so no data is lost
-        }
-      })
-    })
-  }
+  data <- data |>
+    mutate(across(
+      .cols = all_of(int_list_cols),
+      .fns = .to_int_list
+    )) |>
+    mutate(across(
+      .cols = all_of(num_list_cols),
+      .fns = .to_double_list
+    )) |>
+    mutate(across(
+      .cols = all_of(string_list_cols),
+      .fns = .to_string_list
+    )) |>
+    mutate(across(
+      .cols = all_of(string_cols),
+      .fns = .to_string
+    ))
 
-  # Numeric:
-  for(column in num_list_cols){ # for each column in num_list_cols
-    data[[column]] <- lapply(data[[column]], function(x){ # and for each cell in that column
-      as.numeric(unlist(strsplit(x, ","))) # separate each element by comma and unlist it (this results in a vector) and then convert this vector to numeric
-    })
-  }
-
-  # for string lists: now reading them as json lists
-  for(column in string_list_cols){
-    data[[column]] <- lapply(data[[column]], function(cell) {
-      if (!is.na(cell)) {
-        fromJSON(paste0('[', cell, ']'))
-      } else {
-        cell  # Return NA as is
-      }
-    })
-  }
-
-  # for string cols: we can get rid of the \" using fromJSON
-  for(column in string_cols){
-    data[[column]] <- sapply(data[[column]], function(cell) {
-      if (!is.na(cell)) {
-        unlist(fromJSON(cell))
-      } else {
-        cell  # Return NA as is
-      }
-    })
-  }
-
-  # Catch problems
+  # Warn about other problems when reading in the data, if any
   problems <- readr::problems(data)
   problems <- problems[!grepl("columns", problems$expected), ]
 
@@ -199,7 +172,9 @@ read_mpath <- function(
     ))
   }
 
-  return(data) # return data
+  data
+}
+
 #' Check if an m-Path CSV file was opened in Excel
 #'
 #' @description
