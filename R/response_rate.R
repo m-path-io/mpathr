@@ -7,7 +7,8 @@
 #' @param period_start optional: period start
 #' @param period_end optional: period end
 #'
-#' @return a data frame with the response rate for each participant, and the number of beeps used to calculate the response rate
+#' @return a data frame with the response rate for each participant, and the number of beeps used to
+#'   calculate the response rate
 #' @export
 #'
 #' @examples
@@ -42,12 +43,14 @@
 #' response_rate[response_rate$response_rate < 0.5,]
 #'
 
-response_rate <- function(data,
-                          valid_col,
-                          participant_col,
-                          time_col = NULL,
-                          period_start = NULL, # specify period start (optional)
-                          period_end = NULL){ # specify period end (optional)
+response_rate <- function(
+    data,
+    valid_col,
+    participant_col,
+    time_col = NULL,
+    period_start = NULL,
+    period_end = NULL
+){
 
   valid_col <- enquo(valid_col)
   time_col <- enquo(time_col)
@@ -55,18 +58,21 @@ response_rate <- function(data,
 
   # If period/start or end are specified, then time_col should also be specified, check:
   if((!is.null(period_start) | !is.null(period_end)) & is.null(quo_name(time_col))){
-    stop("It seems like the period start or end are specified but the time column is not. Please specify a time colum.")
+    stop(paste(
+      "It seems like the period start or end are specified but the time column is not.",
+      "Please specify a time colum."
+    ))
   }
 
   # filter if a period start was specified
   if(!is.null(period_start)){
-    data <- data %>%
+    data <- data |>
       filter(as.Date(!!time_col) >= as.Date(period_start))
   }
 
   # filter if a period end was specified
   if(!is.null(period_end)){
-    data <- data %>%
+    data <- data |>
       filter(as.Date(!!time_col) <= as.Date(period_end))
   }
 
@@ -82,10 +88,12 @@ response_rate <- function(data,
   }
 
   # grouping by the variable 'participant_col' and calculating number of beeps and response rate
-  response_rate <- data %>%
-    group_by(!!participant_col) %>%
-    summarize(number_of_beeps = n(),
-              response_rate = sum(!!valid_col) / n())
+  response_rate <- data |>
+    group_by(!!participant_col) |>
+    summarize(
+      number_of_beeps = n(),
+      response_rate = sum(!!valid_col) / n()
+    )
 
-  return(response_rate)
+  response_rate
 }

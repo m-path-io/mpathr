@@ -4,24 +4,32 @@
 ## usethis namespace: start
 #' @importFrom cli cli_abort
 #' @importFrom cli cli_warn
-#' @importFrom dplyr %>%
 #' @importFrom dplyr across
+#' @importFrom dplyr all_of
+#' @importFrom dplyr any_of
+#' @importFrom dplyr arrange
+#' @importFrom dplyr case_match
 #' @importFrom dplyr filter
 #' @importFrom dplyr group_by
 #' @importFrom dplyr mutate
 #' @importFrom dplyr n
 #' @importFrom dplyr pull
 #' @importFrom dplyr select
+#' @importFrom dplyr summarise
 #' @importFrom dplyr summarize
+#' @importFrom dplyr tibble
 #' @importFrom dplyr ungroup
 #' @importFrom ggplot2 aes
-#' @importFrom ggplot2 aes_string
 #' @importFrom ggplot2 ggplot
 #' @importFrom jsonlite fromJSON
 #' @importFrom lifecycle deprecated
+#' @importFrom rlang .data
+#' @importFrom rlang .env
 #' @importFrom rlang enquo
 #' @importFrom rlang quo_name
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr pivot_wider
 ## usethis namespace: end
 NULL
+
+rlang::on_load(rlang::local_use_cli())

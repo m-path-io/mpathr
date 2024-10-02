@@ -1,5 +1,3 @@
-library(testthat)
-
 n_participants <- 8
 n_rows_per_participant <- 10
 
@@ -11,13 +9,15 @@ data <- data.frame(
 
 test_that('no period end or start', {
 
-  result <- expect_message(
-    response_rate(
+  expect_message(
+    result <- response_rate(
       data = data,
       valid_col = valid,
       participant_col = participant,
-      time_col = dates),
-    "Calculating response rates for the entire duration of the study.")
+      time_col = dates
+    ),
+    "Calculating response rates for the entire duration of the study."
+  )
 
   # is it a df?
   expect_true(is.data.frame(result))

@@ -1,9 +1,6 @@
 basic_path <- system.file("testdata", "test_basic.csv", package = "mpathr")
 meta_path <- system.file("testdata", "test_meta.csv", package = "mpathr")
 
-# basic_path <- '../read_mpath/data_testrequirements/basic.csv'
-# meta_path <- "../read_mpath/data_testrequirements/meta.csv"
-
 data <- read_mpath(
   file = basic_path,
   meta_data = meta_path
@@ -73,7 +70,7 @@ test_that("First columns are read correctly", {
 })
 
 # we will need the meta data to check the rest of the columns:
-meta <- mpathr:::read_meta_data(meta_path)
+meta <- read_meta_data(meta_path)
 
 test_that("String columns are read correctly", {
 

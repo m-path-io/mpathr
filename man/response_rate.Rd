@@ -27,7 +27,8 @@ response_rate(
 \item{period_end}{optional: period end}
 }
 \value{
-a data frame with the response rate for each participant, and the number of beeps used to calculate the response rate
+a data frame with the response rate for each participant, and the number of beeps used to
+calculate the response rate
 }
 \description{
 Calculate response rate

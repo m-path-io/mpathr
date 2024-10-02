@@ -29,7 +29,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item m-Path [copyright holder]
+  \item m-Path Software [copyright holder]
 }
 
 }

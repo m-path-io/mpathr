@@ -6,7 +6,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-5077-861X")),
     person("Koen", "Niemeijer", email = "koen.niemeijer@kuleuven.be", role = c("aut"),
            comment = c(ORCID = "0000-0002-0816-534X")),
-    person("m-Path", role = c("cph"))
+    person("m-Path Software", role = c("cph"))
   )
 Description: Provides tools for importing and cleaning Experience Sampling Method (ESM) data 
     collected via the 'm-Path' platform. Designed for researchers working with real-time 

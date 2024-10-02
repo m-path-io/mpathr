@@ -36,30 +36,30 @@
 #'
 #'# Create small dataset to import using read_mpath
 #'data <- data.frame(connectionId = 228325,
-#'           code = '',
-#'           alias = '"example_alias"',
-#'           questionListName = '"example_questions"',
+#'           code = "",
+#'           alias = "example_alias",
+#'           questionListName = "example_questions",
 #'           timeStampSent = 1722427206,
 #'           consent_yesno = 1,
 #'           slider_happy = 99)
 #'
 #'# Create metadata for the dataset above
-#'meta_data <- data.frame(columnName = c('"consent_yesno"', '"slider_happy"'),
-#'           fullQuestion = c('"Do you consent to participate in this study?"',
-#'                  '"How happy are you right now?"'),
-#'           typeQuestion = c('"yesno"', '"sliderNegPos"'),
-#'           typeAnswer = c('"int"', '"int"'),
+#'meta_data <- data.frame(columnName = c("consent_yesno", "slider_happy"),
+#'           fullQuestion = c("Do you consent to participate in this study?",
+#'                  "How happy are you right now?"),
+#'           typeQuestion = c("yesno", "sliderNegPos"),
+#'           typeAnswer = c("int", "int"),
 #'           fullQuestion_mixed = c(0,0),
 #'           typeQuestion_mixed =  c(0,0),
 #'           typeAnswer_mixed =  c(0,0))
 #'
 #'# write both datasets as .csv files
-#'write.table(data, '../data.csv', row.names = FALSE, sep = ';', quote = FALSE)
-#'write.table(meta_data, '../meta_data.csv', row.names = FALSE, sep = ';', quote = FALSE)
+#'write.table(data, "../data.csv", row.names = FALSE, sep = ";", quote = FALSE)
+#'write.table(meta_data, "../meta_data.csv", row.names = FALSE, sep = ";", quote = FALSE)
 #'
 #'# Read in the data
-#'read_mpath(file = '../data.csv',
-#'       meta_data = '../meta_data.csv')
+#'read_mpath(file = "../data.csv",
+#'       meta_data = "../meta_data.csv")
 #'
 #'
 read_mpath <- function(
@@ -70,6 +70,8 @@ read_mpath <- function(
   # Read in the meta data
   meta_data <- read_meta_data(meta_data)
 
+  # Read first line to get names of columns (to be saved in col_names)
+  col_names <- readr::read_lines(file, n_max = 1)
 
   # but first: check if file was opened by Excel
   is_opened_in_excel(col_names)
@@ -119,13 +121,13 @@ read_mpath <- function(
   type_char <- paste0(type_char$type, collapse = "")
 
   # Read data
-  suppressWarnings(data <- readr::read_delim(
+  data <- suppressWarnings(readr::read_delim(
     file = file,
     delim = ";",
     locale = .mpath_locale,
     show_col_types = FALSE,
     col_names = TRUE,
-    col_types = c(type_char) # this line specifies types
+    col_types = type_char
   ))
 
   # handle the list columns
