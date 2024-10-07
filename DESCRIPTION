@@ -4,22 +4,26 @@ Version: 1.0.0
 Authors@R: c(
     person("Merijn", "Mestdagh", email = "merijn.mestdagh@m-path.io", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5077-861X")),
+    person("Lara", "Navarrete", email = "larann901@gmail.com", role = c("aut")),
     person("Koen", "Niemeijer", email = "koen.niemeijer@kuleuven.be", role = c("aut"),
            comment = c(ORCID = "0000-0002-0816-534X")),
     person("m-Path Software", role = c("cph"))
   )
 Description: Provides tools for importing and cleaning Experience Sampling Method (ESM) data 
-    collected via the 'm-Path' platform. Designed for researchers working with real-time 
-    questionnaire data, it simplifies the process of reading, organizing, and preparing ESM 
-    datasets for analysis. Functions include raw data handling, format standardization, and basic 
-    data checks. Additionally, convenience functions allow for quick exploration and understanding 
-    of key trends in the data. 
+    collected via the 'm-Path' platform. The goal of `mpathr` is to provide with a few utility 
+    functions to be able to read and perform some common operations in ESM data collected through 
+    the 'm-Path' platform (<https://m-path.io/landing/>). Functions include raw data handling, 
+    format standardization, and basic data checks, as well as to calculate the response rate in 
+    data from ESM studies. 
 License: GPL (>= 3)
 URL: 
     https://m-path.io,
     https://github.com/m-path-io/mpathr
 Encoding: UTF-8
 Suggests: 
+    knitr,
+    rmarkdown,
+    data.table,
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
@@ -39,3 +43,4 @@ Depends:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 LazyData: true
+VignetteBuilder: knitr

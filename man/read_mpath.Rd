@@ -12,45 +12,24 @@ read_mpath(file, meta_data)
 \item{meta_data}{A string with the path to the meta data file}
 }
 \value{
-A \link[tibble]{tibble} with the contents of the m-Path file.
+A \link[tibble]{tibble} with the 'm-Path' data.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-This function reads an m-Path file into a dataframe.
+This function reads an 'm-Path' file into a dataframe.
 }
 \details{
-Note that this function has been tested only with the version v.1.1. of the meta_data.
-So it is advised to use that version of the meta_data file
-(you can change the meta data version under "export version" in "Export data").
+Note that this function has been tested with the meta data version v.1.1.
+So it is advised to use that version of the meta data.
+(In 'm-Path', change the version in 'Export data' > "export version").
 }
 \examples{
 
-# Create small dataset to import using read_mpath
-data <- data.frame(connectionId = 228325,
-          code = "",
-          alias = "example_alias",
-          questionListName = "example_questions",
-          timeStampSent = 1722427206,
-          consent_yesno = 1,
-          slider_happy = 99)
+# We can use the function mpath_examples to get the path to the example data
+basic_path <- mpath_example(file ="example_basic.csv")
+meta_path <- mpath_example("example_meta.csv")
 
-# Create metadata for the dataset above
-meta_data <- data.frame(columnName = c("consent_yesno", "slider_happy"),
-          fullQuestion = c("Do you consent to participate in this study?",
-                 "How happy are you right now?"),
-          typeQuestion = c("yesno", "sliderNegPos"),
-          typeAnswer = c("int", "int"),
-          fullQuestion_mixed = c(0,0),
-          typeQuestion_mixed =  c(0,0),
-          typeAnswer_mixed =  c(0,0))
-
-# write both datasets as .csv files
-write.table(data, "../data.csv", row.names = FALSE, sep = ";", quote = FALSE)
-write.table(meta_data, "../meta_data.csv", row.names = FALSE, sep = ";", quote = FALSE)
-
-# Read in the data
-read_mpath(file = "../data.csv",
-      meta_data = "../meta_data.csv")
-
+data <- read_mpath(file = basic_path,
+                meta_data = meta_path)
 
 }

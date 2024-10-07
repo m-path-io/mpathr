@@ -1,7 +1,7 @@
 #' Locale to be used for m-Path data
 #'
 #' @description
-#' Hard coded locale to be used for m-Path data
+#' Hard coded locale to be used for 'm-Path' data
 #'
 #' @returns Return a locale to be used in [readr::read_delim()] or friends.
 #' @keywords internal
@@ -19,48 +19,27 @@
 #' Read m-Path data
 #'
 #' @description `r lifecycle::badge("experimental")`
-#' This function reads an m-Path file into a dataframe.
+#' This function reads an 'm-Path' file into a dataframe.
 #'
 #' @details
-#' Note that this function has been tested only with the version v.1.1. of the meta_data.
-#' So it is advised to use that version of the meta_data file
-#' (you can change the meta data version under "export version" in "Export data").
+#' Note that this function has been tested with the meta data version v.1.1.
+#' So it is advised to use that version of the meta data.
+#' (In 'm-Path', change the version in 'Export data' > "export version").
 #'
 #' @param file A string with the path to the m-Path file
 #' @param meta_data A string with the path to the meta data file
 #'
-#' @return A \link[tibble]{tibble} with the contents of the m-Path file.
+#' @returns A \link[tibble]{tibble} with the 'm-Path' data.
 #' @export
 #'
 #' @examples
 #'
-#'# Create small dataset to import using read_mpath
-#'data <- data.frame(connectionId = 228325,
-#'           code = "",
-#'           alias = "example_alias",
-#'           questionListName = "example_questions",
-#'           timeStampSent = 1722427206,
-#'           consent_yesno = 1,
-#'           slider_happy = 99)
+#' # We can use the function mpath_examples to get the path to the example data
+#' basic_path <- mpath_example(file ="example_basic.csv")
+#' meta_path <- mpath_example("example_meta.csv")
 #'
-#'# Create metadata for the dataset above
-#'meta_data <- data.frame(columnName = c("consent_yesno", "slider_happy"),
-#'           fullQuestion = c("Do you consent to participate in this study?",
-#'                  "How happy are you right now?"),
-#'           typeQuestion = c("yesno", "sliderNegPos"),
-#'           typeAnswer = c("int", "int"),
-#'           fullQuestion_mixed = c(0,0),
-#'           typeQuestion_mixed =  c(0,0),
-#'           typeAnswer_mixed =  c(0,0))
-#'
-#'# write both datasets as .csv files
-#'write.table(data, "../data.csv", row.names = FALSE, sep = ";", quote = FALSE)
-#'write.table(meta_data, "../meta_data.csv", row.names = FALSE, sep = ";", quote = FALSE)
-#'
-#'# Read in the data
-#'read_mpath(file = "../data.csv",
-#'       meta_data = "../meta_data.csv")
-#'
+#' data <- read_mpath(file = basic_path,
+#'                 meta_data = meta_path)
 #'
 read_mpath <- function(
     file,
@@ -130,6 +109,9 @@ read_mpath <- function(
     col_types = type_char
   ))
 
+  # Save potential problems before modifying the data
+  problems <- readr::problems(data)
+
   # handle the list columns
   ## First, storing which columns have to contain lists:
   int_list_cols <- meta_data$columnName[meta_data$typeAnswer == "intList"]
@@ -156,7 +138,6 @@ read_mpath <- function(
     ))
 
   # Warn about other problems when reading in the data, if any
-  problems <- readr::problems(data)
   problems <- problems[!grepl("columns", problems$expected), ]
 
   if (nrow(problems) > 0) {
@@ -169,7 +150,7 @@ read_mpath <- function(
     names(problems) <- rep("x", length(problems))
 
     cli_warn(c(
-      "There were problems when reading in the meta data:",
+      "There were problems when reading in the data:",
       problems
     ))
   }
@@ -190,7 +171,7 @@ read_mpath <- function(
 #' @param line The first line of the file to check if it was opened in Excel.
 #' @param call The environment from which the function was called to display in the error message.
 #'
-#' @return Returns `TRUE` if the line is opened by Excel, otherwise an error informing the user of
+#' @returns Returns `TRUE` if the line is opened by Excel, otherwise an error informing the user of
 #'   this problem.
 #' @keywords internal
 is_opened_in_excel <- function(line, call = rlang::caller_env()) {
@@ -214,7 +195,7 @@ is_opened_in_excel <- function(line, call = rlang::caller_env()) {
 #'
 #' @param meta_data A string with the path to the meta data file
 #'
-#' @return A \link[tibble]{tibble} with the contents of the meta data file.
+#' @returns A \link[tibble]{tibble} with the contents of the meta data file.
 #' @keywords internal
 read_meta_data <- function(
     meta_data

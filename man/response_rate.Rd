@@ -16,15 +16,20 @@ response_rate(
 \arguments{
 \item{data}{data frame with data}
 
-\item{valid_col}{name of the column that stores whether the beep was answered or not}
+\item{valid_col}{name of the column that stores whether the beep
+was answered or not}
 
-\item{participant_col}{name of the column that stores the participant id (or equivalent)}
+\item{participant_col}{name of the column that stores the participant id
+(or equivalent)}
 
-\item{time_col}{optional: name of the column that stores the time of the beep}
+\item{time_col}{optional: name of the column that stores the time of the
+beep, as a 'POSIXct' object.}
 
-\item{period_start}{optional: period start}
+\item{period_start}{string representing the starting date to
+calculate response rates (optional). Accepts dates in the following
+formats: \code{yyyy-mm-dd} or\code{yyyy/mm/dd}.}
 
-\item{period_end}{optional: period end}
+\item{period_end}{period end to calculate response rates (optional).}
 }
 \value{
 a data frame with the response rate for each participant, and the number of beeps used to
@@ -46,14 +51,10 @@ response_rate <- response_rate(data = example_data,
                                valid_col = answered,
                                participant_col = participant)
 
-# Get participants with a response rate below 0.5
-response_rate[response_rate$response_rate < 0.5,]
-
-
 # Example 2: calculate response rates for a specific time period
 data(example_data)
 
-# Calculate response rate for each participant (for beeps between the 15th and 31st of May 2024)
+# Calculate response rate for each participant between dates
 response_rate <- response_rate(data = example_data,
                                valid_col = answered,
                                participant_col = participant,

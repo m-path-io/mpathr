@@ -24,26 +24,29 @@ response_rate_per_day <- function(
 #' grouped by the day inside the study for the participant.
 #'
 #' @param data data frame with data
-#' @param valid_col name of the column that stores whether the beep was answered or not
-#' @param participant_col name of the column that stores the participant id (or equivalent)
+#' @param valid_col name of the column that stores whether the beep
+#' was answered or not
+#' @param participant_col name of the column that stores the participant id
+#' (or equivalent)
 #' @param time_col name of the column that stores the time of the beep
 #'
-#' @return a ggplot object with the response rate per day (x axis) and participant (color)
+#' @return a ggplot object with the response rate per day (x axis)
+#' and participant (color)
 #' @export
 #'
 #' @examples
 #' # load data
 #' data(example_data)
 #'
-#' # make plot with plot_response_rates
-#' plot_response_rates(data = example_data,
+#' # make plot with plot_response_rate
+#' plot_response_rate(data = example_data,
 #' time_col = sent,
 #' participant_col = participant,
 #' valid_col = answered)
 #' # The resulting ggplot object can be formatted using ggplot2 functions (see ggplot2
 #' # documentation).
 #'
-plot_response_rates <- function(
+plot_response_rate <- function(
     data,
     valid_col,
     participant_col,  # specify participant variable

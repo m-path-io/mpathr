@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides tools for importing and cleaning Experience Sampling Method (ESM) data collected via the 'm-Path' platform. Designed for researchers working with real-time questionnaire data, it simplifies the process of reading, organizing, and preparing ESM datasets for analysis. Functions include raw data handling, format standardization, and basic data checks. Additionally, convenience functions allow for quick exploration and understanding of key trends in the data.
+Provides tools for importing and cleaning Experience Sampling Method (ESM) data collected via the 'm-Path' platform. The goal of `mpathr` is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the 'm-Path' platform (\url{https://m-path.io/landing/}). Functions include raw data handling, format standardization, and basic data checks, as well as to calculate the response rate in data from ESM studies.
 }
 \seealso{
 Useful links:
@@ -24,6 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Lara Navarrete \email{larann901@gmail.com}
   \item Koen Niemeijer \email{koen.niemeijer@kuleuven.be} (\href{https://orcid.org/0000-0002-0816-534X}{ORCID})
 }
 

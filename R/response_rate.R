@@ -1,13 +1,18 @@
 #' Calculate response rate
 #'
 #' @param data data frame with data
-#' @param valid_col name of the column that stores whether the beep was answered or not
-#' @param participant_col name of the column that stores the participant id (or equivalent)
-#' @param time_col optional: name of the column that stores the time of the beep
-#' @param period_start optional: period start
-#' @param period_end optional: period end
+#' @param valid_col name of the column that stores whether the beep
+#' was answered or not
+#' @param participant_col name of the column that stores the participant id
+#' (or equivalent)
+#' @param time_col optional: name of the column that stores the time of the
+#' beep, as a 'POSIXct' object.
+#' @param period_start string representing the starting date to
+#' calculate response rates (optional). Accepts dates in the following
+#' formats: \code{yyyy-mm-dd} or\code{yyyy/mm/dd}.
+#' @param period_end period end to calculate response rates (optional).
 #'
-#' @return a data frame with the response rate for each participant, and the number of beeps used to
+#' @returns a data frame with the response rate for each participant, and the number of beeps used to
 #'   calculate the response rate
 #' @export
 #'
@@ -24,14 +29,10 @@
 #'                                valid_col = answered,
 #'                                participant_col = participant)
 #'
-#' # Get participants with a response rate below 0.5
-#' response_rate[response_rate$response_rate < 0.5,]
-#'
-#'
 #' # Example 2: calculate response rates for a specific time period
 #' data(example_data)
 #'
-#' # Calculate response rate for each participant (for beeps between the 15th and 31st of May 2024)
+#' # Calculate response rate for each participant between dates
 #' response_rate <- response_rate(data = example_data,
 #'                                valid_col = answered,
 #'                                participant_col = participant,
@@ -53,15 +54,20 @@ response_rate <- function(
 ){
 
   valid_col <- enquo(valid_col)
-  time_col <- enquo(time_col)
   participant_col <- enquo(participant_col)
 
-  # If period/start or end are specified, then time_col should also be specified, check:
-  if((!is.null(period_start) | !is.null(period_end)) & is.null(quo_name(time_col))){
-    stop(paste(
-      "It seems like the period start or end are specified but the time column is not.",
-      "Please specify a time colum."
-    ))
+  if(!missing(time_col)){
+    time_col <- enquo(time_col)
+   }
+
+  # If period_start or end are specified, time_col should also be specified
+  if(!is.null(period_start) | !is.null(period_end)){
+    if(missing(time_col)){
+      stop(paste(
+        "It seems like the period start or end are specified",
+        "but the time column is not. Please specify a time colum."
+      ))
+    }
   }
 
   # filter if a period start was specified
@@ -78,11 +84,14 @@ response_rate <- function(
 
   # Print information on the period of the response rates.
   if (!is.null(period_start) & !is.null(period_end)) {
-    message(paste("Calculating response rates between date:", period_start, "and", period_end))
+    message(paste("Calculating response rates between date:",
+                  period_start, "and", period_end))
   } else if (!is.null(period_start)) {
-    message(paste("Calculating response rates starting from date:", period_start))
+    message(paste("Calculating response rates starting from date:",
+                  period_start))
   } else if (!is.null(period_end)) {
-    message(paste("Calculating response rates up to date:", period_end))
+    message(paste("Calculating response rates up to date:",
+                  period_end))
   } else {
     message("Calculating response rates for the entire duration of the study.")
   }

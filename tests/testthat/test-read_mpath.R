@@ -38,32 +38,36 @@ test_that("Data has correct dimensions", {
 # Data types are correct
 
 # Check data types of first columns
-# (columns that are not in the meta data, and they should always be read in the same way)
+# (columns that are not in the meta data)
 test_that("First columns are read correctly", {
 
   # character columns
-  expect_true(all(sapply(data[, c('legacyCode',
-                                  'code',
-                                  'alias',
-                                  'initials',
-                                  'accountCode',
-                                  'questionListName')],
-                         is.character)))
+  cols <- data[, c("legacyCode", "code", "alias", "initials", "accountCode", "questionListName")]
+  expect_true(all(vapply(
+    X = cols,
+    FUN = is.character,
+    FUN.VALUE = logical(1)
+  )))
 
   # integer columns
-  expect_true(all(sapply(data[, c('connectionId',
-                                  'scheduledBeepId',
-                                  'sentBeepId',
-                                  'reminderForOriginalSentBeepId',
-                                  'timeStampScheduled',
-                                  'timeStampSent',
-                                  'timeStampStart',
-                                  'timeStampStop',
-                                  'originalTimeStampSent',
-                                  'timeZoneOffset'
-                                  )],
-                         is.integer)))
+  cols <- data[, c(
+    "connectionId",
+    "scheduledBeepId",
+    "sentBeepId",
+    "reminderForOriginalSentBeepId",
+    "timeStampScheduled",
+    "timeStampSent",
+    "timeStampStart",
+    "timeStampStop",
+    "originalTimeStampSent",
+    "timeZoneOffset"
+  )]
 
+  expect_true(all(vapply(
+    X = cols,
+    FUN = is.integer,
+    FUN.VALUE = logical(1)
+  )))
 
   expect_true(is.numeric(data$deltaUTC))
 
@@ -75,65 +79,176 @@ meta <- read_meta_data(meta_path)
 test_that("String columns are read correctly", {
 
   # What columns should be read as strings?
-  meta_string_cols <- meta[meta$typeAnswer == 'string',]$columnName
+  meta_string_cols <- meta[meta$typeAnswer == "string",]$columnName
 
   # Checks that all those columns are strings
-  expect_true(all(sapply(data[, meta_string_cols], is.character)))
+  expect_true(all(vapply(
+    X = data[, meta_string_cols],
+    FUN = is.character,
+    FUN.VALUE = logical(1)
+  )))
 
 })
 
 test_that("Integer columns are read correctly", {
+  meta_int_cols <- meta[meta$typeAnswer == "int",]$columnName
 
-  meta_int_cols <- meta[meta$typeAnswer == 'int',]$columnName
-
-  expect_true(all(sapply(data[, meta_int_cols], is.integer)))
+  expect_true(all(vapply(
+    X = data[, meta_int_cols],
+    FUN = is.integer,
+    FUN.VALUE = logical(1)
+  )))
 
 })
 
 test_that("Numeric columns aer read correcly", {
+  meta_numeric_cols <- meta[meta$typeAnswer == "double",]$columnName
 
-  meta_numeric_cols <- meta[meta$typeAnswer == 'double',]$columnName
-
-  expect_true(all(sapply(data[, meta_numeric_cols], is.numeric)))
+  expect_true(all(vapply(
+    X = data[, meta_numeric_cols],
+    FUN = is.numeric,
+    FUN.VALUE = logical(1)
+  )))
 })
 
 # List columns
 # Get list columns from meta data
-meta_list_cols <- meta[meta$typeAnswer %in% c('intList', 'doubleList', 'stringList'),]$columnName
-
-test_that('List columns are being read as lists', {
-
-  expect_true(all(sapply(data[, meta_list_cols], is.list)))
+meta_list_cols <- meta[meta$typeAnswer %in% c("intList", "doubleList", "stringList"),]$columnName
+test_that("List columns are being read as lists", {
+  expect_true(all(vapply(
+    X = data[, meta_list_cols],
+    FUN = is.list,
+    FUN.VALUE = logical(1)
+  )))
 })
 
 # Check that each list is being read as its respective type
 
-test_that('List columns are being read as the correct type', {
+test_that("List columns are being read as the correct type", {
   for (col in meta_list_cols) {
-    col_type <- meta[meta$columnName == col,]$typeAnswer
-    if (col_type == 'intList') {
-      expect_true(all(sapply(data[[col]], function(x) is.integer(x) || is.numeric(x))))
-    } else if (col == 'doubleList') {
-      expect_true(all(sapply(data[[col]], is.numeric)))
-    } else if (col == 'stringList') {
-      expect_true(all(sapply(data[[col]], is.character)))
-    }
+    col_type <- meta$typeAnswer[meta$columnName == col]
+    col <- data[[col]]
+
+    # This should be a list either way
+    expect_type(col, "list")
+    col <- unlist(col, use.names = FALSE)
+
+    switch(
+      col_type,
+      "intList" = expect_type(col, "integer"),
+      "doubleList" = expect_type(col, "double"),
+      "stringList" = expect_type(col, "character")
+    )
   }
 })
 
+# Test that problems are being printed when they occur:
+# Make small dataset that will result in parsing problems
+basic <- data.frame(
+  connectionId = 228325.76, # this should be an int
+  code = '',
+  alias = '"example_alias"',
+  questionListName = '"example_questions"',
+  timeStampSent = 1722427206,
+  consent_yesno = 1,
+  slider_happy = 99
+)
 
+# Create metadata for the dataset above
+meta <- data.frame(
+  columnName = c('"consent_yesno"', '"slider_happy"'),
+  fullQuestion = c(
+    '"Do you consent to participate in this study?"',
+    '"How happy are you right now?"'
+  ),
+  typeQuestion = c('"yesno"', '"sliderNegPos"'),
+  typeAnswer = c('"int"', '"int"'),
+  fullQuestion_mixed = c(0, 0),
+  typeQuestion_mixed =  c(0, 0),
+  typeAnswer_mixed =  c(0, 0)
+)
 
+basic_file <- tempfile(fileext = ".csv")
+meta_file <- tempfile(fileext = ".csv")
 
+write.table(basic, basic_file, row.names = FALSE, sep = ";", quote = FALSE)
+write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
 
+test_that("Problem with integer is printed", {
+  expect_warning(
+    read_mpath(file = basic_file, meta_data = meta_file),
+    "In row 2 column 1, expected an integer but got 228325.76."
+  )
+})
 
+# Clean-up
+unlink(basic_file)
+unlink(meta_file)
 
+# Problems in meta_data
+meta <- data.frame(
+  columnName = c('"consent_yesno"', '"slider_happy"'),
+  fullQuestion = c(
+    '"Do you consent to participate in this study?"',
+    '"How happy are you right now?"'
+  ),
+  typeQuestion = c('"yesno"', '"sliderNegPos"'),
+  typeAnswer = c('"int"', '"int"'),
+  fullQuestion_mixed = c(0, 0),
+  typeQuestion_mixed =  c(10, 0),
+  typeAnswer_mixed =  c(0, 0)
+)
 
+meta_file <- tempfile(fileext = ".csv")
+write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
 
+test_that("Problem with meta_data is printed", {
+  expect_warning(
+    read_meta_data(meta_file),
+    "In row 2 column 6, expected 1/0/T/F/TRUE/FALSE but got 10."
+  )
+})
 
+# Clean-up
+unlink(meta_file)
 
+basic <- data.frame(
+  connectionId = 228325,
+  code = '',
+  alias = '"example_alias"',
+  questionListName = '"example_questions"',
+  timeStampSent = 1722427206,
+  consent_yesno = 1,
+  slider_happy = 99
+)
 
+# create small meta_data to test warnings in changed meta data
+test_that('specific warnings are printed for consent_yesno and slider_happy question changes', {
 
+  meta$typeQuestion_mixed <- c(1, 1)
+  meta$fullQuestion_mixed <- c(1, 1)
 
+  basic_file <- tempfile(fileext = ".csv")
+  meta_file <- tempfile(fileext = ".csv")
 
+  write.table(basic, basic_file, row.names = FALSE, sep = ";", quote = FALSE)
+  write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
 
+  # Test for the basic structure of the warning message
+  expect_warning(
+    read_mpath(
+      file = basic_file,
+      meta_data = meta_file
+    ),
+    paste0(
+      "(.*consent_yesno.*)(.*Question text.*)",
+      "(.*consent_yesno.*)(.*Type of question.*)",
+      "(.*slider_happy.*)(.*Question text*)",
+      "(.*slider_happy.*)(.*Type of question.*)"
+    )
+  )
 
+    # Clean-up
+    unlink(basic_file)
+    unlink(meta_file)
+  })

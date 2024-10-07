@@ -11,36 +11,59 @@
 `mpathr` is currently under development and is not yet meant for public
 use. Please check back later for updates.
 
+## Overview
+
+The goal of `mpathr` is to provide with a few utility functions to read
+and perform some common operations in data from Experience Sampling
+Methodology (ESM) studies collected through the ‘m-Path’ platform
+(<https://m-path.io/landing/>). The package provides functions to read
+data from ‘m-Path’, and to calculate response rate in data from
+Experience Sampling studies.
+
 ## Installation
 
-You can install the development version of mpathr from Github using the
-[remotes](https://cran.r-project.org/package=remotes) package:
-
 ``` r
-remotes::install_github("m-path-io/mpathr")
-```
-
-Alternatively, you can go to the Github repository yourself and download
-it using either Git or as a zip file. You can then run the following
-code:
-
-``` r
-install.packages("path/to/mpathr", repos = NULL, type = "source")
+install.packages("mpathr")
+library(mpathr)
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to read data gathered from
+m-Path into R using the `mpathr` package. For this, we use the example
+data included in the package:
 
 ``` r
+# loads package
 library(mpathr)
-# TODO: Include basic examples here
+
+# find paths to example basic and meta data:
+basic_path <- mpath_example(file ='example_basic.csv')
+meta_path <- mpath_example(file = 'example_meta.csv')
+
+# read the data
+data <- read_mpath(
+  file = basic_path,
+  meta_data = meta_path
+)
+
+print(data)
+#> # A tibble: 2,221 × 100
+#>   connectionId legacyCode  code       alias initials accountCode scheduledBeepId sentBeepId
+#>          <int> <chr>       <chr>      <chr> <chr>    <chr>                 <int>      <int>
+#> 1       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7                    -1   19355815
+#> 2       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626776   19369681
+#> 3       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626777   19370288
+#> 4       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626781   19375253
+#> 5       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626782   19377280
+#> # ℹ 2,216 more rows
+#> # ℹ 92 more variables: reminderForOriginalSentBeepId <int>, questionListName <chr>,
+#> #   questionListLabel <lgl>, fromProtocolName <chr>, timeStampScheduled <int>, timeStampSent <int>,
+#> #   timeStampStart <int>, timeStampStop <int>, originalTimeStampSent <int>, timeZoneOffset <int>,
+#> #   deltaUTC <dbl>, consent_yesno_yesno <int>, gender_multipleChoice_index <int>,
+#> #   gender_multipleChoice_string <chr>, gender_multipleChoice_likert <int>, age_open <chr>,
+#> #   SWLS_intro_basic <int>, SWLS_1_multipleChoice_index <int>, …
 ```
-
-## Reference
-
-For an overview of all functions in this package, see the [mpathr
-Reference Site](https://m-path-io.github.io/mpathr/index.html).
 
 ## Getting help
 
