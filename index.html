@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Handling Data from the M-Path Platform • mpathr</title>
+<title>Easily Handling Data from the ‘m-Path’ Platform • mpathr</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Handling Data from the M-Path Platform">
-<meta name="description" content="The goal of `mpathr` is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the m-Path platform (&lt;https://m-path.io/landing/&gt;). The package provides functions to read data from m-Path, and to calculate response rate in data from Experience Sampling studies.">
-<meta property="og:description" content="The goal of `mpathr` is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the m-Path platform (&lt;https://m-path.io/landing/&gt;). The package provides functions to read data from m-Path, and to calculate response rate in data from Experience Sampling studies.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Easily Handling Data from the ‘m-Path’ Platform">
+<meta name="description" content="Provides tools for importing and cleaning Experience Sampling Method (ESM) data collected via the m-Path platform. The goal is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the m-Path platform (&lt;https://m-path.io/landing/&gt;). Functions include raw data handling, format standardization, and basic data checks, as well as to calculate the response rate in data from ESM studies.">
+<meta property="og:description" content="Provides tools for importing and cleaning Experience Sampling Method (ESM) data collected via the m-Path platform. The goal is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the m-Path platform (&lt;https://m-path.io/landing/&gt;). Functions include raw data handling, format standardization, and basic data checks, as well as to calculate the response rate in data from ESM studies.">
 <meta property="og:image" content="/logo.png">
 </head>
 <body>
@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">mpathr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,27 +57,51 @@
 
 <p><code>mpathr</code> is currently under development and is not yet meant for public use. Please check back later for updates.</p>
 <div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>The goal of <code>mpathr</code> is to provide with a few utility functions to read and perform some common operations in data from Experience Sampling Methodology (ESM) studies collected through the ‘m-Path’ platform (<a href="https://m-path.io/landing/" class="external-link uri">https://m-path.io/landing/</a>). The package provides functions to read data from ‘m-Path’, and to calculate response rate in data from Experience Sampling studies.</p>
+</div>
+<div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of mpathr from Github using the <a href="https://cran.r-project.org/package=remotes" class="external-link">remotes</a> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"m-path-io/mpathr"</span><span class="op">)</span></span></code></pre></div>
-<p>Alternatively, you can go to the Github repository yourself and download it using either Git or as a zip file. You can then run the following code:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"path/to/mpathr"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"mpathr"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://m-path.io" class="external-link">mpathr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/m-path-io/mpathr" class="external-link">mpathr</a></span><span class="op">)</span></span>
-<span><span class="co"># TODO: Include basic examples here</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
-</h2>
-<p>For an overview of all functions in this package, see the <a href="https://m-path-io.github.io/mpathr/index.html" class="external-link">mpathr Reference Site</a>.</p>
+<p>This is a basic example which shows you how to read data gathered from m-Path into R using the <code>mpathr</code> package. For this, we use the example data included in the package:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># loads package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://m-path.io" class="external-link">mpathr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># find paths to example basic and meta data:</span></span>
+<span><span class="va">basic_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mpath_example.html">mpath_example</a></span><span class="op">(</span>file <span class="op">=</span><span class="st">'example_basic.csv'</span><span class="op">)</span></span>
+<span><span class="va">meta_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mpath_example.html">mpath_example</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">'example_meta.csv'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># read the data</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_mpath.html">read_mpath</a></span><span class="op">(</span></span>
+<span>  file <span class="op">=</span> <span class="va">basic_path</span>,</span>
+<span>  meta_data <span class="op">=</span> <span class="va">meta_path</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2,221 × 100</span></span>
+<span><span class="co">#&gt;   connectionId legacyCode  code       alias initials accountCode scheduledBeepId sentBeepId</span></span>
+<span><span class="co">#&gt;          &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                 &lt;int&gt;      &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7                    -1   19355815</span></span>
+<span><span class="co">#&gt; 2       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626776   19369681</span></span>
+<span><span class="co">#&gt; 3       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626777   19370288</span></span>
+<span><span class="co">#&gt; 4       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626781   19375253</span></span>
+<span><span class="co">#&gt; 5       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626782   19377280</span></span>
+<span><span class="co">#&gt; # ℹ 2,216 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 92 more variables: reminderForOriginalSentBeepId &lt;int&gt;, questionListName &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   questionListLabel &lt;lgl&gt;, fromProtocolName &lt;chr&gt;, timeStampScheduled &lt;int&gt;, timeStampSent &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   timeStampStart &lt;int&gt;, timeStampStop &lt;int&gt;, originalTimeStampSent &lt;int&gt;, timeZoneOffset &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   deltaUTC &lt;dbl&gt;, consent_yesno_yesno &lt;int&gt;, gender_multipleChoice_index &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   gender_multipleChoice_string &lt;chr&gt;, gender_multipleChoice_likert &lt;int&gt;, age_open &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   SWLS_intro_basic &lt;int&gt;, SWLS_1_multipleChoice_index &lt;int&gt;, …</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
@@ -125,8 +149,9 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Merijn Mestdagh <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5077-861X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Koen Niemeijer <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-0816-534X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Lara Navarrete <br><small class="roles"> Author </small>  </li>
+<li>Koen Niemeijer <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-0816-534X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -142,7 +167,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Merijn Mestdagh, Koen Niemeijer, Lara Navarrete.</p>
+  <p>Developed by Merijn Mestdagh, Lara Navarrete, Koen Niemeijer.</p>
 </div>
 
 <div class="pkgdown-footer-right">
