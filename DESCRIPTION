@@ -39,7 +39,7 @@ Imports:
 Language: en-US
 BugReports: https://github.com/m-path-io/mpathr/issues
 Depends: 
-    R (>= 3.6.0)
+    R (>= 4.0.0)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 LazyData: true
