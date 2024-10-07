@@ -11,10 +11,10 @@ Authors@R: c(
   )
 Description: Provides tools for importing and cleaning Experience Sampling Method ('ESM') data 
     collected via the 'm-Path' platform. The goal is to provide with a few utility 
-    functions to be able to read and perform some common operations in ESM data collected through 
+    functions to be able to read and perform some common operations in 'ESM' data collected through 
     the 'm-Path' platform (<https://m-path.io/landing/>). Functions include raw data handling, 
     format standardization, and basic data checks, as well as to calculate the response rate in 
-    data from ESM studies. 
+    data from 'ESM' studies. 
 License: GPL (>= 3)
 URL: 
     https://m-path.io,

@@ -74,5 +74,6 @@ please file an issue with a minimal reproducible example on
 ## Code of Conduct
 
 Please note that the mpathr project is released with a [Contributor Code
-of Conduct](CODE_OF_CONDUCT.md). By contributing to this project you
-agree to abide by its terms.
+of
+Conduct](https://github.com/m-path-io/mpathr/blob/master/CODE_OF_CONDUCT.md).
+By contributing to this project you agree to abide by its terms.
