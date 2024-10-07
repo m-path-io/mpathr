@@ -20,8 +20,6 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 [![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`mpathr` is currently under development and is not yet meant for public use. Please check back later for updates.
-
 ## Overview
 
 The goal of `mpathr` is to provide with a few utility functions to read and perform some common operations in data from Experience Sampling Methodology (ESM) studies collected through the 'm-Path' platform (<https://m-path.io/landing/>). The package provides functions to read data from 'm-Path', and to calculate response rate in data from Experience Sampling studies. 

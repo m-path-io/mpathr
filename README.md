@@ -8,9 +8,6 @@
 [![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`mpathr` is currently under development and is not yet meant for public
-use. Please check back later for updates.
-
 ## Overview
 
 The goal of `mpathr` is to provide with a few utility functions to read
