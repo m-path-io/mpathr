@@ -149,6 +149,12 @@ read_mpath <- function(
     )
     names(problems) <- rep("x", length(problems))
 
+    if (length(problems) > 100) {
+      len <- length(problems)
+      problems <- problems[1:100]
+      problems <- c(problems, paste0("... and ", len - 100, " more problems."))
+    }
+
     cli_warn(c(
       "There were problems when reading in the data:",
       problems
