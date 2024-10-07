@@ -88,10 +88,11 @@ read_mpath <- function(
   # Get the type of each column in file to specify column types in readr::read_delim
   type_char <- meta_data |>
     select("columnName", "type") |>
-    rbind(cols_not_in_metadata) |>
-    dplyr::left_join(
+    rbind(cols_not_in_metadata)
+
+  type_char <- dplyr::left_join(
       x = tibble(columnName = col_names),
-      y = _,
+      y = type_char,
       by = "columnName"
     ) |>
     mutate(type = ifelse(is.na(.data$type), "?", .data$type)) # not in metadata, let R guess the type
