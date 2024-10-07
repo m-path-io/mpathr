@@ -9,8 +9,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-0816-534X")),
     person("m-Path Software", role = c("cph"))
   )
-Description: Provides tools for importing and cleaning Experience Sampling Method (ESM) data 
-    collected via the 'm-Path' platform. The goal of `mpathr` is to provide with a few utility 
+Description: Provides tools for importing and cleaning Experience Sampling Method ('ESM') data 
+    collected via the 'm-Path' platform. The goal is to provide with a few utility 
     functions to be able to read and perform some common operations in ESM data collected through 
     the 'm-Path' platform (<https://m-path.io/landing/>). Functions include raw data handling, 
     format standardization, and basic data checks, as well as to calculate the response rate in 
