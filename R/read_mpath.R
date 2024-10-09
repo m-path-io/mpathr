@@ -105,6 +105,7 @@ read_mpath <- function(
     file = file,
     delim = ";",
     locale = .mpath_locale,
+    comment = '\r', # this is the newline, which is used as a comment in the m-Path files
     show_col_types = FALSE,
     col_names = TRUE,
     col_types = type_char
@@ -280,7 +281,7 @@ read_meta_data <- function(
   meta_data <- meta_data |>
     mutate(type = case_match(
       .data$typeAnswer,
-      "basic" ~ "i",
+      "basic" ~ "?",
       "int" ~ "i",
       "string" ~ "c",
       "stringList" ~ "c", # the lists are read as strings and then converted to their respective types
