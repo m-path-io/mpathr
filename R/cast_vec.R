@@ -1,15 +1,15 @@
+# Function for unlisting columns by splitting the strings
 .unlist_col <- function(vec) {
-    tibble(
-      .id = seq_along(vec),
-      vec = vec
-    ) |>
-      mutate(vec = strsplit(.data$vec, ",")) |>
-      tidyr::unnest("vec", keep_empty = TRUE)
+  .data <- data.frame(
+    .id = seq_along(vec),
+    vec = vec
+  )
+  .data$vec <- strsplit(.data$vec, ",")
+  tidyr::unnest(.data, "vec", keep_empty = TRUE)
 }
 
 .relist_col <- function(data) {
-  data <- summarise(data, vec = list(.data$vec), .by = ".id")
-  data$vec
+  unname(split(data$vec, data$.id))
 }
 
 .to_int_list <- function(vec) {
@@ -32,27 +32,55 @@
   .relist_col(.data)
 }
 
-.to_string_list <- function(vec) {
-  .data <- .unlist_col(vec)
-  .data$vec <- as.character(.data$vec)
-  .relist_col(.data)
-}
-
 .to_string <- function(vec) {
   # In case the file was written back to csv using [write_mpath()], the strings are not in JSON
   # format and thus do not need conversion.
-  if (!any(grepl("\\\\", vec), na.rm = TRUE)) {
+  if (!any(grepl("\"", vec), na.rm = TRUE)) {
     return(vec)
   }
 
-  unjson <- ifelse(is.na(vec), "null", vec)
-  unjson <- paste0("[", paste0(unjson, collapse = ","), "]")
-  unjson <- jsonlite::fromJSON(unjson)
-  as.character(unjson)
+  # Only unjson strings that are not NA, so find them first
+  idx_na <- is.na(vec)
+
+  # Build the JSON string for the values that are not NA
+  unjson <- paste0("[", paste0(vec[!idx_na], collapse = ","), "]")
+
+  # Parse the JSON string
+  unjson <- jsonlite::fromJSON(unjson, simplifyVector = TRUE)
+
+  # Fill in the unjsoned values
+  vec[!idx_na] <- unjson
+  vec
 }
 
 .to_string_list <- function(vec) {
-  .data <- .unlist_col(vec)
-  .data$vec <- .to_string(.data$vec)
-  .relist_col(.data)
+  if (!any(grepl("\"", vec), na.rm = TRUE)) {
+    # In case the file was written back to csv using [write_mpath()], the strings are not in JSON
+    # format and thus do not need JSON conversion.
+    vec <- .unlist_col(vec)
+    vec <- .relist_col(vec)
+    return(vec)
+  }
+
+  # Only unjson strings that are not NA, so find them first
+  idx_na <- is.na(vec)
+
+  # Define every non-NA entry to be a JSON array
+  unjson <- paste0("[", vec[!idx_na], "]", collapse = ",")
+
+  # Put the string between square brackets to complete the JSON object
+  unjson <- paste0("[", unjson, "]")
+
+  unjson <- jsonlite::fromJSON(unjson, simplifyVector = FALSE)
+
+  # The JSON is now parsed to a lists of lists of lists. We want to unlist in such a way that we
+  # have a list of vectors. So loop over the outer list and collapse everything into a single
+  # vector.
+  unjson <- lapply(unjson, \(x) unlist(x, use.names = FALSE))
+
+  # Merge with the NAs
+  vec <- as.list(vec)
+  vec[!idx_na] <- unjson
+
+  vec
 }
