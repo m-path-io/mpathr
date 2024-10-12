@@ -1,0 +1,7 @@
+example_data            Example m-path data
+mpath_example           Get path to m-Path example data
+plot_response_rate      Plots response rate per day (and per
+                        participant)
+read_mpath              Read m-Path data
+response_rate           Calculate response rate
+write_mpath             Write m-Path data to a CSV file

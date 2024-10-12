@@ -219,6 +219,7 @@ read_meta_data <- function(
     file = meta_data,
     delim = ";",
     locale = .mpath_locale,
+    escape_double = TRUE,
     show_col_types = FALSE,
     col_names = TRUE,
     col_types = c("cccclll")

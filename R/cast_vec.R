@@ -35,7 +35,11 @@
 .to_string <- function(vec) {
   # In case the file was written back to csv using [write_mpath()], the strings are not in JSON
   # format and thus do not need conversion.
-  if (!any(grepl("\"", vec), na.rm = TRUE)) {
+  if (!any(grepl("\"", vec) & vec != '""')){#, na.rm = TRUE) {
+
+    # turn vec == '""' into ""
+    vec[vec == '""'] <- ""
+
     return(vec)
   }
 

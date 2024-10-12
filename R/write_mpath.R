@@ -30,13 +30,23 @@ write_mpath <- function(
     )) |>
     ungroup()
 
-  # TODO: Escape empty strings, otherwise they are converted to NA
-  # data <- data |>
-  #   mutate(across(
-  #     .cols = where(is.character),
-  #     .fns = \(x) ifelse(x == "", '\\', x)
-  #   ))
+  string_cols <- data %>%
+    select(where(is.character)) %>%
+    colnames()
+
+  # escape empty strings
+  data <- data |>
+    mutate(across(
+      .cols = where(is.character),
+      .fns = \(x) {
+        # find empty vals index
+        NA_idx = x == ""
+        # escape empty strings
+        x <- ifelse(NA_idx, '""', x)
+      }
+    ))
+  # TODO: maybe quote all strings so that we can implement lists in read_mpath for reread data
 
   # Write the data to csv
-  readr::write_csv2(data, file = file)
+  readr::write_csv2(data, file = file, na = 'NA', escape = 'double')
 }

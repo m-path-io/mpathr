@@ -1,0 +1,394 @@
+
+R version 4.3.2 (2023-10-31 ucrt) -- "Eye Holes"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "mpathr"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('mpathr')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("mpath_example")
+> ### * mpath_example
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mpath_example
+> ### Title: Get path to m-Path example data
+> ### Aliases: mpath_example
+> 
+> ### ** Examples
+> 
+> # Example 1: access 'example_basic.csv' data
+> 
+> mpath_example('example_basic.csv') # returns the full path to the file
+[1] "C:/Users/laran/Documents/Vault/Work/JOBSTUDENT_R/mpathr/mpathr.Rcheck/mpathr/extdata/example_basic.csv"
+> 'example_basic.csv'
+[1] "example_basic.csv"
+> 
+> # Example 2: list all the example files
+> 
+> mpath_example() # returns the example files as a vector
+[1] "example_basic.csv" "example_meta.csv" 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot_response_rate")
+> ### * plot_response_rate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot_response_rate
+> ### Title: Plots response rate per day (and per participant)
+> ### Aliases: plot_response_rate
+> 
+> ### ** Examples
+> 
+> # load data
+> data(example_data)
+> 
+> # make plot with plot_response_rate
+> plot_response_rate(data = example_data,
++ time_col = sent,
++ participant_col = participant,
++ valid_col = answered)
+> # The resulting ggplot object can be formatted using ggplot2 functions (see ggplot2
+> # documentation).
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("read_mpath")
+> ### * read_mpath
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: read_mpath
+> ### Title: Read m-Path data
+> ### Aliases: read_mpath
+> 
+> ### ** Examples
+> 
+> 
+> # We can use the function mpath_examples to get the path to the example data
+> basic_path <- mpath_example(file ="example_basic.csv")
+> meta_path <- mpath_example("example_meta.csv")
+> 
+> data <- read_mpath(file = basic_path,
++                 meta_data = meta_path)
+Warning: There were problems when reading in the data:
+✖ In row 2 column 66, expected an integer but got 1.
+✖ In row 3 column 84, expected an integer but got 1.
+✖ In row 4 column 84, expected an integer but got 1.
+✖ In row 5 column 84, expected an integer but got 1.
+✖ In row 6 column 84, expected an integer but got 1.
+✖ In row 7 column 84, expected an integer but got 1.
+✖ In row 8 column 84, expected an integer but got 1.
+✖ In row 9 column 99, expected an integer but got 1.
+✖ In row 10 column 99, expected an integer but got .
+✖ In row 11 column 99, expected an integer but got .
+✖ In row 12 column 99, expected an integer but got .
+✖ In row 13 column 99, expected an integer but got .
+✖ In row 14 column 99, expected an integer but got .
+✖ In row 15 column 99, expected an integer but got .
+✖ In row 16 column 99, expected an integer but got .
+✖ In row 17 column 99, expected an integer but got .
+✖ In row 18 column 99, expected an integer but got .
+✖ In row 19 column 99, expected an integer but got .
+✖ In row 20 column 99, expected an integer but got .
+✖ In row 21 column 99, expected an integer but got .
+✖ In row 22 column 99, expected an integer but got 1.
+✖ In row 23 column 99, expected an integer but got 1.
+✖ In row 24 column 99, expected an integer but got .
+✖ In row 25 column 99, expected an integer but got .
+✖ In row 26 column 99, expected an integer but got .
+✖ In row 27 column 99, expected an integer but got .
+✖ In row 28 column 99, expected an integer but got .
+✖ In row 29 column 99, expected an integer but got .
+✖ In row 1415 column 19, expected a number but got .
+✖ In row 1416 column 19, expected a number but got .
+✖ In row 1417 column 19, expected a number but got .
+✖ In row 1418 column 19, expected a number but got .
+✖ In row 1419 column 19, expected a number but got .
+✖ In row 1420 column 19, expected a number but got .
+✖ In row 1421 column 19, expected a number but got .
+✖ In row 1422 column 19, expected a number but got .
+✖ In row 1423 column 19, expected a number but got .
+✖ In row 1424 column 19, expected a number but got .
+✖ In row 1425 column 19, expected a number but got .
+✖ In row 1426 column 19, expected a number but got .
+✖ In row 1427 column 19, expected a number but got .
+✖ In row 1428 column 19, expected a number but got .
+✖ In row 1429 column 19, expected a number but got .
+✖ In row 1430 column 19, expected a number but got .
+✖ In row 1431 column 19, expected a number but got .
+✖ In row 1432 column 19, expected a number but got .
+✖ In row 1433 column 19, expected a number but got .
+✖ In row 1434 column 19, expected a number but got .
+✖ In row 1435 column 19, expected a number but got .
+✖ In row 1436 column 19, expected a number but got .
+✖ In row 1437 column 19, expected a number but got .
+✖ In row 1438 column 19, expected a number but got .
+✖ In row 1439 column 19, expected a number but got .
+✖ In row 1440 column 19, expected a number but got .
+✖ In row 1441 column 19, expected a number but got .
+✖ In row 1442 column 19, expected a number but got .
+✖ In row 1443 column 19, expected a number but got .
+✖ In row 1444 column 19, expected a number but got .
+✖ In row 1445 column 19, expected a number but got .
+✖ In row 1446 column 19, expected a number but got .
+✖ In row 1447 column 19, expected a number but got .
+✖ In row 1448 column 19, expected a number but got .
+✖ In row 1449 column 19, expected a number but got .
+✖ In row 1450 column 19, expected a number but got .
+✖ In row 1451 column 19, expected a number but got .
+✖ In row 1452 column 19, expected a number but got .
+✖ In row 1453 column 19, expected a number but got .
+✖ In row 1454 column 19, expected a number but got .
+✖ In row 1455 column 19, expected a number but got .
+✖ In row 1456 column 19, expected a number but got .
+✖ In row 1457 column 19, expected a number but got .
+✖ In row 1458 column 19, expected a number but got .
+✖ In row 1459 column 19, expected a number but got .
+✖ In row 1460 column 19, expected a number but got .
+✖ In row 1461 column 19, expected a number but got .
+✖ In row 1462 column 19, expected a number but got .
+✖ In row 1463 column 19, expected a number but got .
+✖ In row 1464 column 19, expected a number but got .
+✖ In row 1465 column 19, expected a number but got .
+✖ In row 1466 column 19, expected a number but got .
+✖ In row 1467 column 19, expected a number but got .
+✖ In row 1468 column 19, expected a number but got .
+✖ In row 1469 column 19, expected a number but got .
+✖ In row 1470 column 19, expected a number but got .
+✖ In row 1471 column 19, expected a number but got .
+✖ In row 1472 column 19, expected a number but got .
+✖ In row 1473 column 19, expected a number but got .
+✖ In row 1474 column 19, expected a number but got .
+✖ In row 1475 column 19, expected a number but got .
+✖ In row 1476 column 19, expected a number but got .
+✖ In row 1477 column 19, expected a number but got .
+✖ In row 1478 column 19, expected a number but got .
+✖ In row 1479 column 19, expected a number but got .
+✖ In row 1480 column 19, expected a number but got .
+✖ In row 1481 column 19, expected a number but got .
+✖ In row 1482 column 19, expected a number but got .
+✖ In row 1483 column 19, expected a number but got .
+✖ In row 1484 column 19, expected a number but got .
+✖ In row 1485 column 19, expected a number but got .
+✖ In row 1486 column 19, expected a number but got .
+... and 736 more problems.
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("response_rate")
+> ### * response_rate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: response_rate
+> ### Title: Calculate response rate
+> ### Aliases: response_rate
+> 
+> ### ** Examples
+> 
+> # Example 1: calculate response rates for the whole study
+> # Get example data
+> data(example_data)
+> 
+> # Calculate response rate for each participant
+> 
+> # We don't specify time_col, period_start or period_end.
+> # Response rates will be based on all the participant's data
+> response_rate <- response_rate(data = example_data,
++                                valid_col = answered,
++                                participant_col = participant)
+Calculating response rates for the entire duration of the study.
+> 
+> # Example 2: calculate response rates for a specific time period
+> data(example_data)
+> 
+> # Calculate response rate for each participant between dates
+> response_rate <- response_rate(data = example_data,
++                                valid_col = answered,
++                                participant_col = participant,
++                                time_col = sent,
++                                period_start = '2024-05-15',
++                                period_end = '2024-05-31')
+Calculating response rates between date: 2024-05-15 and 2024-05-31
+> 
+> # Get participants with a response rate below 0.5
+> response_rate[response_rate$response_rate < 0.5,]
+# A tibble: 2 × 3
+  participant number_of_beeps response_rate
+        <int>           <int>         <dbl>
+1          16              55        0.0364
+2          20              77        0.494 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("write_mpath")
+> ### * write_mpath
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: write_mpath
+> ### Title: Write m-Path data to a CSV file
+> ### Aliases: write_mpath
+> 
+> ### ** Examples
+> 
+> 
+> data <- read_mpath(
++   mpath_example("example_basic.csv"),
++   mpath_example("example_meta.csv")
++ )
+Warning: There were problems when reading in the data:
+✖ In row 2 column 66, expected an integer but got 1.
+✖ In row 3 column 84, expected an integer but got 1.
+✖ In row 4 column 84, expected an integer but got 1.
+✖ In row 5 column 84, expected an integer but got 1.
+✖ In row 6 column 84, expected an integer but got 1.
+✖ In row 7 column 84, expected an integer but got 1.
+✖ In row 8 column 84, expected an integer but got 1.
+✖ In row 9 column 99, expected an integer but got 1.
+✖ In row 10 column 99, expected an integer but got .
+✖ In row 11 column 99, expected an integer but got .
+✖ In row 12 column 99, expected an integer but got .
+✖ In row 13 column 99, expected an integer but got .
+✖ In row 14 column 99, expected an integer but got .
+✖ In row 15 column 99, expected an integer but got .
+✖ In row 16 column 99, expected an integer but got .
+✖ In row 17 column 99, expected an integer but got .
+✖ In row 18 column 99, expected an integer but got .
+✖ In row 19 column 99, expected an integer but got .
+✖ In row 20 column 99, expected an integer but got .
+✖ In row 21 column 99, expected an integer but got .
+✖ In row 22 column 99, expected an integer but got 1.
+✖ In row 23 column 99, expected an integer but got 1.
+✖ In row 24 column 99, expected an integer but got .
+✖ In row 25 column 99, expected an integer but got .
+✖ In row 26 column 99, expected an integer but got .
+✖ In row 27 column 99, expected an integer but got .
+✖ In row 28 column 99, expected an integer but got .
+✖ In row 29 column 99, expected an integer but got .
+✖ In row 1415 column 19, expected a number but got .
+✖ In row 1416 column 19, expected a number but got .
+✖ In row 1417 column 19, expected a number but got .
+✖ In row 1418 column 19, expected a number but got .
+✖ In row 1419 column 19, expected a number but got .
+✖ In row 1420 column 19, expected a number but got .
+✖ In row 1421 column 19, expected a number but got .
+✖ In row 1422 column 19, expected a number but got .
+✖ In row 1423 column 19, expected a number but got .
+✖ In row 1424 column 19, expected a number but got .
+✖ In row 1425 column 19, expected a number but got .
+✖ In row 1426 column 19, expected a number but got .
+✖ In row 1427 column 19, expected a number but got .
+✖ In row 1428 column 19, expected a number but got .
+✖ In row 1429 column 19, expected a number but got .
+✖ In row 1430 column 19, expected a number but got .
+✖ In row 1431 column 19, expected a number but got .
+✖ In row 1432 column 19, expected a number but got .
+✖ In row 1433 column 19, expected a number but got .
+✖ In row 1434 column 19, expected a number but got .
+✖ In row 1435 column 19, expected a number but got .
+✖ In row 1436 column 19, expected a number but got .
+✖ In row 1437 column 19, expected a number but got .
+✖ In row 1438 column 19, expected a number but got .
+✖ In row 1439 column 19, expected a number but got .
+✖ In row 1440 column 19, expected a number but got .
+✖ In row 1441 column 19, expected a number but got .
+✖ In row 1442 column 19, expected a number but got .
+✖ In row 1443 column 19, expected a number but got .
+✖ In row 1444 column 19, expected a number but got .
+✖ In row 1445 column 19, expected a number but got .
+✖ In row 1446 column 19, expected a number but got .
+✖ In row 1447 column 19, expected a number but got .
+✖ In row 1448 column 19, expected a number but got .
+✖ In row 1449 column 19, expected a number but got .
+✖ In row 1450 column 19, expected a number but got .
+✖ In row 1451 column 19, expected a number but got .
+✖ In row 1452 column 19, expected a number but got .
+✖ In row 1453 column 19, expected a number but got .
+✖ In row 1454 column 19, expected a number but got .
+✖ In row 1455 column 19, expected a number but got .
+✖ In row 1456 column 19, expected a number but got .
+✖ In row 1457 column 19, expected a number but got .
+✖ In row 1458 column 19, expected a number but got .
+✖ In row 1459 column 19, expected a number but got .
+✖ In row 1460 column 19, expected a number but got .
+✖ In row 1461 column 19, expected a number but got .
+✖ In row 1462 column 19, expected a number but got .
+✖ In row 1463 column 19, expected a number but got .
+✖ In row 1464 column 19, expected a number but got .
+✖ In row 1465 column 19, expected a number but got .
+✖ In row 1466 column 19, expected a number but got .
+✖ In row 1467 column 19, expected a number but got .
+✖ In row 1468 column 19, expected a number but got .
+✖ In row 1469 column 19, expected a number but got .
+✖ In row 1470 column 19, expected a number but got .
+✖ In row 1471 column 19, expected a number but got .
+✖ In row 1472 column 19, expected a number but got .
+✖ In row 1473 column 19, expected a number but got .
+✖ In row 1474 column 19, expected a number but got .
+✖ In row 1475 column 19, expected a number but got .
+✖ In row 1476 column 19, expected a number but got .
+✖ In row 1477 column 19, expected a number but got .
+✖ In row 1478 column 19, expected a number but got .
+✖ In row 1479 column 19, expected a number but got .
+✖ In row 1480 column 19, expected a number but got .
+✖ In row 1481 column 19, expected a number but got .
+✖ In row 1482 column 19, expected a number but got .
+✖ In row 1483 column 19, expected a number but got .
+✖ In row 1484 column 19, expected a number but got .
+✖ In row 1485 column 19, expected a number but got .
+✖ In row 1486 column 19, expected a number but got .
+... and 736 more problems.
+> 
+> ## Not run: 
+> ##D   write_mpath(data, "data.csv")
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.71 0.15 2.39 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

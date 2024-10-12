@@ -35,7 +35,8 @@ Imports:
     tidyr,
     rlang,
     ggplot2,
-    jsonlite
+    jsonlite,
+    magrittr
 Language: en-US
 BugReports: https://github.com/m-path-io/mpathr/issues
 Depends: 

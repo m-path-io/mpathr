@@ -61,8 +61,8 @@ data <- read_mpath(
 
 ### Note: saving m-Path data
 As explained above, the resulting data frame will contain columns with lists,
-which can be problematic when saving the data. To save the data, we suggest
-using either `fwrite` from the `data.table` package, or the `save` function. 
+which can be problematic when saving the data. To save the data, we suggest the
+following two options:
 
 If you want to save the data as a 'csv' to use it in another program, use `write_mpath()`. Once 
 written to csv, you can again use `read_mpath()` to read the data back into R.

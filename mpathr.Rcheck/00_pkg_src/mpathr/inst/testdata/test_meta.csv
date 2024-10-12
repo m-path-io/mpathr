@@ -1,0 +1,92 @@
+﻿columnName;fullQuestion;typeQuestion;typeAnswer;fullQuestion_mixed;typeQuestion_mixed;typeAnswer_mixed
+open_open;Question;open;string;0;0;0
+open_number_open;"put decimal number";open;string;0;0;0
+open_number_digits_open;Question;open;string;0;0;0
+yesno_yesno;Question;yesno;int;0;0;0
+single_choice_multipleChoice_index;Question;multipleChoice;int;0;0;0
+single_choice_multipleChoice_string;Question;multipleChoice;string;0;0;0
+single_choice_multipleChoice_likert;Question;multipleChoice;int;0;0;0
+multiple_choice_multipleChoice_index;"Question choose 1 option";multipleChoice;intList;0;0;0
+multiple_choice_multipleChoice_string;"Question choose 1 option";multipleChoice;stringList;0;0;0
+multiple_choice_multipleChoice_likert;"Question choose 1 option";multipleChoice;intList;0;0;0
+multiplemulti_choice_multipleChoice_index;"Question choose 2 options";multipleChoice;intList;0;0;0
+multiplemulti_choice_multipleChoice_string;"Question choose 2 options";multipleChoice;stringList;0;0;0
+multiplemulti_choice_multipleChoice_likert;"Question choose 2 options";multipleChoice;intList;0;0;0
+multiplemulti_none_choice_multipleChoice_index;"Question choose no options";multipleChoice;intList;0;0;0
+multiplemulti_none_choice_multipleChoice_string;"Question choose no options";multipleChoice;stringList;0;0;0
+multiplemulti_none_choice_multipleChoice_likert;"Question choose no options";multipleChoice;intList;0;0;0
+single_other_multipleChoice_index;"choose other option";multipleChoice;int;0;0;0
+single_other_multipleChoice_string;"choose other option";multipleChoice;string;0;0;0
+single_other_multipleChoice_likert;"choose other option";multipleChoice;int;0;0;0
+order_order;Question;order;intList;0;0;0
+multismiley_multiSmiley;Question;multiSmiley;stringList;0;0;0
+bodypart_bodyParts;Question;bodyParts;stringList;0;0;0
+bodypartfronback_bodyParts;Question;bodyParts;stringList;0;0;0
+image_choice_single_imageChoice_index;"single choice";imageChoice;int;0;0;0
+image_choice_single_imageChoice_string;"single choice";imageChoice;string;0;0;0
+image_choice_single_imageChoice_likert;"single choice";imageChoice;int;0;0;0
+image_choice_multi_imageChoice_index;"multi choice";imageChoice;intList;0;0;0
+image_choice_multi_imageChoice_string;"multi choice";imageChoice;stringList;0;0;0
+image_choice_multi_imageChoice_likert;"multi choice";imageChoice;intList;0;0;0
+valence_smiley;Question;smiley;int;0;0;0
+surprise_smiley;Question;smiley;int;0;0;0
+happy_smiley;Question;smiley;int;0;0;0
+angry_smiley;Question;smiley;int;0;0;0
+sad_smiley;Question;smiley;int;0;0;0
+fear_smiley;Question;smiley;int;0;0;0
+stress_smiley;Question;smiley;int;0;0;0
+battery_smiley;Question;smiley;int;0;0;0
+sliderneutral_sliderNeutralPos;Question;sliderNeutralPos;int;0;0;0
+sliderneg_sliderNegPos;Question;sliderNegPos;int;0;0;0
+slidersmallrange_sliderNegPos;Question;sliderNegPos;int;0;0;0
+time_time;Question;time;int;0;0;0
+time_seconds_time;Question;time;int;0;0;0
+date_date;Question;date;intList;0;0;0
+image_basic;image;basic;basic;0;0;0
+audio_audio;Question;audio;int;0;0;0
+text_basic;text;basic;basic;0;0;0
+video_video;Question;video;intList;0;0;0
+button_button;;button;int;0;0;0
+vectorStringComputation_computation;;computation;stringList;0;0;0
+stringComputation_computation;;computation;string;0;0;0
+vectorComputation_computation;;computation;doubleList;0;0;0
+numberComputation_computation;;computation;double;0;0;0
+contLine_continuousLine;Question;continuousLine;doubleList;0;0;0
+picture_picture;Question;picture;file;0;0;0
+recording_recording_filename;Question;recording;file;0;0;0
+recording_recording_metadata;Question;recording;file;0;0;0
+location_location;;location;doubleList;0;0;0
+appusage_appUsage_apps;;appUsage;stringList;0;0;0
+appusage_appUsage_usage;;appUsage;intList;0;0;0
+stepcount_steps;;steps;int;0;0;0
+noise_noise;;noise;doubleList;0;0;0
+bluetooth_bluetooth;;bluetooth;stringList;0;0;0
+spatial_spatialWorkingMemory;;spatialWorkingMemory;containerAnswer;0;0;0
+spatial_spatialWorkingMemory-toGuess;;spatialWorkingMemory;intList;0;0;0
+spatial_spatialWorkingMemory-guessed;;spatialWorkingMemory;intList;0;0;0
+spatial_spatialWorkingMemory-responseTimes;;spatialWorkingMemory;intList;0;0;0
+mole_whackmole;;whackmole;containerAnswer;0;0;0
+mole_whackmole-peeped;;whackmole;intList;0;0;0
+mole_whackmole-bonked;;whackmole;intList;0;0;0
+mole_whackmole-preciseXY;;whackmole;intList;0;0;0
+mole_whackmole-scores;;whackmole;intList;0;0;0
+mole_whackmole-speedScores;;whackmole;intList;0;0;0
+mole_whackmole-responseTimes;;whackmole;intList;0;0;0
+set_spatialExploration;;spatialExploration;containerAnswer;0;0;0
+set_spatialExploration-clicked;;spatialExploration;intList;0;0;0
+set_spatialExploration-scores;;spatialExploration;intList;0;0;0
+set_spatialExploration-clickTimes;;spatialExploration;intList;0;0;0
+set_spatialExploration-highCorrelation;;spatialExploration;int;0;0;0
+sliderskip_sliderNegPos;skip;sliderNegPos;int;0;0;0
+openskip_open;skip;open;string;0;0;0
+mpcskip_multipleChoice_index;skip;multipleChoice;intList;0;0;0
+mpcskip_multipleChoice_string;skip;multipleChoice;stringList;0;0;0
+mpcskip_multipleChoice_likert;skip;multipleChoice;intList;0;0;0
+singlechoiceskip_multipleChoice_index;skip;multipleChoice;intList;0;0;0
+singlechoiceskip_multipleChoice_string;skip;multipleChoice;stringList;0;0;0
+singlechoiceskip_multipleChoice_likert;skip;multipleChoice;intList;0;0;0
+slidertimeout_sliderNegPos;"let time out";sliderNegPos;int;0;0;0
+opentimeout_open;"let time out";open;string;0;0;0
+mpctimeout_open;"let time out";open;string;0;0;0
+questionSameLabel_sliderNeutralPos;"question a with same label";sliderNeutralPos;int;0;0;0
+questionSameLabel_open;"question b with same label";open;string;0;0;0

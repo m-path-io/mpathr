@@ -1,0 +1,11 @@
+mpathr-package	mpathr-package
+.mpath_locale	dot-mpath_locale
+example_data	example_data
+is_opened_in_excel	is_opened_in_excel
+mpathr	mpathr-package
+mpath_example	mpath_example
+plot_response_rate	plot_response_rate
+read_meta_data	read_meta_data
+read_mpath	read_mpath
+response_rate	response_rate
+write_mpath	write_mpath
