@@ -4,10 +4,13 @@
 \alias{read_meta_data}
 \title{Read m-Path meta data}
 \usage{
-read_meta_data(meta_data)
+read_meta_data(meta_data, warn_changed_columns = TRUE)
 }
 \arguments{
-\item{meta_data}{A string with the path to the meta data file}
+\item{meta_data}{A string with the path to the meta data file.}
+
+\item{warn_changed_columns}{Warn if the question text, type of question, or type of answer has
+changed during the study. Default is \code{TRUE} and may print up to 100 warnings.}
 }
 \value{
 A \link[tibble]{tibble} with the contents of the meta data file.

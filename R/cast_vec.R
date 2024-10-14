@@ -1,5 +1,7 @@
 # Function for unlisting columns by splitting the strings
 .unlist_col <- function(vec) {
+  # Generate a data frame with instance IDs to keep track of what goes where
+  # Then unsplit the vector to a list column and unpack that column to a long format
   .data <- data.frame(
     .id = seq_along(vec),
     vec = vec
@@ -8,6 +10,8 @@
   tidyr::unnest(.data, "vec", keep_empty = TRUE)
 }
 
+# Given a data frame with a vec(tor) and id, "split" the data frame into lists with each list
+# having the instance belonging to that ID
 .relist_col <- function(data) {
   unname(split(data$vec, data$.id))
 }
@@ -33,17 +37,29 @@
 }
 
 .to_string <- function(vec) {
-  # In case the file was written back to csv using [write_mpath()], the strings are not in JSON
-  # format and thus do not need conversion.
-  if (!any(grepl("\"", vec), na.rm = TRUE)) {
+  if (all(is.na(vec)) || !any(vec != "", na.rm = TRUE)) {
     return(vec)
   }
 
   # Only unjson strings that are not NA, so find them first
   idx_na <- is.na(vec)
+  unjson <- vec[!idx_na]
+
+  # Weird bug: If there are only "NA" values (not missing, but the text NA), it will convert it
+  # to missing values.
+  if (all(unjson == "\"NA\"")) {
+    return(gsub("\"NA\"", "NA", vec))
+  }
 
   # Build the JSON string for the values that are not NA
-  unjson <- paste0("[", paste0(vec[!idx_na], collapse = ","), "]")
+  unjson <- paste0("[", paste0(unjson, collapse = ","), "]")
+
+  # Ensure the JSON is valid, otherwise return the input
+  # This should normally not happen, except when there is a column in the meta data that we had to
+  # guess, which turned out to be a character, and is then not JSON after all.
+  if (isFALSE(jsonlite::validate(unjson))) {
+    return(vec)
+  }
 
   # Parse the JSON string
   unjson <- jsonlite::fromJSON(unjson, simplifyVector = TRUE)
@@ -54,14 +70,6 @@
 }
 
 .to_string_list <- function(vec) {
-  if (!any(grepl("\"", vec), na.rm = TRUE)) {
-    # In case the file was written back to csv using [write_mpath()], the strings are not in JSON
-    # format and thus do not need JSON conversion.
-    vec <- .unlist_col(vec)
-    vec <- .relist_col(vec)
-    return(vec)
-  }
-
   # Only unjson strings that are not NA, so find them first
   idx_na <- is.na(vec)
 
@@ -70,6 +78,13 @@
 
   # Put the string between square brackets to complete the JSON object
   unjson <- paste0("[", unjson, "]")
+
+  # Ensure the JSON is valid, otherwise return the input
+  # This should normally not happen, except when there is a column in the meta data that we had to
+  # guess, which turned out to be a character, and is then not JSON after all.
+  if (isFALSE(jsonlite::validate(unjson))) {
+    return(vec)
+  }
 
   unjson <- jsonlite::fromJSON(unjson, simplifyVector = FALSE)
 

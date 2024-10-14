@@ -4,24 +4,29 @@
 \alias{read_mpath}
 \title{Read m-Path data}
 \usage{
-read_mpath(file, meta_data)
+read_mpath(file, meta_data = NULL, warn_changed_columns = TRUE)
 }
 \arguments{
-\item{file}{A string with the path to the m-Path file}
+\item{file}{A string with the path to the m-Path file.}
 
-\item{meta_data}{A string with the path to the meta data file}
+\item{meta_data}{A string with the path to the meta data file.}
+
+\item{warn_changed_columns}{Warn if the question text, type of question, or type of answer has
+changed during the study. Default is \code{TRUE} and may print up to 100 warnings.}
 }
 \value{
-A \link[tibble]{tibble} with the 'm-Path' data.
+A \link[tibble]{tibble} with the m-Path data.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-This function reads an 'm-Path' file into a dataframe.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
+This function reads an m-Path CSV file into a \link[tibble]{tibble}, an extension of a
+\code{data.frame}.
 }
 \details{
-Note that this function has been tested with the meta data version v.1.1.
-So it is advised to use that version of the meta data.
-(In 'm-Path', change the version in 'Export data' > "export version").
+Note that this function has been tested with the meta data version v.1.1, so it is
+advised to use that version of the meta data. In the m-Path dashboard, change the version in
+'Export data' > "export version".
 }
 \examples{
 
@@ -32,4 +37,7 @@ meta_path <- mpath_example("example_meta.csv")
 data <- read_mpath(file = basic_path,
                 meta_data = meta_path)
 
+}
+\seealso{
+\code{\link[=write_mpath]{write_mpath()}} for saving the data back to a CSV file.
 }

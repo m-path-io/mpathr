@@ -18,18 +18,23 @@
 
 #' Read m-Path data
 #'
-#' @description `r lifecycle::badge("experimental")`
-#' This function reads an 'm-Path' file into a dataframe.
+#' @description `r lifecycle::badge("stable")`
 #'
-#' @details
-#' Note that this function has been tested with the meta data version v.1.1.
-#' So it is advised to use that version of the meta data.
-#' (In 'm-Path', change the version in 'Export data' > "export version").
+#'   This function reads an m-Path CSV file into a \link[tibble]{tibble}, an extension of a
+#'   `data.frame`.
 #'
-#' @param file A string with the path to the m-Path file
-#' @param meta_data A string with the path to the meta data file
+#' @details Note that this function has been tested with the meta data version v.1.1, so it is
+#' advised to use that version of the meta data. In the m-Path dashboard, change the version in
+#' 'Export data' > "export version".
 #'
-#' @returns A \link[tibble]{tibble} with the 'm-Path' data.
+#' @param file A string with the path to the m-Path file.
+#' @param meta_data A string with the path to the meta data file.
+#' @param warn_changed_columns Warn if the question text, type of question, or type of answer has
+#'   changed during the study. Default is `TRUE` and may print up to 100 warnings.
+#'
+#' @seealso [write_mpath()] for saving the data back to a CSV file.
+#'
+#' @returns A \link[tibble]{tibble} with the m-Path data.
 #' @export
 #'
 #' @examples
@@ -43,16 +48,20 @@
 #'
 read_mpath <- function(
     file,
-    meta_data
+    meta_data = NULL,
+    warn_changed_columns = TRUE
 ) {
 
   # Read in the meta data
-  meta_data <- read_meta_data(meta_data)
+  if (!is.null(meta_data)) {
+
+  }
+  meta_data <- read_meta_data(meta_data, warn_changed_columns)
 
   # Read first line to get names of columns (to be saved in col_names)
   col_names <- readr::read_lines(file, n_max = 1)
 
-  # but first: check if file was opened by Excel
+  # but first: check if file was opened in Excel previously
   is_opened_in_excel(col_names)
 
   # Define the default column names in data files
@@ -68,6 +77,8 @@ read_mpath <- function(
     sentBeepId = "i",
     reminderForOriginalSentBeepId = "i",
     questionListName = "c",
+    questionListLabel = "c",
+    fromProtocolName = "c",
     timeStampScheduled = "i",
     timeStampSent = "i",
     timeStampStart = "i",
@@ -87,18 +98,15 @@ read_mpath <- function(
 
   # Get the type of each column in file to specify column types in readr::read_delim
   type_char <- meta_data |>
-    select("columnName", "type") |>
-    rbind(cols_not_in_metadata)
+    select("columnName", "type", "typeAnswer") |>
+    dplyr::bind_rows(cols_not_in_metadata)
 
   type_char <- dplyr::left_join(
       x = tibble(columnName = col_names),
       y = type_char,
       by = "columnName"
     ) |>
-    mutate(type = ifelse(is.na(.data$type), "?", .data$type)) # not in metadata, let R guess the type
-
-  # put the types in one single string (that"s how read_delim expects them)
-  type_char <- paste0(type_char$type, collapse = "")
+    mutate(type = ifelse(is.na(.data$type), "?", .data$type))
 
   # Read data
   data <- suppressWarnings(readr::read_delim(
@@ -106,19 +114,22 @@ read_mpath <- function(
     delim = ";",
     locale = .mpath_locale,
     show_col_types = FALSE,
+    na = "",
     col_names = TRUE,
-    col_types = type_char
+    col_types = paste0(type_char$type, collapse = "")
   ))
 
   # Save potential problems before modifying the data
   problems <- readr::problems(data)
 
-  # handle the list columns
-  ## First, storing which columns have to contain lists:
+  # Convert collapsed list columns to actual list column
   int_list_cols <- meta_data$columnName[meta_data$typeAnswer == "intList"]
   num_list_cols <- meta_data$columnName[meta_data$typeAnswer == "doubleList"]
   string_list_cols <- meta_data$columnName[meta_data$typeAnswer == "stringList"]
   string_cols <- meta_data$columnName[meta_data$typeAnswer == "string"]
+  unknown_cols <- type_char |>
+    filter(.data$type == "?" & !is.na(.data$typeAnswer)) |>
+    dplyr::pull("columnName")
 
   data <- data |>
     mutate(across(
@@ -138,6 +149,13 @@ read_mpath <- function(
       .fns = .to_string
     ))
 
+  # Try to parse JSONs for unknown columns
+  data <- data |>
+    mutate(across(
+      .cols = all_of(unknown_cols),
+      .fns = .to_string
+    ))
+
   # Warn about other problems when reading in the data, if any
   problems <- problems[!grepl("columns", problems$expected), ]
 
@@ -150,6 +168,7 @@ read_mpath <- function(
     )
     names(problems) <- rep("x", length(problems))
 
+    # Limit the number of problems to 100, otherwise printing the warnings may take a very long time
     if (length(problems) > 100) {
       len <- length(problems)
       problems <- problems[1:100]
@@ -200,12 +219,13 @@ is_opened_in_excel <- function(line, call = rlang::caller_env()) {
 #'
 #' Internal function to read the meta data file for an m-Path file.
 #'
-#' @param meta_data A string with the path to the meta data file
+#' @inheritParams read_mpath
 #'
 #' @returns A \link[tibble]{tibble} with the contents of the meta data file.
 #' @keywords internal
 read_meta_data <- function(
-    meta_data
+    meta_data,
+    warn_changed_columns = TRUE
 ) {
   # Check if the first character of the file is not a quote. If it is, this is likely because it was
   # opened in Excel and saved again. This is because Excel will treat it as a string which means
@@ -234,6 +254,13 @@ read_meta_data <- function(
     )
     names(problems) <- rep("x", length(problems))
 
+    # Limit the number of problems to 100, otherwise printing the warnings may take a very long time
+    if (length(problems) > 100) {
+      len <- length(problems)
+      problems <- problems[1:100]
+      problems <- c(problems, paste0("... and ", len - 100, " more problems."))
+    }
+
     cli_warn(c(
       "There were problems when reading in the meta data:",
       problems
@@ -241,9 +268,12 @@ read_meta_data <- function(
   }
 
   # give warnings from last 3 cols of metadata
-  rows_with_changes <- meta_data |>
-    pivot_longer("fullQuestion_mixed":"typeAnswer_mixed") |>
-    filter(.data$value)
+  if (warn_changed_columns) {
+    rows_with_changes <- meta_data |>
+      pivot_longer("fullQuestion_mixed":"typeAnswer_mixed") |>
+      filter(.data$value)
+  } else rows_with_changes <- data.frame()
+
 
   if (nrow(rows_with_changes) > 0){
     rows_with_changes <- rows_with_changes |>
@@ -269,6 +299,13 @@ read_meta_data <- function(
     # Generate bullet points
     names(problems) <- rep("*", length(problems))
 
+    # Limit the number of problems to 100, otherwise printing the warnings may take a very long time
+    if (length(problems) > 100) {
+      len <- length(problems)
+      problems <- problems[1:100]
+      problems <- c(problems, paste0("... and ", len - 100, " more problems."))
+    }
+
     cli_warn(c(
       "!" = "The following questions were changed during the study:",
       problems
@@ -281,7 +318,7 @@ read_meta_data <- function(
     mutate(type = case_match(
       .data$typeAnswer,
       "basic" ~ "i",
-      "int" ~ "i",
+      c("int", "integer") ~ "i",
       "string" ~ "c",
       "stringList" ~ "c", # the lists are read as strings and then converted to their respective types
       "intList" ~ "c",

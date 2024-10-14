@@ -19,6 +19,7 @@
 #' @importFrom dplyr summarize
 #' @importFrom dplyr tibble
 #' @importFrom dplyr ungroup
+#' @importFrom dplyr where
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 ggplot
 #' @importFrom jsonlite fromJSON
