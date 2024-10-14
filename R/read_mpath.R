@@ -238,6 +238,7 @@ read_meta_data <- function(
     file = meta_data,
     delim = ";",
     locale = .mpath_locale,
+    escape_double = TRUE,
     show_col_types = FALSE,
     col_names = TRUE,
     col_types = c("cccclll")
@@ -317,10 +318,10 @@ read_meta_data <- function(
   meta_data <- meta_data |>
     mutate(type = case_match(
       .data$typeAnswer,
-      "basic" ~ "i",
+      "basic" ~ "?",
       c("int", "integer") ~ "i",
       "string" ~ "c",
-      "stringList" ~ "c", # the lists are read as strings and then converted to their respective types
+      "stringList" ~ "c",
       "intList" ~ "c",
       "doubleList" ~ "c",
       "double" ~ "n"

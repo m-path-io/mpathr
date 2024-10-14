@@ -62,7 +62,7 @@
   }
 
   # Parse the JSON string
-  unjson <- jsonlite::fromJSON(unjson, simplifyVector = TRUE)
+  unjson <- fromJSON(unjson, simplifyVector = TRUE)
 
   # Fill in the unjsoned values
   vec[!idx_na] <- unjson
@@ -86,7 +86,7 @@
     return(vec)
   }
 
-  unjson <- jsonlite::fromJSON(unjson, simplifyVector = FALSE)
+  unjson <- fromJSON(unjson, simplifyVector = FALSE)
 
   # The JSON is now parsed to a lists of lists of lists. We want to unlist in such a way that we
   # have a list of vectors. So loop over the outer list and collapse everything into a single

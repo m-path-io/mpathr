@@ -23,6 +23,7 @@
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 ggplot
 #' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite toJSON
 #' @importFrom lifecycle deprecated
 #' @importFrom rlang .data
 #' @importFrom rlang .env

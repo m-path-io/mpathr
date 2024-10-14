@@ -159,7 +159,7 @@ write_mpath <- function(
   parsed <- vec[!idx_na]
 
   # Parse the string to JSON
-  parsed <- vapply(parsed, jsonlite::toJSON, character(1))
+  parsed <- vapply(parsed, toJSON, character(1))
 
   # But remove the square brackets from the JSON string
   parsed <- gsub("^\\[", "", parsed)
