@@ -39,7 +39,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_meta_data</span><span class="op">(</span><span class="va">meta_data</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_meta_data</span><span class="op">(</span><span class="va">meta_data</span>, warn_changed_columns <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -47,7 +47,12 @@
 
 
 <dl><dt id="arg-meta-data">meta_data<a class="anchor" aria-label="anchor" href="#arg-meta-data"></a></dt>
-<dd><p>A string with the path to the meta data file</p></dd>
+<dd><p>A string with the path to the meta data file.</p></dd>
+
+
+<dt id="arg-warn-changed-columns">warn_changed_columns<a class="anchor" aria-label="anchor" href="#arg-warn-changed-columns"></a></dt>
+<dd><p>Warn if the question text, type of question, or type of answer has
+changed during the study. Default is <code>TRUE</code> and may print up to 100 warnings.</p></dd>
 
 </dl></div>
     <div class="section level2">
