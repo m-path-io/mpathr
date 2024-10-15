@@ -51,7 +51,7 @@ read_mpath <- function(
     meta_data,
     warn_changed_columns = TRUE
 ) {
-
+  # Read in the meta data
   meta_data <- read_meta_data(meta_data, warn_changed_columns)
 
   # Read first line to get names of columns (to be saved in col_names)
@@ -123,6 +123,7 @@ read_mpath <- function(
   num_list_cols <- meta_data$columnName[meta_data$typeAnswer == "doubleList"]
   string_list_cols <- meta_data$columnName[meta_data$typeAnswer == "stringList"]
   string_cols <- meta_data$columnName[meta_data$typeAnswer == "string"]
+
   unknown_cols <- type_char |>
     filter(.data$type == "?" & !is.na(.data$typeAnswer)) |>
     dplyr::pull("columnName")
