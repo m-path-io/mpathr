@@ -13,7 +13,7 @@ response_rate_per_day <- function(
   data <- data |>
     group_by({{ participant_col }}) |>
     mutate(day = as.POSIXlt({{ time_col }}, tz = tz)$mday) |>
-    mutate(day = dplyr::dense_rank(day)) |>
+    mutate(day = dplyr::dense_rank(.data$day)) |>
     ungroup() |>
     group_by({{ participant_col }}, .data$day) |>
     summarize(response_rate = sum({{ valid_col }}) / n(), .groups = "drop") |>
