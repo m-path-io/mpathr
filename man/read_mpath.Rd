@@ -4,7 +4,7 @@
 \alias{read_mpath}
 \title{Read m-Path data}
 \usage{
-read_mpath(file, meta_data = NULL, warn_changed_columns = TRUE)
+read_mpath(file, meta_data, warn_changed_columns = TRUE)
 }
 \arguments{
 \item{file}{A string with the path to the m-Path file.}
