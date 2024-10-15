@@ -6,9 +6,14 @@ response_rate_per_day <- function(
     time_col
 ){
 
+  # Get the timezone of the participant to use with as.Date()
+  tz <- attr(pull(data, {{ time_col }}), "tzone")[[1]]
+  tz <- if (is.null(tz)) "" else tz
+
   data <- data |>
     group_by({{ participant_col }}) |>
-    mutate(day = dplyr::dense_rank({{ time_col }})) |>
+    mutate(day = as.POSIXlt({{ time_col }}, tz = tz)$mday) |>
+    mutate(day = dplyr::dense_rank(day)) |>
     ungroup() |>
     group_by({{ participant_col }}, .data$day) |>
     summarize(response_rate = sum({{ valid_col }}) / n(), .groups = "drop") |>
