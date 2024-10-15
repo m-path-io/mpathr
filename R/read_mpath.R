@@ -48,14 +48,10 @@
 #'
 read_mpath <- function(
     file,
-    meta_data = NULL,
+    meta_data,
     warn_changed_columns = TRUE
 ) {
 
-  # Read in the meta data
-  if (!is.null(meta_data)) {
-
-  }
   meta_data <- read_meta_data(meta_data, warn_changed_columns)
 
   # Read first line to get names of columns (to be saved in col_names)
@@ -177,7 +173,12 @@ read_mpath <- function(
 
     cli_warn(c(
       "There were problems when reading in the data:",
-      problems
+      problems,
+      i = "Try redownloading the file from the m-Path dashboard.",
+      i = paste(
+        "Consult the m-Path manual {.url https://m-path.io/manual/knowledge-base/export-data/}",
+        "for more information on how to export the data."
+      )
     ))
   }
 
@@ -264,7 +265,12 @@ read_meta_data <- function(
 
     cli_warn(c(
       "There were problems when reading in the meta data:",
-      problems
+      problems,
+      i = "Try redownloading the file from the m-Path dashboard.",
+      i = paste(
+        "Consult the m-Path manual {.url https://m-path.io/manual/knowledge-base/export-data/}",
+        "for more information on how to export the data."
+      )
     ))
   }
 
