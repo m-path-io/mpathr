@@ -32,20 +32,22 @@ the package:
 mpath_example()
 ```
 As shown above, the package comes with an example of the `basic.csv` that can be
-exported from the m-Path platform. \n
+exported from the m-Path platform. 
 
-To read this data into R, we can use the `read_mpath` function. We will also 
-need a path to the meta data. 
+To read this data into R, we can use the `read_mpath()` function. We will also 
+need a path to the meta data. The meta data is a file that contains information
+about the data types of each column, as well as the possible responses for
+categorical columns. 
 
-The main advantage of using `read_mpath`, as opposed to other functions like 
-`read.csv`, is that `read_mpath` uses the meta data to correctly interpret the
+The main advantage of using `read_mpath()`, as opposed to other functions like 
+`read.csv()`, is that `read_mpath()` uses the meta data to correctly interpret the
 data types. Furthermore it will also automatically convert columns that store 
-multiple responses into lists. For a response with multiple options like 1,4,6,
-`read_mpath` will store a list with each number, which facilitates further 
-preprocess these responses.\n
+multiple responses into lists. For a response with multiple options like `1,4,6`,
+`read_mpath()` will store a list with each number, which facilitates further 
+preprocessing of these responses.
 
 We can obtain the paths to the example basic data and meta data 
-using the `mpath_example` function: 
+using the `mpath_example()` function: 
 
 ```{r use read_mpath}
 # find paths to example basic and meta data:
@@ -57,14 +59,20 @@ data <- read_mpath(
   file = basic_path,
   meta_data = meta_path
 )
+
+data
 ```
 
-### Note: saving m-Path data
-As explained above, the resulting data frame will contain columns with lists,
+#### Saving m-Path data
+The resulting data frame will contain columns with lists,
 which can be problematic when saving the data. To save the data, we suggest the
 following two options:
 
-If you want to save the data as a 'csv' to use it in another program, use `write_mpath()`. 
+If you want to save the data as a comma-separated values (CSV) file to use it in another program, 
+use `write_mpath()`. This function will collapse most list columns to a single string and parses
+all character columns to JSON strings, essentially reversing the operations performed by 
+`read_mpath()`. Note that this does not mean that data can be read back using `read_mpath()`,
+because the data may have been modified and thus no longer be in line with the meta data.
 
 ```{r write data as csv, eval = FALSE}
 write_mpath(
@@ -73,11 +81,20 @@ write_mpath(
 )
 ```
 
-Otherwise, if the data will be used exclusively in R, we suggest saving it as an R object:
+Otherwise, if the data will be used exclusively in R, we suggest saving it as an R object (.RData 
+or .RDS):
 ```{r write data as an R object, eval = FALSE}
+# As an .RData file. When using `load()`, note that the data will be stored in the `data` object
+# in the global environment.
 save(
   data, 
   file = 'data.RData'
+)
+
+# As an RDS file.
+saveRDS(
+  data, 
+  file = 'data.RDS'
 )
 ```
 
@@ -86,16 +103,16 @@ save(
 ### response_rate function
 
 Some common operations that are done on Experience Sampling Methodology (ESM) data have to do with 
-the participants' response rate. We provide a function `response_rate` that 
+the participants' response rate. We provide a function `response_rate()` that 
 calculates the response_rate per participant for the entire duration of the 
-study, or for a specific time frame.\n
+study, or for a specific time frame.
 
 This function takes as argument a `valid_col`, that takes a logical column that 
 stores whether the beep was answered by the participant, or not, as well as a 
-`participant_col`, that identifies each separate participant.
+`participant_col`, that identifies each distinct participant.
 
 We will show how to use this function with the `example_data`, that contains data from the same 
-study as the `example_basic.csv` file, but after some cleaning.\n
+study as the `example_basic.csv` file, but after some cleaning.
 
 ```{r calculate response rate}
 example_data
@@ -105,9 +122,11 @@ response_rates <- response_rate(
   valid_col = answered,
   participant_col = participant
 )
+
+response_rates
 ```
 
-The function returns a data frame with:\n
+The function returns a data frame with:
 
 * The `participant` column, as specified in `participant_col`
 * The `number_of_beeps` used to calculate the response rate.
@@ -125,8 +144,8 @@ We could also be interested in seeing the participants' response rate during
 a specific period of time (for example, if we think a participant's compliance
 significantly dropped a certain date). In this case, we should supply the 
 function with the (otherwise optional) argument `time_col`, that should contain
-times stored as 'POSIXct' objects, and specify the date period that we are
-interested in (in the format 'yyyy-mm-dd' or 'yyyy/mm/dd'):
+times stored as `POSIXct` objects, and specify the date period that we are
+interested in (in the format `yyyy-mm-dd` or `yyyy/mm/dd`):
 
 ```{r calculate response rate after 15th of May 2024}
 response_rates_after_15 <- response_rate(
@@ -147,7 +166,7 @@ response_rates_after_15
 ### plot_response_rate function
 
 We also suggest a way to plot the participant response rates, to identify 
-patterns like response rates dropping over time. For this, we provide the `plot_response_rate` function.
+patterns like response rates dropping over time. For this, we provide the `plot_response_rate()` function.
 
 ```{r plot response rate, fig.width=7, fig.height=5}
 plot_response_rate(
