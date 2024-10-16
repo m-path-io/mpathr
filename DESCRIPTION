@@ -27,6 +27,7 @@ Imports:
     ggplot2,
     jsonlite,
     lifecycle,
+    lubridate,
     readr,
     rlang,
     tidyr
