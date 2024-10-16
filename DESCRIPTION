@@ -33,7 +33,6 @@ Imports:
     tidyr
 Suggests: 
     knitr,
-    lubridate,
     rmarkdown,
     spelling,
     testthat (>= 3.0.0)
