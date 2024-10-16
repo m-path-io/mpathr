@@ -61,9 +61,7 @@ write_mpath <- function(
     "accountCode",
     "questionListName",
     "questionListLabel",
-    "fromProtocolName",
-    "recording_recording_filename",
-    "recording_recording_metadata"
+    "fromProtocolName"
   )
 
   # Find which columns are lists of strings

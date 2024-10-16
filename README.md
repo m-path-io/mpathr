@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/m-path-io/mpathr/graph/badge.svg)](https://app.codecov.io/gh/m-path-io/mpathr)
 <!-- badges: end -->
 
 ## Overview
@@ -46,20 +48,20 @@ data <- read_mpath(
 
 print(data)
 #> # A tibble: 2,221 × 100
-#>   connectionId legacyCode  code       alias initials accountCode scheduledBeepId sentBeepId
-#>          <int> <chr>       <chr>      <chr> <chr>    <chr>                 <int>      <int>
-#> 1       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7                    -1   19355815
-#> 2       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626776   19369681
-#> 3       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626777   19370288
-#> 4       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626781   19375253
-#> 5       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626782   19377280
+#>   connectionId legacyCode  code       alias initials accountCode scheduledBeepId
+#>          <int> <chr>       <chr>      <chr> <chr>    <chr>                 <int>
+#> 1       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7                    -1
+#> 2       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626776
+#> 3       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626777
+#> 4       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626781
+#> 5       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626782
 #> # ℹ 2,216 more rows
-#> # ℹ 92 more variables: reminderForOriginalSentBeepId <int>, questionListName <chr>,
-#> #   questionListLabel <lgl>, fromProtocolName <chr>, timeStampScheduled <int>, timeStampSent <int>,
-#> #   timeStampStart <int>, timeStampStop <int>, originalTimeStampSent <int>, timeZoneOffset <int>,
-#> #   deltaUTC <dbl>, consent_yesno_yesno <int>, gender_multipleChoice_index <int>,
-#> #   gender_multipleChoice_string <chr>, gender_multipleChoice_likert <int>, age_open <chr>,
-#> #   SWLS_intro_basic <int>, SWLS_1_multipleChoice_index <int>, …
+#> # ℹ 93 more variables: sentBeepId <int>, reminderForOriginalSentBeepId <int>,
+#> #   questionListName <chr>, questionListLabel <chr>, fromProtocolName <chr>,
+#> #   timeStampScheduled <int>, timeStampSent <int>, timeStampStart <int>,
+#> #   timeStampStop <int>, originalTimeStampSent <int>, timeZoneOffset <int>,
+#> #   deltaUTC <dbl>, consent_yesno_yesno <int>,
+#> #   gender_multipleChoice_index <int>, gender_multipleChoice_string <chr>, …
 ```
 
 ## Getting help

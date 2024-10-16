@@ -18,6 +18,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/m-path-io/mpathr/graph/badge.svg)](https://app.codecov.io/gh/m-path-io/mpathr)
 <!-- badges: end -->
 
 ## Overview

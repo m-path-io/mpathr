@@ -83,13 +83,13 @@ timestamps_to_datetime <- function(x, tz_offset = NULL, force_tz = NULL) {
   out <- as.POSIXct(x, origin = "1970-01-01", tz = "UTC")
 
   if (!is.null(force_tz)) {
-    if (!requireNamespace("lubridate", quietly = TRUE)) {
+    if (!requireNamespace("lubridate", quietly = TRUE)) { #nocov start
       cli_abort(c(
         paste0("Package `lubridate` is needed for this function to work."),
         i = paste0("Please install it using `install.packages(\"lubridate\")`")),
         call = call
       )
-    }
+    } #nocov end
 
     out <- lubridate::force_tz(out, tzone = force_tz)
   }
