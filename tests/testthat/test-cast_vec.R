@@ -89,7 +89,6 @@ test_that(".to_string can handle a vector of only empty strings", {
   expect_type(output, "character")
   expect_equal(length(output), 5)
   expect_equal(output, rep("", 5))
-
 })
 
 test_that(".to_string can handle numbers that start with 0 without returning the input", {
@@ -120,4 +119,59 @@ test_that(".to_string_list with JSON-like input works correctly", {
   expect_equal(output[[2]], "right leg")
   expect_equal(output[[3]], c("left hand", "right hand"))
   expect_equal(output[[4]], NA_character_)
+})
+
+test_that(".to_string_list can handle incorrect JSON", {
+  # If the test fails because the quotes "\"\"" were different, it means the JSON in .to_string_list
+  # was invalid due to the other values, and the input was simply returned unparsed.
+  input <- c("\"neck\"", "\"right leg\"", "\"left hand\", \"right hand", NA)
+  output <- .to_string_list(input)
+
+  expect_type(output, "list")
+  expect_equal(length(output), 4)
+  expect_equal(output[[1]], "\"neck\"")
+  expect_equal(output[[2]], "\"right leg\"")
+  expect_equal(output[[3]], "\"left hand\", \"right hand")
+  expect_equal(output[[4]], NA_character_)
+})
+
+test_that(".to_string_list can handle empty strings and quotes", {
+  # An empty string, a single quote, a double quote, and a triple quote
+  input <- c("", '"', '""', '"""', NA)
+  output <- .to_string_list(input)
+
+  expect_type(output, "list")
+  expect_equal(length(output), length(input))
+  expect_equal(output[[1]], "")
+  expect_equal(output[[2]], '"')
+  expect_equal(output[[3]], '""')
+  expect_equal(output[[4]], '"""')
+  expect_equal(output[[5]], NA_character_)
+})
+
+test_that(".to_string_list can handle a vector of only empty strings", {
+  input <- rep("", 5)
+  output <- .to_string_list(input)
+
+  expect_type(output, "list")
+  expect_equal(length(output), 5)
+  expect_equal(output, as.list(rep("", 5)))
+})
+
+test_that(".to_string_list can handle numbers that start with 0 without returning the input", {
+  # If the test fails because the quotes "\"\"" were different, it means the JSON in .to_string
+  # was invalid due to the other values, and the input was simply returned unparsed.
+  input <- c("\"0\"", "\"01\"", "\"012\"", "\"0123\"", "\"0123\\n\"", "\"0123 \"", "\"\"", NA)
+  output <- .to_string_list(input)
+
+  expect_type(output, "list")
+  expect_equal(length(output), length(input))
+  expect_equal(output[[1]], "0")
+  expect_equal(output[[2]], "01")
+  expect_equal(output[[3]], "012")
+  expect_equal(output[[4]], "0123")
+  expect_equal(output[[5]], "0123\n")
+  expect_equal(output[[6]], "0123 ")
+  expect_equal(output[[7]], "")
+  expect_equal(output[[8]], NA_character_)
 })

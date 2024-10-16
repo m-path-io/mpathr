@@ -70,6 +70,10 @@
 }
 
 .to_string_list <- function(vec) {
+  if (all(is.na(vec)) || !any(vec != "", na.rm = TRUE)) {
+    return(as.list(vec))
+  }
+
   # Only unjson strings that are not NA, so find them first
   idx_na <- is.na(vec)
 
@@ -79,11 +83,11 @@
   # Put the string between square brackets to complete the JSON object
   unjson <- paste0("[", unjson, "]")
 
-  # Ensure the JSON is valid, otherwise return the input
+  # Ensure the JSON is valid, otherwise return the input as a list
   # This should normally not happen, except when there is a column in the meta data that we had to
   # guess, which turned out to be a character, and is then not JSON after all.
   if (isFALSE(jsonlite::validate(unjson))) {
-    return(vec)
+    return(as.list(vec))
   }
 
   unjson <- fromJSON(unjson, simplifyVector = FALSE)
