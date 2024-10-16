@@ -12,7 +12,7 @@ read_mpath(file, meta_data, warn_changed_columns = TRUE)
 \item{meta_data}{A string with the path to the meta data file.}
 
 \item{warn_changed_columns}{Warn if the question text, type of question, or type of answer has
-changed during the study. Default is \code{TRUE} and may print up to 100 warnings.}
+changed during the study. Default is \code{TRUE} and may print up to 50 warnings.}
 }
 \value{
 A \link[tibble]{tibble} with the m-Path data.

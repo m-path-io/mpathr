@@ -30,7 +30,7 @@
 #' @param file A string with the path to the m-Path file.
 #' @param meta_data A string with the path to the meta data file.
 #' @param warn_changed_columns Warn if the question text, type of question, or type of answer has
-#'   changed during the study. Default is `TRUE` and may print up to 100 warnings.
+#'   changed during the study. Default is `TRUE` and may print up to 50 warnings.
 #'
 #' @seealso [write_mpath()] for saving the data back to a CSV file.
 #'
@@ -165,11 +165,11 @@ read_mpath <- function(
     )
     names(problems) <- rep("x", length(problems))
 
-    # Limit the number of problems to 100, otherwise printing the warnings may take a very long time
-    if (length(problems) > 100) {
+    # Limit the number of problems to 50, otherwise printing the warnings may take a very long time
+    if (length(problems) > 50) {
       len <- length(problems)
-      problems <- problems[1:100]
-      problems <- c(problems, paste0("... and ", len - 100, " more problems."))
+      problems <- problems[1:50]
+      problems <- c(problems, paste0("... and ", len - 50, " more problems."))
     }
 
     cli_warn(c(
@@ -257,11 +257,11 @@ read_meta_data <- function(
     )
     names(problems) <- rep("x", length(problems))
 
-    # Limit the number of problems to 100, otherwise printing the warnings may take a very long time
-    if (length(problems) > 100) {
+    # Limit the number of problems to 50, otherwise printing the warnings may take a very long time
+    if (length(problems) > 50) {
       len <- length(problems)
-      problems <- problems[1:100]
-      problems <- c(problems, paste0("... and ", len - 100, " more problems."))
+      problems <- problems[1:50]
+      problems <- c(problems, paste0("... and ", len - 50, " more problems."))
     }
 
     cli_warn(c(
@@ -307,11 +307,11 @@ read_meta_data <- function(
     # Generate bullet points
     names(problems) <- rep("*", length(problems))
 
-    # Limit the number of problems to 100, otherwise printing the warnings may take a very long time
-    if (length(problems) > 100) {
+    # Limit the number of problems to 50, otherwise printing the warnings may take a very long time
+    if (length(problems) > 50) {
       len <- length(problems)
-      problems <- problems[1:100]
-      problems <- c(problems, paste0("... and ", len - 100, " more problems."))
+      problems <- problems[1:50]
+      problems <- c(problems, paste0("... and ", len - 50, " more problems."))
     }
 
     cli_warn(c(

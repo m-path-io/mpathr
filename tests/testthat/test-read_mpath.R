@@ -123,7 +123,6 @@ test_that("List columns are being read as lists", {
 })
 
 # Check that each list is being read as its respective type
-
 test_that("List columns are being read as the correct type", {
   for (col in meta_list_cols) {
     col_type <- meta$typeAnswer[meta$columnName == col]
@@ -251,4 +250,142 @@ test_that('specific warnings are printed for consent_yesno and slider_happy ques
     # Clean-up
     unlink(basic_file)
     unlink(meta_file)
-  })
+})
+
+test_that("no warnings are printen when warn_changed_columns is false", {
+  meta$typeQuestion_mixed <- c(1, 1)
+  meta$fullQuestion_mixed <- c(1, 1)
+
+  basic_file <- tempfile(fileext = ".csv")
+  meta_file <- tempfile(fileext = ".csv")
+
+  write.table(basic, basic_file, row.names = FALSE, sep = ";", quote = FALSE)
+  write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
+
+  expect_no_warning(
+    read_mpath(
+      file = basic_file,
+      meta_data = meta_file,
+      warn_changed_columns = FALSE
+    )
+  )
+
+  # Clean-up
+  unlink(basic_file)
+  unlink(meta_file)
+})
+
+test_that("meta_data changed columns warnings are limited to 50", {
+  meta <- data.frame(
+    columnName = paste0('"consent_yesno_', 1:101, '"'),
+    fullQuestion = paste0('"Do you consent to participate in this study?_', 1:101, '"'),
+    typeQuestion = '"yesno"',
+    typeAnswer = '"int"',
+    fullQuestion_mixed = 1,
+    typeQuestion_mixed =  0,
+    typeAnswer_mixed =  0
+  )
+
+  meta_file <- tempfile(fileext = ".csv")
+  write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
+
+  out <- NULL
+  suppressWarnings(
+    foo <- withCallingHandlers(
+      read_meta_data(meta_file),
+      warning = \(w) out <<- w$message
+    )
+  )
+
+  # Bullet points are used to delimit the warnings
+  out <- strsplit(out, "\\*")[[1]]
+
+  # 100 warnings + "The following questions have been changed"
+  expect_length(out, 51)
+
+  # Clean-up
+  unlink(meta_file)
+})
+
+test_that("meta_data limits warnings from reading in meta data files to 50", {
+  meta <- data.frame(
+    columnName = paste0('"consent_yesno_', 1:101, '"'),
+    fullQuestion = paste0('"Do you consent to participate in this study?_', 1:101, '"'),
+    typeQuestion = '"yesno"',
+    typeAnswer = '\nil',
+    fullQuestion_mixed = 1,
+    typeQuestion_mixed =  0,
+    typeAnswer_mixed =  0
+  )
+
+  meta_file <- tempfile(fileext = ".csv")
+  write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
+
+  out <- NULL
+  suppressWarnings(
+    foo <- withCallingHandlers(
+      read_meta_data(meta_file),
+      warning = \(w) out <<- w$message
+    )
+  )
+
+  # Bullet points are used to delimit the warnings
+  out <- strsplit(out, "\nx")[[1]]
+
+  # 100 warnings + "The following questions have been changed"
+  expect_length(out, 51)
+
+  # Clean-up
+  unlink(meta_file)
+})
+
+test_that("read_mpath limits warnings from reading in data files to 50", {
+  basic <- data.frame(
+    connectionId = 228325,
+    code = '',
+    alias = rep('"example_alias"', 51),
+    questionListName = '"example_questions"',
+    timeStampSent = 1722427206,
+    consent_yesno = "foo"
+  )
+
+  # create small meta_data to test warnings in changed meta data
+  meta <- data.frame(
+    columnName = paste0('"consent_yesno"'),
+    fullQuestion = paste0('"Do you consent to participate in this study?"'),
+    typeQuestion = '"yesno"',
+    typeAnswer = '"int"',
+    fullQuestion_mixed = 0,
+    typeQuestion_mixed =  0,
+    typeAnswer_mixed =  0
+  )
+
+  basic_file <- tempfile(fileext = ".csv")
+  meta_file <- tempfile(fileext = ".csv")
+
+  write.table(basic, basic_file, row.names = FALSE, sep = ";", quote = FALSE)
+  write.table(meta, meta_file, row.names = FALSE, sep = ";", quote = FALSE)
+
+  out <- NULL
+  suppressWarnings(
+    foo <- withCallingHandlers(
+      read_mpath(
+        file = basic_file,
+        meta_data = meta_file
+      ),
+      warning = \(w) out <<- w$message
+    )
+  )
+
+  # Bullet points are used to delimit the warnings
+  out <- strsplit(out, "\\nx")[[1]]
+
+  # 50 warnings + "The following questions have been changed"
+  expect_length(out, 51)
+
+  # Clean-up
+  unlink(basic_file)
+  unlink(meta_file)
+})
+
+
