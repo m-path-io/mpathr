@@ -86,8 +86,7 @@ timestamps_to_datetime <- function(x, tz_offset = NULL, force_tz = NULL) {
     if (!requireNamespace("lubridate", quietly = TRUE)) { #nocov start
       cli_abort(c(
         paste0("Package `lubridate` is needed for this function to work."),
-        i = paste0("Please install it using `install.packages(\"lubridate\")`")),
-        call = call
+        i = paste0("Please install it using `install.packages(\"lubridate\")`"))
       )
     } #nocov end
 
