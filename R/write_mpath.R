@@ -43,9 +43,13 @@
 #'   mpath_example("example_basic.csv"),
 #'   mpath_example("example_meta.csv")
 #' )
-#'
-#' \dontrun{
-#' write_mpath(data, "data.csv")}
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' write_mpath(data, "data.csv")
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 write_mpath <- function(
     x,
     file,

@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides tools for importing and cleaning Experience Sampling Method ('ESM') data collected via the 'm-Path' platform. The goal is to provide with a few utility functions to be able to read and perform some common operations in 'ESM' data collected through the 'm-Path' platform (\url{https://m-path.io/landing/}). Functions include raw data handling, format standardization, and basic data checks, as well as to calculate the response rate in data from 'ESM' studies.
+Provides tools for importing and cleaning Experience Sampling Method (ESM) data collected via the 'm-Path' platform. The goal is to provide with a few utility functions to be able to read and perform some common operations in ESM data collected through the 'm-Path' platform (\url{https://m-path.io/landing/}). Functions include raw data handling, format standardization, and basic data checks, as well as to calculate the response rate in data from ESM studies.
 }
 \seealso{
 Useful links:

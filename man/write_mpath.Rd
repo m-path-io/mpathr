@@ -50,9 +50,13 @@ data <- read_mpath(
   mpath_example("example_basic.csv"),
   mpath_example("example_meta.csv")
 )
-
-\dontrun{
-write_mpath(data, "data.csv")}
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+write_mpath(data, "data.csv")
+\dontshow{
+setwd(.old_wd)
+}
 }
 \seealso{
 \code{\link[=read_mpath]{read_mpath()}} to read m-Path data into R.

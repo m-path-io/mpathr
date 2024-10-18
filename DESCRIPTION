@@ -1,6 +1,6 @@
 Package: mpathr
 Title: Easily Handling Data from the ‘m-Path’ Platform
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person("Merijn", "Mestdagh", , "merijn.mestdagh@m-path.io", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5077-861X")),
@@ -10,12 +10,12 @@ Authors@R: c(
     person("m-Path Software", role = "cph")
   )
 Description: Provides tools for importing and cleaning Experience Sampling
-    Method ('ESM') data collected via the 'm-Path' platform. The goal is
+    Method (ESM) data collected via the 'm-Path' platform. The goal is
     to provide with a few utility functions to be able to read and perform
-    some common operations in 'ESM' data collected through the 'm-Path'
+    some common operations in ESM data collected through the 'm-Path'
     platform (<https://m-path.io/landing/>). Functions include raw data
     handling, format standardization, and basic data checks, as well as to
-    calculate the response rate in data from 'ESM' studies.
+    calculate the response rate in data from ESM studies.
 License: GPL (>= 3)
 URL: https://m-path.io, https://github.com/m-path-io/mpathr
 BugReports: https://github.com/m-path-io/mpathr/issues
