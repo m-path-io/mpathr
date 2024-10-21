@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/m-path-io/mpathr/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/m-path-io/mpathr/graph/badge.svg)](https://app.codecov.io/gh/m-path-io/mpathr)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/mpathr)](https://CRAN.R-project.org/package=mpathr)
 <!-- badges: end -->
 
 ## Overview
