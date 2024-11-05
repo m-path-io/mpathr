@@ -16,10 +16,14 @@ status](https://www.r-pkg.org/badges/version/mpathr)](https://CRAN.R-project.org
 
 The goal of `mpathr` is to provide with a few utility functions to read
 and perform some common operations in data from Experience Sampling
-Methodology (ESM) studies collected through the ‘m-Path’ platform
+Methodology (ESM) studies collected through the m-Path platform
 (<https://m-path.io/landing/>). The package provides functions to read
-data from ‘m-Path’, and to calculate response rate in data from
-Experience Sampling studies.
+data from m-Path, and to calculate response rate in data from Experience
+Sampling studies.
+
+An overview of how to use this package (as well as a video and a
+detailed guide) can be found in the [m-Path
+manual](https://m-path.io/manual/knowledge-base/importing-and-analyzing-m-path-data-in-r-mpathr/).
 
 ## Installation
 

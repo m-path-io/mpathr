@@ -1,6 +1,6 @@
 Package: mpathr
 Title: Easily Handling Data from the ‘m-Path’ Platform
-Version: 1.0.2
+Version: 1.0.2.9999
 Authors@R: c(
     person("Merijn", "Mestdagh", , "merijn.mestdagh@m-path.io", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5077-861X")),
