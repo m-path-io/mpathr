@@ -17,6 +17,10 @@
 }
 
 .to_int_list <- function(vec) {
+  if (all(is.na(vec))) {
+    return(as.list(rep(NA_integer_, length(vec))))
+  }
+
   .data <- .unlist_col(vec)
   # Try to convert to integers, as they should be able to. However, in rare scenarios the integer
   # value is too large for R (integer overflow) in which case we will use double values.
@@ -31,6 +35,10 @@
 }
 
 .to_double_list <- function(vec) {
+  if (all(is.na(vec))) {
+    return(as.list(rep(NA_real_, length(vec))))
+  }
+
   .data <- .unlist_col(vec)
   .data$vec <- as.double(.data$vec)
   .relist_col(.data)
@@ -63,6 +71,13 @@
 
   # Parse the JSON string
   unjson <- fromJSON(unjson, simplifyVector = TRUE)
+
+  # If the length of the unjsoned values is longer than the original vector (without missing
+  # values), it means that each entry contained multiple components and was thus not a string but a
+  # stringList.
+  if (length(unjson) > length(vec[!idx_na])) {
+    return(.to_string_list(vec))
+  }
 
   # Fill in the unjsoned values
   vec[!idx_na] <- unjson
