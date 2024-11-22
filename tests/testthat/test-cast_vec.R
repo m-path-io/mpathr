@@ -140,6 +140,18 @@ test_that(".to_string_list with JSON-like input works correctly", {
   expect_equal(output[[4]], NA_character_)
 })
 
+test_that(".to_string falls back to .to_string_list if it detects a list structure", {
+  input <- c("\"neck\"", "\"right leg\"", "\"left hand\", \"right hand\"", NA)
+  output <- .to_string(input)
+
+  expect_type(output, "list")
+  expect_equal(length(output), 4)
+  expect_equal(output[[1]], "neck")
+  expect_equal(output[[2]], "right leg")
+  expect_equal(output[[3]], c("left hand", "right hand"))
+  expect_equal(output[[4]], NA_character_)
+})
+
 test_that(".to_string_list can handle incorrect JSON", {
   # If the test fails because the quotes "\"\"" were different, it means the JSON in .to_string_list
   # was invalid due to the other values, and the input was simply returned unparsed.
