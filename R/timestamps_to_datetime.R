@@ -77,7 +77,7 @@ timestamps_to_datetime <- function(x, tz_offset = NULL, force_tz = NULL) {
   }
 
   if (!is.null(tz_offset)) {
-    x <- x + tz_offset
+    x <- x - tz_offset
   }
 
   out <- as.POSIXct(x, origin = "1970-01-01", tz = "UTC")
