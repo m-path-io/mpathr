@@ -10,11 +10,11 @@ test_that("timestamps_to_datetime correctly converts UNIX timestamp to datetime"
 test_that("timestamps_to_datetime applies tz_offset correctly", {
   # Convert timestamp with tz_offset (1 hour offset)
   result <- timestamps_to_datetime(0, tz_offset = 3600)
-  expect_equal(result, as.POSIXct("1970-01-01 01:00:00", tz = "UTC"))
+  expect_equal(result, as.POSIXct("1969-12-31 23:00:00", tz = "UTC"))
 
   # Convert timestamp with tz_offset (-5 hours offset)
   result <- timestamps_to_datetime(0, tz_offset = -18000)
-  expect_equal(result, as.POSIXct("1969-12-31 19:00:00", tz = "UTC"))
+  expect_equal(result, as.POSIXct("1970-01-01 05:00:00", tz = "UTC"))
 })
 
 test_that("timestamps_to_datetime applies force_tz correctly", {

@@ -50,5 +50,5 @@ test_that('plot_response_rate returns a ggplot', {
                                 participant_col = participant,
                                 time_col = dates)
 
-  expect_true(ggplot2::is.ggplot(result))
+  expect_true(ggplot2::is_ggplot(result))
 })

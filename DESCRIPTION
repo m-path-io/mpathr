@@ -20,7 +20,7 @@ License: GPL (>= 3)
 URL: https://m-path.io, https://github.com/m-path-io/mpathr
 BugReports: https://github.com/m-path-io/mpathr/issues
 Depends: 
-    R (>= 4.0.0)
+    R (>= 4.1.0)
 Imports: 
     cli,
     dplyr,
