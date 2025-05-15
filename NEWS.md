@@ -1,3 +1,9 @@
+# mpathr 1.0.3
+## Minor changes
+* Bump minimum R version to 4.1.0 due to the new pipe `|>` being used.
+* Fix the `tz_offset` argument of `timestamps_to_datetime()` that was being incorrectly calculated. 
+* Further refined the documentation of `timestamps_to_datetime()` to clarify how it should be used.
+
 # mpathr 1.0.2
 This is a hotfix release to address some issues that may occur when reading in data files that have
 non-standard column names. 
