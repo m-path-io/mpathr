@@ -5,6 +5,9 @@ on:
     types: [created]
 
 name: Commands
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   document:
