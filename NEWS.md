@@ -1,3 +1,7 @@
+# mpathr (development version)
+* Add a new function `extract_app_usage()` to extract app usage data collected with mobile sensing
+lite.
+
 # mpathr 1.0.3
 ## Minor changes
 * Bump minimum R version to 4.1.0 due to the new pipe `|>` being used.
