@@ -120,7 +120,9 @@ extract_app_usage <- function(app_names, app_values) {
     )) |>
     mutate(across(
       .cols = c("startTimeFar", "endTimeFar", "startTimeNear", "endTimeNear"),
-      .fns = \(x) as.POSIXct(x, format = "%F %X", tz = "UTC")
+      .fns = \(x) {
+        as.POSIXct(x, format = "%F %X", tz = "UTC", origin = "1970-01-01")
+      }
     )) |>
     mutate(across(
       .cols = c("usageFar", "usageNear"),
