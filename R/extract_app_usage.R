@@ -97,7 +97,7 @@ extract_app_usage <- function(app_names, app_values) {
   app_values <- lapply(app_values, \(x) {
     split(x, (seq_along(x) - 1) %% 6 + 1)
   })
-  browser()
+
   # Pluck the values into a list of lists
   .data <- tibble(
     .id = seq_along(app_names),
