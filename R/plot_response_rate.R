@@ -1,11 +1,10 @@
 # this function is used by the function plot_response_rate (below).
 response_rate_per_day <- function(
-    data,
-    valid_col,
-    participant_col,
-    time_col
-){
-
+  data,
+  valid_col,
+  participant_col,
+  time_col
+) {
   # Get the timezone of the participant to use with as.Date()
   tz <- attr(pull(data, {{ time_col }}), "tzone")[[1]]
   tz <- if (is.null(tz)) "" else tz
@@ -52,12 +51,11 @@ response_rate_per_day <- function(
 #' # documentation).
 #'
 plot_response_rate <- function(
-    data,
-    valid_col,
-    participant_col,  # specify participant variable
-    time_col # specify time variable
-){
-
+  data,
+  valid_col,
+  participant_col, # specify participant variable
+  time_col # specify time variable
+) {
   data_plot <- response_rate_per_day(
     data = data,
     valid_col = {{ valid_col }},
@@ -84,14 +82,19 @@ plot_response_rate <- function(
         color = .data$participant,
         shape = .data$participant,
         linetype = .data$participant
-      )) +
+      )
+    ) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
-    ggplot2::scale_linetype_manual(values = rep(
-      c("solid", "dashed", "dotted"),
-      length.out = num_unique
-    )) +
-    ggplot2::scale_shape_manual(values = rep(c(3, 8, 15, 16, 17, 18), length.out = num_unique)) +
+    ggplot2::scale_linetype_manual(
+      values = rep(
+        c("solid", "dashed", "dotted"),
+        length.out = num_unique
+      )
+    ) +
+    ggplot2::scale_shape_manual(
+      values = rep(c(3, 8, 15, 16, 17, 18), length.out = num_unique)
+    ) +
     ggplot2::labs(
       title = "Response rate per day",
       x = "Date",

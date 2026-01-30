@@ -17,6 +17,6 @@ timeStampStart"
 test_that('Returns error when col_names is not correct', {
   expect_error(
     is_opened_in_excel(col_names),
-    'The file was saved and changed by Excel.')
+    'The file was saved and changed by Excel.'
+  )
 })
-

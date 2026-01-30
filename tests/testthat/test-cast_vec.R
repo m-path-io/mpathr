@@ -39,7 +39,6 @@ test_that(".to_int_list can handle vectors of NA", {
   expect_type(output, "list")
   expect_equal(length(output), 5)
   expect_identical(output, as.list(rep(NA_integer_, 5)))
-
 })
 
 test_that(".to_int_list handles integer overflow correctly", {
@@ -113,7 +112,16 @@ test_that(".to_string can handle a vector of only empty strings", {
 test_that(".to_string can handle numbers that start with 0 without returning the input", {
   # If the test fails because the quotes "\"\"" were different, it means the JSON in .to_string
   # was invalid due to the other values, and the input was simply returned unparsed.
-  input <- c("\"0\"", "\"01\"", "\"012\"", "\"0123\"", "\"0123\\n\"", "\"0123 \"", "\"\"", NA)
+  input <- c(
+    "\"0\"",
+    "\"01\"",
+    "\"012\"",
+    "\"0123\"",
+    "\"0123\\n\"",
+    "\"0123 \"",
+    "\"\"",
+    NA
+  )
   output <- .to_string(input)
 
   expect_type(output, "character")
@@ -192,7 +200,16 @@ test_that(".to_string_list can handle a vector of only empty strings", {
 test_that(".to_string_list can handle numbers that start with 0 without returning the input", {
   # If the test fails because the quotes "\"\"" were different, it means the JSON in .to_string
   # was invalid due to the other values, and the input was simply returned unparsed.
-  input <- c("\"0\"", "\"01\"", "\"012\"", "\"0123\"", "\"0123\\n\"", "\"0123 \"", "\"\"", NA)
+  input <- c(
+    "\"0\"",
+    "\"01\"",
+    "\"012\"",
+    "\"0123\"",
+    "\"0123\\n\"",
+    "\"0123 \"",
+    "\"\"",
+    NA
+  )
   output <- .to_string_list(input)
 
   expect_type(output, "list")

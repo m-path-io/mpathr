@@ -47,9 +47,9 @@
 #'                 meta_data = meta_path)
 #'
 read_mpath <- function(
-    file,
-    meta_data,
-    warn_changed_columns = TRUE
+  file,
+  meta_data,
+  warn_changed_columns = TRUE
 ) {
   # Read in the meta data
   meta_data <- read_meta_data(meta_data, warn_changed_columns)
@@ -108,10 +108,10 @@ read_mpath <- function(
     dplyr::bind_rows(cols_not_in_metadata)
 
   type_char <- dplyr::left_join(
-      x = tibble(columnName = col_names),
-      y = type_char,
-      by = "columnName"
-    ) |>
+    x = tibble(columnName = col_names),
+    y = type_char,
+    by = "columnName"
+  ) |>
     mutate(type = ifelse(is.na(.data$type), "?", .data$type))
 
   # Read data
@@ -169,10 +169,15 @@ read_mpath <- function(
 
   if (nrow(problems) > 0) {
     problems <- paste0(
-      "In row ", problems$row,
-      " column ", problems$col,
-      ", expected ", problems$expected,
-      " but got ", problems$actual, "."
+      "In row ",
+      problems$row,
+      " column ",
+      problems$col,
+      ", expected ",
+      problems$expected,
+      " but got ",
+      problems$actual,
+      "."
     )
     names(problems) <- rep("x", length(problems))
 
@@ -237,8 +242,8 @@ is_opened_in_excel <- function(line, call = rlang::caller_env()) {
 #' @returns A \link[tibble]{tibble} with the contents of the meta data file.
 #' @keywords internal
 read_meta_data <- function(
-    meta_data,
-    warn_changed_columns = TRUE
+  meta_data,
+  warn_changed_columns = TRUE
 ) {
   # Check if the first character of the file is not a quote. If it is, this is likely because it was
   # opened in Excel and saved again. This is because Excel will treat it as a string which means
@@ -261,10 +266,15 @@ read_meta_data <- function(
   problems <- readr::problems(meta_data)
   if (nrow(problems) > 0) {
     problems <- paste0(
-      "In row ", problems$row,
-      " column ", problems$col,
-      ", expected ", problems$expected,
-      " but got ", problems$actual, "."
+      "In row ",
+      problems$row,
+      " column ",
+      problems$col,
+      ", expected ",
+      problems$expected,
+      " but got ",
+      problems$actual,
+      "."
     )
     names(problems) <- rep("x", length(problems))
 
@@ -291,8 +301,9 @@ read_meta_data <- function(
     rows_with_changes <- meta_data |>
       pivot_longer("fullQuestion_mixed":"typeAnswer_mixed") |>
       filter(.data$value)
-  } else rows_with_changes <- data.frame()
-
+  } else {
+    rows_with_changes <- data.frame()
+  }
 
   if (nrow(rows_with_changes) > 0) {
     if (utils::packageVersion("dplyr") <= "1.1.4") {
@@ -327,7 +338,12 @@ read_meta_data <- function(
     )
 
     # Generate the warning messages for the questions
-    problems <- paste0("In `", rows_with_changes$columnName, "`: ",rows_with_changes$name)
+    problems <- paste0(
+      "In `",
+      rows_with_changes$columnName,
+      "`: ",
+      rows_with_changes$name
+    )
 
     # Generate bullet points
     names(problems) <- rep("*", length(problems))
@@ -380,11 +396,13 @@ read_meta_data <- function(
   # Special case for appUsage intList row: it should be read as a double List, even though it is an
   # intList
   meta_data <- meta_data |>
-    mutate(typeAnswer = ifelse(
-      .data$typeQuestion == "appUsage" & .data$typeAnswer == "intList",
-      "doubleList",
-      .data$typeAnswer
-    ))
+    mutate(
+      typeAnswer = ifelse(
+        .data$typeQuestion == "appUsage" & .data$typeAnswer == "intList",
+        "doubleList",
+        .data$typeAnswer
+      )
+    )
 
   # if type is NA (because it is not in type_mapping), then R will guess the type
   meta_data[is.na(meta_data$type), "type"] <- "?"

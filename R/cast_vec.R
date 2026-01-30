@@ -24,13 +24,21 @@
   .data <- .unlist_col(vec)
   # Try to convert to integers, as they should be able to. However, in rare scenarios the integer
   # value is too large for R (integer overflow) in which case we will use double values.
-  .data$vec <- tryCatch({
-    as.integer(.data$vec)
-  }, warning = function(w) {
-    if (grepl("NAs introduced by coercion to integer range", conditionMessage(w))) {
-      as.double(.data$vec)
+  .data$vec <- tryCatch(
+    {
+      as.integer(.data$vec)
+    },
+    warning = function(w) {
+      if (
+        grepl(
+          "NAs introduced by coercion to integer range",
+          conditionMessage(w)
+        )
+      ) {
+        as.double(.data$vec)
+      }
     }
-  })
+  )
   .relist_col(.data)
 }
 

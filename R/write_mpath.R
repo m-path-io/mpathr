@@ -51,11 +51,10 @@
 #' setwd(.old_wd)
 #' }
 write_mpath <- function(
-    x,
-    file,
-    .progress = TRUE
+  x,
+  file,
+  .progress = TRUE
 ) {
-
   # These are default columns part of any m-Path file, and are not parsed to JSON
   default_cols <- c(
     "legacyCode",
@@ -69,7 +68,11 @@ write_mpath <- function(
   )
 
   # Find which columns are lists of strings
-  string_list_cols <- vapply(x, \(x) is.list(x) & all(is.character(unlist(x))), logical(1))
+  string_list_cols <- vapply(
+    x,
+    \(x) is.list(x) & all(is.character(unlist(x))),
+    logical(1)
+  )
   string_list_cols <- colnames(x)[string_list_cols]
 
   # Other string columns
@@ -85,7 +88,9 @@ write_mpath <- function(
       name = "Writing to CSV...",
       total = length(string_list_cols) + length(string_cols)
     )
-  } else NULL
+  } else {
+    NULL
+  }
 
   # Collapse string list columns to JSONs to escape characters
   data <- x |>

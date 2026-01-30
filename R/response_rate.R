@@ -45,24 +45,23 @@
 #'
 
 response_rate <- function(
-    data,
-    valid_col,
-    participant_col,
-    time_col = NULL,
-    period_start = NULL,
-    period_end = NULL
-){
-
+  data,
+  valid_col,
+  participant_col,
+  time_col = NULL,
+  period_start = NULL,
+  period_end = NULL
+) {
   valid_col <- enquo(valid_col)
   participant_col <- enquo(participant_col)
 
-  if(!missing(time_col)){
+  if (!missing(time_col)) {
     time_col <- enquo(time_col)
-   }
+  }
 
   # If period_start or end are specified, time_col should also be specified
-  if(!is.null(period_start) | !is.null(period_end)){
-    if(missing(time_col)){
+  if (!is.null(period_start) | !is.null(period_end)) {
+    if (missing(time_col)) {
       stop(paste(
         "It seems like the period start or end are specified",
         "but the time column is not. Please specify a time colum."
@@ -71,27 +70,32 @@ response_rate <- function(
   }
 
   # filter if a period start was specified
-  if(!is.null(period_start)){
+  if (!is.null(period_start)) {
     data <- data |>
       filter(as.Date(!!time_col) >= as.Date(period_start))
   }
 
   # filter if a period end was specified
-  if(!is.null(period_end)){
+  if (!is.null(period_end)) {
     data <- data |>
       filter(as.Date(!!time_col) <= as.Date(period_end))
   }
 
   # Print information on the period of the response rates.
   if (!is.null(period_start) & !is.null(period_end)) {
-    message(paste("Calculating response rates between date:",
-                  period_start, "and", period_end))
+    message(paste(
+      "Calculating response rates between date:",
+      period_start,
+      "and",
+      period_end
+    ))
   } else if (!is.null(period_start)) {
-    message(paste("Calculating response rates starting from date:",
-                  period_start))
+    message(paste(
+      "Calculating response rates starting from date:",
+      period_start
+    ))
   } else if (!is.null(period_end)) {
-    message(paste("Calculating response rates up to date:",
-                  period_end))
+    message(paste("Calculating response rates up to date:", period_end))
   } else {
     message("Calculating response rates for the entire duration of the study.")
   }

@@ -41,13 +41,18 @@ test_that("write_mpath can write and preserve empty strings", {
 
   # Create metadata for the dataset above
   meta <- tibble(
-    columnName = c("consent_yesno", "slider_happy", "some_empty_string", "some_string"),
+    columnName = c(
+      "consent_yesno",
+      "slider_happy",
+      "some_empty_string",
+      "some_string"
+    ),
     fullQuestion = "Do you consent to participate in this study?",
     typeQuestion = c("yesno", "sliderNegPos", "string", "stringList"),
     typeAnswer = c("string", "integer", "string", "stringList"),
     fullQuestion_mixed = 0,
-    typeQuestion_mixed =  0,
-    typeAnswer_mixed =  0
+    typeQuestion_mixed = 0,
+    typeAnswer_mixed = 0
   )
 
   basic_file <- tempfile(fileext = ".csv")
@@ -94,8 +99,8 @@ test_that("write_mpath can handle NA as character", {
     typeQuestion = c("yesno", "sliderNegPos"),
     typeAnswer = c("string", "string"),
     fullQuestion_mixed = 0,
-    typeQuestion_mixed =  0,
-    typeAnswer_mixed =  0
+    typeQuestion_mixed = 0,
+    typeAnswer_mixed = 0
   )
 
   basic_file <- tempfile(fileext = ".csv")

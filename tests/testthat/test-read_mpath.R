@@ -23,7 +23,6 @@ test_that("Data is a dataframe", {
 # Check that the correct number of rows and columns are read
 
 test_that("Data has correct dimensions", {
-
   col_names <- readr::read_lines(basic_path, n_max = 1, skip_empty_rows = TRUE)
 
   # The number of columns should be the number of ; in the header + 1
@@ -32,7 +31,6 @@ test_that("Data has correct dimensions", {
   n_rows <- length(count.fields(basic_path, sep = ";")) - 1
 
   expect_equal(dim(data), c(n_rows, n_cols))
-
 })
 
 # Data types are correct
@@ -40,9 +38,15 @@ test_that("Data has correct dimensions", {
 # Check data types of first columns
 # (columns that are not in the meta data)
 test_that("First columns are read correctly", {
-
   # character columns
-  cols <- data[, c("legacyCode", "code", "alias", "initials", "accountCode", "questionListName")]
+  cols <- data[, c(
+    "legacyCode",
+    "code",
+    "alias",
+    "initials",
+    "accountCode",
+    "questionListName"
+  )]
   expect_true(all(vapply(
     X = cols,
     FUN = is.character,
@@ -70,16 +74,14 @@ test_that("First columns are read correctly", {
   )))
 
   expect_true(is.numeric(data$deltaUTC))
-
 })
 
 # we will need the meta data to check the rest of the columns:
 meta <- read_meta_data(meta_path)
 
 test_that("String columns are read correctly", {
-
   # What columns should be read as strings?
-  meta_string_cols <- meta[meta$typeAnswer == "string",]$columnName
+  meta_string_cols <- meta[meta$typeAnswer == "string", ]$columnName
 
   # Checks that all those columns are strings
   expect_true(all(vapply(
@@ -87,22 +89,20 @@ test_that("String columns are read correctly", {
     FUN = is.character,
     FUN.VALUE = logical(1)
   )))
-
 })
 
 test_that("Integer columns are read correctly", {
-  meta_int_cols <- meta[meta$typeAnswer == "int",]$columnName
+  meta_int_cols <- meta[meta$typeAnswer == "int", ]$columnName
 
   expect_true(all(vapply(
     X = data[, meta_int_cols],
     FUN = is.integer,
     FUN.VALUE = logical(1)
   )))
-
 })
 
 test_that("Numeric columns aer read correcly", {
-  meta_numeric_cols <- meta[meta$typeAnswer == "double",]$columnName
+  meta_numeric_cols <- meta[meta$typeAnswer == "double", ]$columnName
 
   expect_true(all(vapply(
     X = data[, meta_numeric_cols],
@@ -113,7 +113,9 @@ test_that("Numeric columns aer read correcly", {
 
 # List columns
 # Get list columns from meta data
-meta_list_cols <- meta[meta$typeAnswer %in% c("intList", "doubleList", "stringList"),]$columnName
+meta_list_cols <- meta[
+  meta$typeAnswer %in% c("intList", "doubleList", "stringList"),
+]$columnName
 test_that("List columns are being read as lists", {
   expect_true(all(vapply(
     X = data[, meta_list_cols],
@@ -163,8 +165,8 @@ meta <- data.frame(
   typeQuestion = c('"yesno"', '"sliderNegPos"'),
   typeAnswer = c('"int"', '"int"'),
   fullQuestion_mixed = c(0, 0),
-  typeQuestion_mixed =  c(0, 0),
-  typeAnswer_mixed =  c(0, 0)
+  typeQuestion_mixed = c(0, 0),
+  typeAnswer_mixed = c(0, 0)
 )
 
 basic_file <- tempfile(fileext = ".csv")
@@ -194,8 +196,8 @@ meta <- data.frame(
   typeQuestion = c('"yesno"', '"sliderNegPos"'),
   typeAnswer = c('"int"', '"int"'),
   fullQuestion_mixed = c(0, 0),
-  typeQuestion_mixed =  c(10, 0),
-  typeAnswer_mixed =  c(0, 0)
+  typeQuestion_mixed = c(10, 0),
+  typeAnswer_mixed = c(0, 0)
 )
 
 meta_file <- tempfile(fileext = ".csv")
@@ -223,7 +225,6 @@ basic <- data.frame(
 
 # create small meta_data to test warnings in changed meta data
 test_that('specific warnings are printed for consent_yesno and slider_happy question changes', {
-
   meta$typeQuestion_mixed <- c(1, 1)
   meta$fullQuestion_mixed <- c(1, 1)
 
@@ -247,9 +248,9 @@ test_that('specific warnings are printed for consent_yesno and slider_happy ques
     )
   )
 
-    # Clean-up
-    unlink(basic_file)
-    unlink(meta_file)
+  # Clean-up
+  unlink(basic_file)
+  unlink(meta_file)
 })
 
 test_that("no warnings are printen when warn_changed_columns is false", {
@@ -278,12 +279,16 @@ test_that("no warnings are printen when warn_changed_columns is false", {
 test_that("meta_data changed columns warnings are limited to 50", {
   meta <- data.frame(
     columnName = paste0('"consent_yesno_', 1:101, '"'),
-    fullQuestion = paste0('"Do you consent to participate in this study?_', 1:101, '"'),
+    fullQuestion = paste0(
+      '"Do you consent to participate in this study?_',
+      1:101,
+      '"'
+    ),
     typeQuestion = '"yesno"',
     typeAnswer = '"int"',
     fullQuestion_mixed = 1,
-    typeQuestion_mixed =  0,
-    typeAnswer_mixed =  0
+    typeQuestion_mixed = 0,
+    typeAnswer_mixed = 0
   )
 
   meta_file <- tempfile(fileext = ".csv")
@@ -310,12 +315,16 @@ test_that("meta_data changed columns warnings are limited to 50", {
 test_that("meta_data limits warnings from reading in meta data files to 50", {
   meta <- data.frame(
     columnName = paste0('"consent_yesno_', 1:101, '"'),
-    fullQuestion = paste0('"Do you consent to participate in this study?_', 1:101, '"'),
+    fullQuestion = paste0(
+      '"Do you consent to participate in this study?_',
+      1:101,
+      '"'
+    ),
     typeQuestion = '"yesno"',
     typeAnswer = '\nil',
     fullQuestion_mixed = 1,
-    typeQuestion_mixed =  0,
-    typeAnswer_mixed =  0
+    typeQuestion_mixed = 0,
+    typeAnswer_mixed = 0
   )
 
   meta_file <- tempfile(fileext = ".csv")
@@ -356,8 +365,8 @@ test_that("read_mpath limits warnings from reading in data files to 50", {
     typeQuestion = '"yesno"',
     typeAnswer = '"int"',
     fullQuestion_mixed = 0,
-    typeQuestion_mixed =  0,
-    typeAnswer_mixed =  0
+    typeQuestion_mixed = 0,
+    typeAnswer_mixed = 0
   )
 
   basic_file <- tempfile(fileext = ".csv")
@@ -387,5 +396,3 @@ test_that("read_mpath limits warnings from reading in data files to 50", {
   unlink(basic_file)
   unlink(meta_file)
 })
-
-

@@ -19,7 +19,6 @@
 #' mpath_example() # returns the example files as a vector
 #'
 mpath_example <- function(file = NULL) {
-
   all_files <- list.files(system.file('extdata', package = "mpathr"))
 
   # Just return all files, without their directories
