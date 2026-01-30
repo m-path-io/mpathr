@@ -1,0 +1,96 @@
+# mpathr
+
+## Overview
+
+The goal of `mpathr` is to provide with a few utility functions to read
+and perform some common operations in data from Experience Sampling
+Methodology (ESM) studies collected through the m-Path platform
+(<https://m-path.io/landing/>). The package provides functions to read
+data from m-Path, and to calculate response rate in data from Experience
+Sampling studies.
+
+An overview of how to use this package (as well as a video and a
+detailed guide) can be found in the [m-Path
+manual](https://m-path.io/manual/knowledge-base/importing-and-analyzing-m-path-data-in-r-mpathr/).
+
+## Installation
+
+``` r
+install.packages("mpathr")
+library(mpathr)
+```
+
+## Example
+
+This is a basic example which shows you how to read data gathered from
+m-Path into R using the `mpathr` package. For this, we use the example
+data included in the package:
+
+``` r
+# loads package
+library(mpathr)
+
+# find paths to example basic and meta data:
+basic_path <- mpath_example(file ='example_basic.csv')
+meta_path <- mpath_example(file = 'example_meta.csv')
+
+# read the data
+data <- read_mpath(
+  file = basic_path,
+  meta_data = meta_path
+)
+
+print(data)
+#> # A tibble: 2,221 × 100
+#>   connectionId legacyCode  code       alias initials accountCode scheduledBeepId
+#>          <int> <chr>       <chr>      <chr> <chr>    <chr>                 <int>
+#> 1       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7                    -1
+#> 2       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626776
+#> 3       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626777
+#> 4       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626781
+#> 5       234609 !9v48@jp7a7 !byyo kjyt abc   Ver      jp7a7              28626782
+#> # ℹ 2,216 more rows
+#> # ℹ 93 more variables: sentBeepId <int>, reminderForOriginalSentBeepId <int>,
+#> #   questionListName <chr>, questionListLabel <chr>, fromProtocolName <chr>,
+#> #   timeStampScheduled <int>, timeStampSent <int>, timeStampStart <int>,
+#> #   timeStampStop <int>, originalTimeStampSent <int>, timeZoneOffset <int>,
+#> #   deltaUTC <dbl>, consent_yesno_yesno <int>,
+#> #   gender_multipleChoice_index <int>, gender_multipleChoice_string <chr>, …
+```
+
+## Getting help
+
+If you encounter a clear bug or need help getting a function to run,
+please file an issue with a minimal reproducible example on
+[Github](https://github.com/m-path-io/mpathr/issues).
+
+## Code of Conduct
+
+Please note that the mpathr project is released with a [Contributor Code
+of
+Conduct](https://github.com/m-path-io/mpathr/blob/master/CODE_OF_CONDUCT.md).
+By contributing to this project you agree to abide by its terms.
+
+# Package index
+
+## All functions
+
+- [`example_data`](example_data.md) : Example m-path data
+- [`extract_app_usage()`](extract_app_usage.md) : Extract App Usage from
+  Paired Name/Value Columns
+- [`mpath_example()`](mpath_example.md) : Get path to m-Path example
+  data
+- [`plot_response_rate()`](plot_response_rate.md) : Plots response rate
+  per day (and per participant)
+- [`read_mpath()`](read_mpath.md) **\[stable\]** : Read m-Path data
+- [`response_rate()`](response_rate.md) : Calculate response rate
+- [`timestamps_to_datetime()`](timestamps_to_datetime.md) **\[stable\]**
+  : Convert m-Path timestamps to a date time format
+- [`write_mpath()`](write_mpath.md) **\[experimental\]** : Write m-Path
+  data to a CSV file
+
+# Articles
+
+### All vignettes
+
+- [mpathr](mpathr.md):

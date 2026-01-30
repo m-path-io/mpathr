@@ -1,0 +1,31 @@
+# Check if an m-Path CSV file was opened in Excel
+
+This function checks if an m-Path data file has previously been opened
+in Excel, in which case the whole file is wrapped in quotation marks.
+Actual quotation marks will then also be quoted, which is why we can't
+simply remove the outer quotes. Also, this function takes a single
+string as input (the first line of the file) instead of the file itself,
+because this would mean the file would have to be read twice. One time
+for this function, and then another time to get the column names.
+
+## Usage
+
+``` r
+is_opened_in_excel(line, call = rlang::caller_env())
+```
+
+## Arguments
+
+- line:
+
+  The first line of the file to check if it was opened in Excel.
+
+- call:
+
+  The environment from which the function was called to display in the
+  error message.
+
+## Value
+
+Returns `TRUE` if the line is opened by Excel, otherwise an error
+informing the user of this problem.
