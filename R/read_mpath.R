@@ -294,14 +294,28 @@ read_meta_data <- function(
   } else rows_with_changes <- data.frame()
 
 
-  if (nrow(rows_with_changes) > 0){
-    rows_with_changes <- rows_with_changes |>
-      mutate(name = case_match(
-        .data$name,
-        "fullQuestion_mixed" ~ "{.fullq Question text}",
-        "typeQuestion_mixed" ~ "{.typeq Type of question}",
-        "typeAnswer_mixed" ~ "{.typea Type of answer}"
-      ))
+  if (nrow(rows_with_changes) > 0) {
+    if (utils::packageVersion("dplyr") <= "1.1.4") {
+      rows_with_changes <- rows_with_changes |>
+        mutate(
+          name = case_match(
+            .data$name,
+            "fullQuestion_mixed" ~ "{.fullq Question text}",
+            "typeQuestion_mixed" ~ "{.typeq Type of question}",
+            "typeAnswer_mixed" ~ "{.typea Type of answer}"
+          )
+        )
+    } else {
+      rows_with_changes <- rows_with_changes |>
+        mutate(
+          name = dplyr::recode_values(
+            .data$name,
+            "fullQuestion_mixed" ~ "{.fullq Question text}",
+            "typeQuestion_mixed" ~ "{.typeq Type of question}",
+            "typeAnswer_mixed" ~ "{.typea Type of answer}"
+          )
+        )
+    }
 
     # Create a new coloured theme to use in the warning
     cli::cli_div(
@@ -333,17 +347,35 @@ read_meta_data <- function(
 
   # Create mapping from the values in meta_data$typeAnswer (that specifies how that column should be saved)
   # to the values that readr::read_delim expects (i, c, ?...)
-  meta_data <- meta_data |>
-    mutate(type = case_match(
-      .data$typeAnswer,
-      "basic" ~ "?",
-      c("int", "integer") ~ "i",
-      "string" ~ "c",
-      "stringList" ~ "c",
-      "intList" ~ "c",
-      "doubleList" ~ "c",
-      "double" ~ "n"
-    ))
+  if (utils::packageVersion("dplyr") <= "1.1.4") {
+    meta_data <- meta_data |>
+      mutate(
+        type = case_match(
+          .data$typeAnswer,
+          "basic" ~ "?",
+          c("int", "integer") ~ "i",
+          "string" ~ "c",
+          "stringList" ~ "c",
+          "intList" ~ "c",
+          "doubleList" ~ "c",
+          "double" ~ "n"
+        )
+      )
+  } else {
+    meta_data <- meta_data |>
+      mutate(
+        type = dplyr::recode_values(
+          .data$typeAnswer,
+          "basic" ~ "?",
+          c("int", "integer") ~ "i",
+          "string" ~ "c",
+          "stringList" ~ "c",
+          "intList" ~ "c",
+          "doubleList" ~ "c",
+          "double" ~ "n"
+        )
+      )
+  }
 
   # Special case for appUsage intList row: it should be read as a double List, even though it is an
   # intList
