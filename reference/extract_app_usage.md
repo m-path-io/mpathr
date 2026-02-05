@@ -1,8 +1,25 @@
 # Extract App Usage from Paired Name/Value Columns
 
+**\[experimental\]**
+
 Parses app names and usage values into structured usage data, with start
 and end timestamps and usage durations for both "Far" and "Near"
 windows.
+
+The input can be formatted in two ways:
+
+- If the data is in its raw form (e.g. imported from CSV via
+  [`read.csv()`](https://rdrr.io/r/utils/read.table.html)), both
+  `app_names` and `app_values` should be character vectors where each
+  element is a comma-separated string.
+
+- If the data was imported via [`read_mpath()`](read_mpath.md), then
+  `app_names` should be a list of character vectors, and `app_values`
+  should be a list of integer vectors.
+
+The function expects that each app is associated with exactly six
+values: `startTimeFar`, `endTimeFar`, `usageFar`, `startTimeNear`,
+`endTimeNear`, `usageNear`.
 
 ## Usage
 
@@ -37,23 +54,6 @@ rows:
 - `startTimeNear`, `endTimeNear`: POSIXct timestamps (UTC)
 
 - `usageNear`: Integer usage during the near window
-
-## Details
-
-The input can be formatted in two ways:
-
-- If the data is in its raw form (e.g. imported from CSV via
-  [`read.csv()`](https://rdrr.io/r/utils/read.table.html)), both
-  `app_names` and `app_values` should be character vectors where each
-  element is a comma-separated string.
-
-- If the data was imported via [`read_mpath()`](read_mpath.md), then
-  `app_names` should be a list of character vectors, and `app_values`
-  should be a list of integer vectors.
-
-The function expects that each app is associated with exactly six
-values: `startTimeFar`, `endTimeFar`, `usageFar`, `startTimeNear`,
-`endTimeNear`, `usageNear`.
 
 ## Time windows
 

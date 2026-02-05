@@ -76,8 +76,8 @@ By contributing to this project you agree to abide by its terms.
 ## All functions
 
 - [`example_data`](example_data.md) : Example m-path data
-- [`extract_app_usage()`](extract_app_usage.md) : Extract App Usage from
-  Paired Name/Value Columns
+- [`extract_app_usage()`](extract_app_usage.md) **\[experimental\]** :
+  Extract App Usage from Paired Name/Value Columns
 - [`mpath_example()`](mpath_example.md) : Get path to m-Path example
   data
 - [`plot_response_rate()`](plot_response_rate.md) : Plots response rate
