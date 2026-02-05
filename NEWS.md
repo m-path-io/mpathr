@@ -1,6 +1,8 @@
-# mpathr (development version)
+# mpathr 1.0.4
 * Add a new function `extract_app_usage()` to extract app usage data collected with mobile sensing
 lite.
+* We now use the new `dplyr::recode_values()` in favor of `dplyr::case_match()` if your `dplyr` 
+version is 1.2.0 or greater.
 
 # mpathr 1.0.3
 ## Minor changes

@@ -25,10 +25,11 @@ A list of tibbles (one per input row). Each tibble contains one or more rows:
 }
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
 Parses app names and usage values into structured usage data, with
 start and end timestamps and usage durations for both "Far" and "Near" windows.
-}
-\details{
+
 The input can be formatted in two ways:
 \itemize{
 \item If the data is in its raw form (e.g. imported from CSV via \code{\link[=read.csv]{read.csv()}}), both

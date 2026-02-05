@@ -1,5 +1,7 @@
 #' Extract App Usage from Paired Name/Value Columns
 #'
+#' @description `r lifecycle::badge("experimental")`
+#'
 #' Parses app names and usage values into structured usage data, with
 #' start and end timestamps and usage durations for both "Far" and "Near" windows.
 #'
@@ -69,21 +71,6 @@
 #'
 #' @export
 extract_app_usage <- function(app_names, app_values) {
-  # if (length(names) > 1) {
-  #   len <- length(names)
-  #   cli_abort(
-  #     "{.var names} must be character vector of length 1.",
-  #     "x" = "You've supplied a {.cls {class(names)}} vector of length {len}."
-  #   )
-  # }
-  # if (length(values) > 1) {
-  #   len <- length(values)
-  #   cli_abort(
-  #     "{.var values} must be character or numeric vector of length 1.",
-  #     "x" = "You've supplied a {.cls {class(values)}} vector of length {len}."
-  #   )
-  # }
-
   # Get the unique app names
   if (all(lengths(app_names) == 1)) {
     app_names <- strsplit(app_names, ",")
