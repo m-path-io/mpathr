@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/m-path-io/mpathr/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/m-path-io/mpathr/blob/HEAD/inst/CITATION)
 
 Mestdagh M, Verdonck S, Piot M, Niemeijer K, Kilani G, Tuerlinckx F,
 Kuppens P, Dejonckheere E (2023). “m-Path: an easy-to-use and highly
