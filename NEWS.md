@@ -1,3 +1,5 @@
+# mpathr (in-development version)
+
 # mpathr 1.0.4
 * Add a new function `extract_app_usage()` to extract app usage data collected with mobile sensing
 lite.
